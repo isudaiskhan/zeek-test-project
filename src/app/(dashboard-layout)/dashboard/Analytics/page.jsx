@@ -1,7 +1,7 @@
 import React from "react";
 
 const Analytics = () => {
-  return <div>Analytics</div>;
+  return <div>Analyticss</div>;
 };
 
 export default Analytics;
