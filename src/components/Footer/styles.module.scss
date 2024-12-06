@@ -1,0 +1,14 @@
+@use "@/styles/colors.module.scss" as *;
+
+.footer {
+  background-color: $footer-bg-light;
+  padding: 1rem 0;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+}
+
+.footer.dark {
+  background-color: $footer-bg-dark;
+  color: $text-primary-dark;
+}

@@ -1,0 +1,33 @@
+@use "@/styles/colors.module.scss" as *;
+
+.dashboard-main-container {
+  background-color: $main-container-bg-light;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  transition: padding-left 200ms;
+
+  .content-container {
+    flex-grow: 1;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    .paper-container {
+      min-height: 400px;
+      padding: 10px 24px;
+      margin: 2rem 0;
+      background-color: $main-container-paper-bg-light;
+      box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.dashboard-main-container.dark {
+  background-color: $main-container-bg-dark;
+
+  .paper-container {
+    border: 1px solid rgba($color: $primary, $alpha: 0.4);
+    background-color: $main-container-paper-bg-dark;
+  }
+}
