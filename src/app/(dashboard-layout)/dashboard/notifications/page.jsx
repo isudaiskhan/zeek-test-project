@@ -1,7 +1,7 @@
 import React from "react";
 
-const Notifications = () => {
-  return <h4>Notifications</h4>;
+const Segments = () => {
+  return <h4>Segments</h4>;
 };
 
-export default Notifications;
+export default Segments;

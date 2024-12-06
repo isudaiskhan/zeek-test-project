@@ -45,7 +45,7 @@ const AdminSidebar = ({
           textAlign="center"
           variant="h5"
         >
-          [Logo]
+          ZEEK
         </Typography>
       </Box>
       <Box className="links-box">
@@ -61,10 +61,10 @@ const AdminSidebar = ({
         </List>
       </Box>
 
-      {renderActions && (
+      {
         <div className="drawer-footer-actions">
           <AdminSidebarActions drawerWidth={drawerWidth} />
-          {renderToggleButton && (
+          {
             <Box className="drawer-toggle-btn">
               <Button
                 onClick={toggleDrawer}
@@ -72,6 +72,7 @@ const AdminSidebar = ({
                 color="primary"
                 variant="contained"
               >
+                hgjhghg
                 {drawerWidth === DRAWER_WIDTH.OPEN ? (
                   <ArrowBackIos style={{ fontSize: "inherit" }} />
                 ) : (
@@ -79,9 +80,9 @@ const AdminSidebar = ({
                 )}
               </Button>
             </Box>
-          )}
+          }
         </div>
-      )}
+      }
     </Box>
   );
 };

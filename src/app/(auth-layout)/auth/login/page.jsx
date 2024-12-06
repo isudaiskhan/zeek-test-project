@@ -38,12 +38,15 @@ const Login = () => {
       loadingMsg: "Logging in...",
       successMsg: "Logged in successfully",
       onSubmit: async () => {
-        const { email, password, rememberMe } = values;
+        const { email, rememberMe } = values;
 
-        const res = await login(email, password);
+        // const res = await login(email, password);
 
-        const { token } = res;
-        const userData = await getUserProfile(token);
+        // const { token } = res;
+        const token = "dummy token";
+        // const userData = await getUserProfile(token);
+
+        const userData = { email };
 
         const reduxState = {
           userData,

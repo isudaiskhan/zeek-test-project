@@ -49,9 +49,9 @@ export default async function validateAuthentication(req) {
   }
 
   // check for roles for specific routes
-  if (token && pathname.startsWith(ROUTES.ADMIN_ROUTES)) {
-    return await handleAdminRoutes(req, token);
-  }
+  // if (token && pathname.startsWith(ROUTES.ADMIN_ROUTES)) {
+  //   return await handleAdminRoutes(req, token);
+  // }
 
   return NextResponse.next();
 }
