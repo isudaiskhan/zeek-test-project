@@ -1,40 +1,61 @@
 @use "./colors.module.scss" as *;
 
+
 .sidebar-container {
   background-color: $sidebar-bg-light;
-  height: 100%;
+  height: calc(100vh - 60px);
   overflow: hidden;
-  display: grid;
-  transition: width 200ms;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "logo-box"
-    "link-box"
-    "actions-box";
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width 0.3s ease;
+  padding: 15px 0; 
+  border-radius: 10px; 
+  box-shadow: 5px 5px 18px rgba(0, 0, 0, 0.2); 
+  position: fixed;
+  left: 30px; 
+  top: 30px; 
+  right: 30px; 
+  bottom: 30px;
+  width: auto;
+  max-width: 250px; 
+  z-index: 10;
+
+
+  &.collapsed {
+    width: 60px;
+  }
+
+  
+  .links-box .navLink {
+    padding: 15px;
+    transition: padding 0.2s ease-in-out;
+  }
+  
+
+  &.collapsed {
+    width: 60px;
+  }
 
   .logo-box {
-    grid-area: logo-box;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 1.5rem 0;
+    justify-content: space-between;
+    height: 70px;
+    padding: 0px 20px;
+    
+
     .logo-heading {
+      font-size: 1.5rem;
+      font-weight: bolder;
+      color: $dark-primary;
+      white-space: nowrap;
       overflow: hidden;
-      color: $text-primary-light;
     }
   }
 
-  .links-box {
-    overflow-y: auto;
-    grid-area: link-box;
-    background-color: $sidebar-bg-light;
 
-    padding: 0 1rem 0 0;
-  }
-
-  // scrollbar
+    // scrollbar
   .links-box::-webkit-scrollbar {
     width: 4px;
   }
@@ -60,19 +81,7 @@
         fill: $selected-sidebar-link-light;
       }
 
-      .MuiListItemText-root {
-        .MuiTypography-root {
-          color: $selected-sidebar-link-light;
-        }
-      }
-
-      & .MuiListItemText-secondary {
-        color: white !important;
-      }
-
-      & .MuiIconButton-root {
-        color: white;
-      }
+   
     }
 
     .list-item {
@@ -102,77 +111,66 @@
     }
   }
 
-  // sidebar footer buttons
-  .drawer-footer-actions {
-    grid-area: actions-box;
-
-    .drawer-toggle-btn {
-      & > button {
-        border-top: 1px white solid;
-        display: flex;
-        justify-content: flex-end;
-        border-radius: 0px;
-        font-size: 17px;
-        padding: 13px 10px 13px 0px;
-        background-color: transparent;
-
-        & > svg {
-          opacity: 0.8;
-          transition: opacity 200ms;
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-}
-
-.sidebar-container.dark {
-  background-color: $sidebar-bg-dark;
-
-  .logo-heading {
-    color: $text-primary-dark;
-  }
 
   .links-box {
-    background-color: $sidebar-bg-dark;
-  }
+    flex-grow: 1;
+    margin-top: 20px;
+    overflow-y: auto;
+    padding-right: 5px;
 
-  .navLink {
-    .list-item.Mui-selected {
-      background-color: $selected-sidebar-bg-dark;
+    .navLink {
+      .list-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
 
-      & .MuiListItemIcon-root svg {
-        fill: $selected-sidebar-link-dark;
-      }
+        &.Mui-selected {
+          background-color: $selected-sidebar-bg-light;
+          color: $selected-sidebar-link-light;
 
-      .MuiListItemText-root {
-        .MuiTypography-root {
-          color: $selected-sidebar-link-dark;
+          .MuiListItemIcon-root svg {
+            fill: $selected-sidebar-link-light;
+          }
         }
-      }
 
-      & .MuiIconButton-root {
-        color: $text-primary-dark;
+       
+
+        .MuiListItemIcon-root {
+          min-width: 40px;
+          color: $sidebar-link-light;
+        }
+
+        .MuiTypography-root {
+          font-size: 14px;
+          font-weight: 500;
+          color: $sidebar-link-light;
+        }
       }
     }
+  }
 
-    .list-item {
-      & .MuiListItemIcon-root svg {
-        fill: $sidebar-link-dark;
-      }
+  .drawer-footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-      & .MuiListItemText-root {
-        .MuiTypography-root {
-          color: $sidebar-link-dark;
-        }
-      }
+    .drawer-toggle-btn button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      background-color: transparent;
+      transition: background-color 0.2s ease;
 
-      & .MuiIconButton-root {
-        color: $text-primary-dark;
+      &:hover {
+        background-color: rgba($primary, 0.1);
       }
     }
   }
 }
+

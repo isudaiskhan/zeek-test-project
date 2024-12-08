@@ -49,11 +49,11 @@ const DashboardLayout = ({ children }) => {
         }}
       >
         <Container className={styles["content-container"]}>
-          {/* <Paper elevation={0} className={styles["paper-container"]}> */}
+          <Paper elevation={0} className={styles["paper-container"]}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <div>{children}</div>
           </ErrorBoundary>
-          {/* </Paper> */}
+          </Paper>
         </Container>
         {/* <Footer /> */}
       </Box>

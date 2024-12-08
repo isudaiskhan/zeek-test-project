@@ -1,10 +1,12 @@
 import {
+  ArrowRight,
   BarChart,
   Dashboard,
   Message,
   Notifications,
   Person,
   Reviews,
+  SubdirectoryArrowRight,
   Timeline,
 } from "@mui/icons-material";
 import Image from "next/image";
@@ -27,7 +29,7 @@ export const routes = [
     isPrivate: true,
   },
   {
-    path: "/dashboard/zeekai",
+    path: "/dashboard/zeek",
     name: "Zeek AI",
     icon: (
       <Image
@@ -72,12 +74,12 @@ export const routes = [
       {
         path: "/dashboard/notifications/notification",
         name: "Notification",
-        icon: <BarChart />,
+        icon: <SubdirectoryArrowRight />,
       },
       {
         path: "/dashboard/notifications",
-        name: "Notifications",
-        icon: <Notifications />,
+        name: "Segments",
+        icon: <SubdirectoryArrowRight />,
       },
     ],
   },
@@ -152,7 +154,7 @@ export const routes = [
     name: "Employees",
     icon: (
       <Image
-        src="/images/5.svg"
+        src="/images/9.svg"
         alt="Employees"
         width={20}
         height={20}

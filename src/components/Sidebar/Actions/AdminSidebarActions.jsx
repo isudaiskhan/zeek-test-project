@@ -1,5 +1,5 @@
 import React from "react";
-import { Logout, Settings } from "@mui/icons-material";
+import { HelpSharp, Logout } from "@mui/icons-material";
 import {
   List,
   ListItemButton,
@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { removeAuthUser } from "@/redux/slices/authUser";
+import Image from "next/image";
 
 const drawer = Object.freeze({
   open: 240,
@@ -21,8 +22,8 @@ const drawer = Object.freeze({
 export const routes = [
   {
     path: "/dashboard/settings",
-    name: "Settings",
-    icon: <Settings />,
+    name: "Help Center",
+    icon: <HelpSharp />,
   },
 ];
 
@@ -78,9 +79,17 @@ const AdminSidebarActions = ({ drawerWidth }) => {
             </ListItemIcon>
           </Tooltip>
           {drawerWidth === drawer.open && (
-            <ListItemText primary="Logout" secondary="" />
+            <ListItemText primary="Log Out" secondary="" />
           )}
         </ListItemButton>
+        <Image
+        src="/images/side-footer-logo.svg"
+        alt="logo"
+        width={100}
+        height={100}
+        layout="responsive"
+        priority
+      />
       </List>
     </div>
   );
