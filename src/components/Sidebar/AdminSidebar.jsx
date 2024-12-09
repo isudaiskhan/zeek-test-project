@@ -38,37 +38,37 @@ const AdminSidebar = ({
   };
   return (
     <Box sx={{ width: drawerWidth }} className={`sidebar-container ${theme}`}>
-   <Box className="logo-box">
-  <Typography
-    className={`logo-heading ${isRotated ? "hidden" : ""}`}
-    sx={{ color: "black" }}
-    textAlign="center"
-    variant="h5"
-  >
-    ZEEK.
-  </Typography>
+      <Box className="logo-box">
+        <Typography
+          className={`logo-heading ${isRotated ? "hidden" : ""}`}
+          sx={{ color: "black" }}
+          textAlign="center"
+          variant="h5"
+        >
+          ZEEK.
+        </Typography>
 
-  <Box className="drawer-toggle-btn">
-    <motion.div
-      animate={{
-        rotate: isRotated ? 180 : 0,
-      }}
-      transition={{
-        duration: 0.5,
-        ease: "easeInOut",
-      }}
-    >
-      <IconButton onClick={toggleDrawer}>
-        <Image
-          src={isRotated ? "images/menu.svg" : "images/menu.svg"}
-          alt="Toggle Drawer Icon"
-          width={24}
-          height={24}
-        />
-      </IconButton>
-    </motion.div>
-  </Box>
-</Box>
+        <Box className="drawer-toggle-btn">
+          <motion.div
+            animate={{
+              rotate: isRotated ? 180 : 0,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <Image
+                src={isRotated ? "/images/menu.svg" : "/images/menu.svg"}
+                alt="Toggle Drawer Icon"
+                width={24}
+                height={24}
+              />
+            </IconButton>
+          </motion.div>
+        </Box>
+      </Box>
 
       <Box className="links-box">
         <List className="navLink">
@@ -86,9 +86,7 @@ const AdminSidebar = ({
       {
         <div className="drawer-footer-actions">
           <AdminSidebarActions drawerWidth={drawerWidth} />
-          {
-            
-          }
+          {}
         </div>
       }
     </Box>

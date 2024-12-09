@@ -1,6 +1,6 @@
 import { Roboto } from "next/font/google";
 
-export const projectName = "Web Template";
+export const projectName = "ZEEK";
 
 // fonts
 export const fontTheme = Roboto({
