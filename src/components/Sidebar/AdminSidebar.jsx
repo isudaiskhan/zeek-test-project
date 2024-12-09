@@ -15,11 +15,13 @@ const AdminSidebar = ({
   renderToggleButton,
   renderActions,
 }) => {
-  // theme
-  const { theme } = useTheme();
-
   // state
   const [filterRoutes, setFilterRoutes] = useState([]);
+  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN); // Default open
+  const [isRotated, setIsRotated] = useState(false);
+
+  // theme
+  const { theme } = useTheme();
 
   useEffect(() => {
     let arr = [];
@@ -27,15 +29,13 @@ const AdminSidebar = ({
     setFilterRoutes(arr);
   }, []);
 
-  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN); // Default open
-  const [isRotated, setIsRotated] = useState(false);
-
   const toggleDrawer = () => {
     setDrawerWidth((prevWidth) =>
       prevWidth === DRAWER_WIDTH.OPEN ? DRAWER_WIDTH.CLOSED : DRAWER_WIDTH.OPEN
     );
     setIsRotated((prev) => !prev); // Toggle rotation
   };
+
   return (
     <Box sx={{ width: drawerWidth }} className={`sidebar-container ${theme}`}>
       <Box className="logo-box">
