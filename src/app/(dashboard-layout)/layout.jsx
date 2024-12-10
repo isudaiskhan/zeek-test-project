@@ -81,8 +81,9 @@ import Image from "next/image";
 const DashboardLayout = ({ children }) => {
   const { theme } = useTheme();
 
+  // Sidebar states
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
@@ -100,93 +101,79 @@ const DashboardLayout = ({ children }) => {
 
       {isSmallScreen ? (
         <>
+          {/* Temporary Drawer for Small Screens */}
           <Box
             sx={{
               display: "flex",
               justifyContent: "flex-start",
-              padding: "0 16px",
+              padding: "16px",
               backgroundColor: "#f6f6f6",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                padding: "16px",
-                backgroundColor: "#f6f6f6",
-              }}
-            >
-              <IconButton onClick={toggleSidebar}>
-                <Image
-                  src={"/images/menu.svg"}
-                  alt="Toggle Drawer Icon"
-                  width={24}
-                  height={24}
-                />{" "}
-              </IconButton>
-            </Box>
+            <IconButton onClick={toggleSidebar}>
+              <Image src="/images/menu.svg" alt="Toggle Drawer Icon" width={24} height={24} />
+            </IconButton>
           </Box>
 
           <Drawer
             variant="temporary"
             anchor="left"
             open={isSidebarOpen}
-            onClose={toggleSidebar}
-            PaperProps={{
-              sx: {
-                borderRight: "none",
-              },
-            }}
-            sx={{
-              width: drawerWidth,
-              boxSizing: "border-box",
-            }}
+            onClose={closeSidebar}
+            PaperProps={{ sx: { borderRight: "none" } }}
           >
             <AdminSidebar
               drawerWidth={drawerWidth}
-              setDrawerWidth={setDrawerWidth}
-              renderActions
+              toggleDrawer={toggleSidebar}
+              isSidebarOpen={isSidebarOpen}
               closeSidebar={closeSidebar}
             />
           </Drawer>
         </>
       ) : (
+        /* Permanent Drawer for Larger Screens */
         <Drawer
           variant="permanent"
           anchor="left"
-          className="xs:hidden md:block"
-          PaperProps={{
-            sx: {
-              borderRight: "none",
-            },
-          }}
+          PaperProps={{ sx: { borderRight: "none" } }}
+          sx={{ width: drawerWidth }}
         >
           <AdminSidebar
             drawerWidth={drawerWidth}
-            setDrawerWidth={setDrawerWidth}
-            renderActions
+            toggleDrawer={toggleSidebar}
+            isSidebarOpen={isSidebarOpen}
           />
         </Drawer>
       )}
 
-      <Box
+<Box
         className={`${styles["dashboard-main-container"]} ${styles[theme]}`}
         sx={{
           paddingLeft: {
             xs: 0,
-            md: `${drawerWidth}px`,
+            md: isSidebarOpen ? `${drawerWidth}px` : '60px',
           },
+          transition: "padding-left 0.3s ease-in-out",
         }}
       >
-        <Container className={styles["content-container"]} maxWidth={false}>
-          <Paper elevation={0} className={styles["paper-container"]}>
-            <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <div>{children}</div>
-            </ErrorBoundary>
-          </Paper>
-        </Container>
-        {/* <Footer /> */}
-      </Box>
+
+{/* <Box
+  className={`${styles["dashboard-main-container"]} ${styles[theme]}`}
+  sx={{
+    paddingLeft: isSidebarOpen ? `${drawerWidth}px` : "60px", // Keep padding for collapsed sidebar
+    transition: "padding-left 0.3s ease-in-out",
+  }}
+> */}
+      
+  <Container className={styles["content-container"]} maxWidth={false}>
+    <Paper elevation={0} className={styles["paper-container"]}>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <div>{children}</div>
+      </ErrorBoundary>
+    </Paper>
+  </Container>
+</Box>
+
     </DashboardLayoutWrapper>
   );
 };

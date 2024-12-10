@@ -95,70 +95,86 @@ const AdminSidebar = ({
 
 export default AdminSidebar;
 
+
+
+// // new responsivness issue finish in this code
 // "use client";
 
-// import { useState } from "react";
-// import { Box, Typography, IconButton } from "@mui/material";
-// import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+// import { Box, IconButton, List, Typography } from "@mui/material";
+// import { useTheme } from "next-themes";
+// import { useEffect, useState } from "react";
+// import { routes } from "../../routes/admin";
+// import AdminSidebarActions from "./Actions/AdminSidebarActions";
+// import RenderSidebarList from "./RenderSidebarList";
 // import { motion } from "framer-motion";
+// import Image from "next/image";
 
-// const AdminSidebar = () => {
-//   const [isRotated, setIsRotated] = useState(false);
+// const AdminSidebar = ({ drawerWidth, toggleDrawer, isSidebarOpen }) => {
+//   const [filterRoutes, setFilterRoutes] = useState([]);
+//   const { theme } = useTheme();
 
-//   const toggleRotation = () => {
-//     setIsRotated((prev) => !prev);
-//   };
+//   useEffect(() => {
+//     const sidebarRoutes = routes.filter((route) => route.sidebar);
+//     setFilterRoutes(sidebarRoutes);
+//   }, []);
 
 //   return (
 //     <Box
 //       sx={{
+//         width: isSidebarOpen ? drawerWidth : 60, // Adjust width for half-closed state
+//         overflowX: "hidden",
+//         transition: "width 0.3s ease-in-out",
 //         display: "flex",
-//         alignItems: "center",
+//         flexDirection: "column",
 //         justifyContent: "space-between",
-//         padding: "16px",
-//         backgroundColor: "#fff",
-//         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+//         height: "100vh",
 //       }}
+//       className={`sidebar-container ${theme}`}
 //     >
-//       {/* ZEEK Text */}
-//       <Typography
-//         variant="h5"
-//         component="div"
+//       {/* Logo and Toggle Button */}
+//       <Box
 //         sx={{
-//           fontWeight: "bold",
-//           color: "#000",
+//           display: "flex",
+//           alignItems: "center",
+//           justifyContent: isSidebarOpen ? "space-between" : "center",
+//           padding: "16px",
 //         }}
 //       >
-//         ZEEK
-//       </Typography>
-
-//       {/* Icon Button */}
-//       <motion.div
-//         animate={{
-//           rotate: isRotated ? 180 : 0,
-//         }}
-//         transition={{
-//           duration: 0.5,
-//           ease: "easeInOut",
-//         }}
-//       >
-//         <IconButton
-//           onClick={toggleRotation}
-//           sx={{
-//             backgroundColor: "#f0f0f0",
-//             borderRadius: "50%",
-//             "&:hover": {
-//               backgroundColor: "#e0e0e0",
-//             },
-//           }}
-//         >
-//           {isRotated ? (
-//             <ArrowForwardIos sx={{ color: "#000" }} />
-//           ) : (
-//             <ArrowBackIos sx={{ color: "#000" }} />
-//           )}
+//         {isSidebarOpen && (
+//           <Typography
+//             sx={{ color: "black" }}
+//             textAlign="center"
+//             variant="h5"
+//             className="logo-heading"
+//           >
+//             ZEEK.
+//           </Typography>
+//         )}
+//         <IconButton onClick={toggleDrawer}>
+//           <motion.div
+//             animate={{ rotate: isSidebarOpen ? 180 : 0 }}
+//             transition={{ duration: 0.5, ease: "easeInOut" }}
+//           >
+//             <Image src="/images/menu.svg" alt="Toggle Drawer Icon" width={24} height={24} />
+//           </motion.div>
 //         </IconButton>
-//       </motion.div>
+//       </Box>
+
+//       {/* Sidebar Links */}
+//       <Box sx={{ flexGrow: 1 }}>
+//         <List>
+//           {filterRoutes.map((route) => (
+//             <RenderSidebarList key={route.path} route={route} isSidebarOpen={isSidebarOpen} />
+//           ))}
+//         </List>
+//       </Box>
+
+//       {/* Footer Actions */}
+//       {isSidebarOpen && (
+//         <Box sx={{ padding: "16px" }}>
+//           <AdminSidebarActions />
+//         </Box>
+//       )}
 //     </Box>
 //   );
 // };
