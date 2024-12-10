@@ -17,25 +17,37 @@ const RenderSidebarList = ({
   route,
   drawerWidth,
   handleSidebarDrawerClose,
+  isSmallScreen,
 }) => {
   // router
   const pathname = usePathname();
 
-  // hooks
+  // hooks for toggling the subRoutes visibility (sidebar open/close state)
   const [sidebarOpen, sidebarToggle] = useToggleState();
 
+  // handle click on list item, toggle sub-routes if available
   const handleListItemClick = () => {
     if (route.subRoutes) {
-      sidebarToggle();
+      sidebarToggle(); // Toggle sub-routes visibility
     } else {
       if (handleSidebarDrawerClose) {
-        handleSidebarDrawerClose();
+        handleSidebarDrawerClose(); // Close the sidebar
       }
     }
   };
 
   const handleSubListItemClick = () => {
     if (handleSidebarDrawerClose) {
+      handleSidebarDrawerClose(); // Close sidebar when a sub-item is clicked
+    }
+  };
+
+  // Determine whether to show the sidebar icon and text based on the drawer width
+  const isSidebarCollapsed = drawerWidth === DRAWER_WIDTH.CLOSED;
+
+  // Close sidebar on small screen if any item is clicked
+  const closeSidebarOnClick = () => {
+    if (isSmallScreen && handleSidebarDrawerClose) {
       handleSidebarDrawerClose();
     }
   };
@@ -45,28 +57,35 @@ const RenderSidebarList = ({
       <ListItemButton
         button
         className="list-item"
-        onClick={handleListItemClick}
+        onClick={() => {
+          handleListItemClick();
+          closeSidebarOnClick(); // Close the sidebar on item click (for small screens)
+        }}
         selected={pathname === route.path}
       >
         <Tooltip
-          title={drawerWidth === DRAWER_WIDTH.CLOSED ? route.name : ""}
+          title={isSidebarCollapsed ? route.name : ""}
           placement="right"
           arrow
         >
           <ListItemIcon>{route.icon}</ListItemIcon>
         </Tooltip>
-        {drawerWidth === DRAWER_WIDTH.OPEN && (
+        {/* Show text only if the sidebar is fully opened */}
+        {!isSidebarCollapsed && (
           <ListItemText
             primary={route.name}
             secondary={route?.description ?? ""}
           />
         )}
-        {route.subRoutes && (
+        {/* Show sub-menu toggle button if subRoutes exist */}
+        {route.subRoutes && !isSidebarCollapsed && (
           <IconButton>
             {sidebarOpen ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         )}
       </ListItemButton>
+
+      {/* If sub-routes exist, render them in a collapsible list */}
       {route.subRoutes && (
         <Collapse in={sidebarOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -75,20 +94,22 @@ const RenderSidebarList = ({
                 <ListItemButton
                   button
                   className="list-item"
-                  onClick={handleSubListItemClick}
+                  onClick={() => {
+                    handleSubListItemClick();
+                    closeSidebarOnClick(); // Close sidebar on sub-item click (for small screens)
+                  }}
                   selected={pathname === subRoute.path}
                   sx={{ pl: 4 }}
                 >
                   <Tooltip
-                    title={
-                      drawerWidth === DRAWER_WIDTH.CLOSED ? subRoute.name : ""
-                    }
+                    title={isSidebarCollapsed ? subRoute.name : ""}
                     placement="right"
                     arrow
                   >
                     <ListItemIcon>{subRoute.icon}</ListItemIcon>
                   </Tooltip>
-                  {drawerWidth === DRAWER_WIDTH.OPEN && (
+                  {/* Show text if sidebar is not collapsed */}
+                  {!isSidebarCollapsed && (
                     <ListItemText
                       primary={subRoute.name}
                       secondary={subRoute?.description ?? ""}

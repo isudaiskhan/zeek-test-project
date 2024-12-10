@@ -1,73 +1,8 @@
-// "use client";
-
-// import styles from "./styles.module.scss";
-
-// import { Box, Container, Drawer, Paper } from "@mui/material";
-// import { useState } from "react";
-// import AdminSidebar from "../../components/Sidebar/AdminSidebar";
-// import AdminHeader from "../../components/Header/AdminHeader";
-// // import Footer from "../../components/Footer/Footer";
-// import { ErrorBoundary } from "react-error-boundary";
-// import ErrorFallback from "components/ErrorFallback/ErrorFallback";
-// import { DRAWER_WIDTH } from "../../theme/drawer";
-// import DashboardLayoutWrapper from "../../components/LayoutWrappers/Dashboard/LayoutWrapper";
-// import { useTheme } from "next-themes";
-
-// const DashboardLayout = ({ children }) => {
-//   // theme
-//   const { theme } = useTheme();
-
-//   // state
-//   const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
-
-//   return (
-//     <DashboardLayoutWrapper>
-//       <AdminHeader drawerWidth={drawerWidth} />
-//       <Drawer
-//         variant="permanent"
-//         anchor="left"
-//         className="xs:hidden md:block"
-//         PaperProps={{
-//           sx: {
-//             borderRight: "none",
-//           },
-//         }}
-//       >
-//         <AdminSidebar
-//           drawerWidth={drawerWidth}
-//           setDrawerWidth={setDrawerWidth}
-//           renderActions
-//         />
-//       </Drawer>
-//       <Box
-//         className={`${styles["dashboard-main-container"]} ${styles[theme]}`}
-//         sx={{
-//           paddingLeft: {
-//             xs: 0,
-//             md: `${drawerWidth}px`,
-//           },
-//         }}
-//       >
-//         <Container className={styles["content-container"]} maxWidth={false}>
-//           <Paper elevation={0} className={styles["paper-container"]}>
-//             <ErrorBoundary FallbackComponent={ErrorFallback}>
-//               <div>{children}</div>
-//             </ErrorBoundary>
-//           </Paper>
-//         </Container>
-//         {/* <Footer /> */}
-//       </Box>
-//     </DashboardLayoutWrapper>
-//   );
-// };
-
-// export default DashboardLayout;
-
 "use client";
 
 import styles from "./styles.module.scss";
 import { Box, Container, Drawer, Paper, IconButton } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminSidebar from "../../components/Sidebar/AdminSidebar";
 import AdminHeader from "../../components/Header/AdminHeader";
 import { ErrorBoundary } from "react-error-boundary";
@@ -83,9 +18,17 @@ const DashboardLayout = ({ children }) => {
 
   // Sidebar states
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default to false on small screens
 
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  useEffect(() => {
+    if (!isSmallScreen) {
+      setIsSidebarOpen(true); // Always open the sidebar on medium and larger screens
+    } else {
+      setIsSidebarOpen(false); // Close the sidebar on small screens by default
+    }
+  }, [isSmallScreen]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -111,7 +54,12 @@ const DashboardLayout = ({ children }) => {
             }}
           >
             <IconButton onClick={toggleSidebar}>
-              <Image src="/images/menu.svg" alt="Toggle Drawer Icon" width={24} height={24} />
+              <Image
+                src="/images/menu.svg"
+                alt="Toggle Drawer Icon"
+                width={24}
+                height={24}
+              />
             </IconButton>
           </Box>
 
@@ -142,38 +90,29 @@ const DashboardLayout = ({ children }) => {
             drawerWidth={drawerWidth}
             toggleDrawer={toggleSidebar}
             isSidebarOpen={isSidebarOpen}
+            closeSidebar={closeSidebar}
           />
         </Drawer>
       )}
 
-<Box
+      <Box
         className={`${styles["dashboard-main-container"]} ${styles[theme]}`}
         sx={{
           paddingLeft: {
             xs: 0,
-            md: isSidebarOpen ? `${drawerWidth}px` : '60px',
+            md: isSidebarOpen ? `${drawerWidth}px` : "60px",
           },
-          transition: "padding-left 0.3s ease-in-out",
+          transition: "padding-left 0.3s ease-in-out", // Smooth transition when toggling
         }}
       >
-
-{/* <Box
-  className={`${styles["dashboard-main-container"]} ${styles[theme]}`}
-  sx={{
-    paddingLeft: isSidebarOpen ? `${drawerWidth}px` : "60px", // Keep padding for collapsed sidebar
-    transition: "padding-left 0.3s ease-in-out",
-  }}
-> */}
-      
-  <Container className={styles["content-container"]} maxWidth={false}>
-    <Paper elevation={0} className={styles["paper-container"]}>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <div>{children}</div>
-      </ErrorBoundary>
-    </Paper>
-  </Container>
-</Box>
-
+        <Container className={styles["content-container"]} maxWidth={false}>
+          <Paper elevation={0} className={styles["paper-container"]}>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <div>{children}</div>
+            </ErrorBoundary>
+          </Paper>
+        </Container>
+      </Box>
     </DashboardLayoutWrapper>
   );
 };

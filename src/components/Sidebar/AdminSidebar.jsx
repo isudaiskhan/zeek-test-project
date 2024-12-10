@@ -9,32 +9,41 @@ import RenderSidebarList from "./RenderSidebarList";
 import { DRAWER_WIDTH } from "@/theme/drawer";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useMediaQuery } from "@mui/material";
 
 const AdminSidebar = ({
   handleSidebarDrawerClose,
   renderToggleButton,
   renderActions,
 }) => {
-  // state
+  // State variables
   const [filterRoutes, setFilterRoutes] = useState([]);
-  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN); // Default open
-  const [isRotated, setIsRotated] = useState(false);
+  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN); // Default to the "open" state
+  const [isRotated, setIsRotated] = useState(false); // Handle icon rotation state
+  const [isClient, setIsClient] = useState(false); // New state to track client-side rendering
 
-  // theme
+  // Fetch routes to render in sidebar dynamically
   const { theme } = useTheme();
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   useEffect(() => {
+    setIsClient(true); // Ensure this runs only on the client side
     let arr = [];
     arr = routes.filter((item) => item.sidebar);
     setFilterRoutes(arr);
   }, []);
 
+  // Toggle sidebar open/close
   const toggleDrawer = () => {
     setDrawerWidth((prevWidth) =>
       prevWidth === DRAWER_WIDTH.OPEN ? DRAWER_WIDTH.CLOSED : DRAWER_WIDTH.OPEN
     );
-    setIsRotated((prev) => !prev); // Toggle rotation
+    setIsRotated((prev) => !prev); // Toggle icon animation
   };
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <Box sx={{ width: drawerWidth }} className={`sidebar-container ${theme}`}>
@@ -94,8 +103,6 @@ const AdminSidebar = ({
 };
 
 export default AdminSidebar;
-
-
 
 // // new responsivness issue finish in this code
 // "use client";
