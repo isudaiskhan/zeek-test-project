@@ -1,32 +1,31 @@
 "use client";
-
-import styles from "./styles.module.scss";
-import { Box, Container, Drawer, Paper, IconButton } from "@mui/material";
 import { useState, useEffect } from "react";
+import { Box, Container, Drawer, IconButton, Paper, useMediaQuery } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useTheme } from "next-themes";
 import AdminSidebar from "../../components/Sidebar/AdminSidebar";
 import AdminHeader from "../../components/Header/AdminHeader";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "components/ErrorFallback/ErrorFallback";
-import { DRAWER_WIDTH } from "../../theme/drawer";
 import DashboardLayoutWrapper from "../../components/LayoutWrappers/Dashboard/LayoutWrapper";
-import { useTheme } from "next-themes";
-import { useMediaQuery } from "@mui/material";
-import Image from "next/image";
+import styles from "./styles.module.scss";
+import { DRAWER_WIDTH } from "../../theme/drawer";
 
 const DashboardLayout = ({ children }) => {
   const { theme } = useTheme();
 
   // Sidebar states
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default to false on small screens
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  // Detect medium and smaller screens
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   useEffect(() => {
     if (!isSmallScreen) {
-      setIsSidebarOpen(true); // Always open the sidebar on medium and larger screens
+      setIsSidebarOpen(true); // Sidebar open by default on larger screens
     } else {
-      setIsSidebarOpen(false); // Close the sidebar on small screens by default
+      setIsSidebarOpen(false); // Sidebar closed by default on smaller screens
     }
   }, [isSmallScreen]);
 
@@ -42,44 +41,38 @@ const DashboardLayout = ({ children }) => {
     <DashboardLayoutWrapper>
       <AdminHeader drawerWidth={drawerWidth} />
 
-      {isSmallScreen ? (
-        <>
-          {/* Temporary Drawer for Small Screens */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              padding: "16px",
-              backgroundColor: "#f6f6f6",
-            }}
-          >
-            <IconButton onClick={toggleSidebar}>
-              <Image
-                src="/images/menu.svg"
-                alt="Toggle Drawer Icon"
-                width={24}
-                height={24}
-              />
-            </IconButton>
-          </Box>
+      {/* Icon for medium screens */}
+      {isSmallScreen && (
+        <IconButton
+          sx={{
+            position: "fixed",
+            top: 16,
+            left: 16,
+            zIndex: 1300, // Ensure it stays above other elements
+            backgroundColor: "white",
+          }}
+          onClick={toggleSidebar}
+        >
+          <MenuIcon />
+        </IconButton>
+      )}
 
-          <Drawer
-            variant="temporary"
-            anchor="left"
-            open={isSidebarOpen}
-            onClose={closeSidebar}
-            PaperProps={{ sx: { borderRight: "none" } }}
-          >
-            <AdminSidebar
-              drawerWidth={drawerWidth}
-              toggleDrawer={toggleSidebar}
-              isSidebarOpen={isSidebarOpen}
-              closeSidebar={closeSidebar}
-            />
-          </Drawer>
-        </>
+      {isSmallScreen ? (
+        <Drawer
+          variant="temporary"
+          anchor="left"
+          open={isSidebarOpen}
+          onClose={closeSidebar}
+          PaperProps={{ sx: { borderRight: "none" } }}
+        >
+          <AdminSidebar
+            drawerWidth={drawerWidth}
+            toggleDrawer={toggleSidebar}
+            isSidebarOpen={isSidebarOpen}
+            closeSidebar={closeSidebar}
+          />
+        </Drawer>
       ) : (
-        /* Permanent Drawer for Larger Screens */
         <Drawer
           variant="permanent"
           anchor="left"
@@ -102,7 +95,7 @@ const DashboardLayout = ({ children }) => {
             xs: 0,
             md: isSidebarOpen ? `${drawerWidth}px` : "60px",
           },
-          transition: "padding-left 0.3s ease-in-out", // Smooth transition when toggling
+          transition: "padding-left 0.3s ease-in-out",
         }}
       >
         <Container className={styles["content-container"]} maxWidth={false}>
