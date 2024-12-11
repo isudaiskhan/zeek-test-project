@@ -24,7 +24,13 @@ export const useToggleState = (initialState) => {
    * toggleState function
    * @returns {void}
    */
-  const toggleState = () => setState(!state);
+  const toggleState = (newVal) => {
+    if (typeof newVal !== "undefined") {
+      setState(newVal);
+    } else {
+      setState(!state);
+    }
+  };
 
   return [state, toggleState];
 };

@@ -18,35 +18,50 @@ import ErrorFallback from "components/ErrorFallback/ErrorFallback";
 import DashboardLayoutWrapper from "../../components/LayoutWrappers/Dashboard/LayoutWrapper";
 import styles from "./styles.module.scss";
 import { DRAWER_WIDTH } from "../../theme/drawer";
+import { useToggleState } from "@/utils/hooks";
 
 const DashboardLayout = ({ children }) => {
   const { theme } = useTheme();
 
-  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
+  const [permDrawer, togglePermDrawer] = useToggleState(!isSmallScreen);
+  const [tempDrawer, toggleTempDrawer] = useToggleState(isSmallScreen);
+
   useEffect(() => {
-    if (!isSmallScreen) {
-      setIsSidebarOpen(true);
+    if (isSmallScreen) {
+      togglePermDrawer(false);
     } else {
-      setIsSidebarOpen(false);
+      togglePermDrawer(true);
+      toggleTempDrawer(false);
     }
   }, [isSmallScreen]);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
+    if (isSmallScreen) {
+      toggleTempDrawer();
+    } else {
+      togglePermDrawer();
+    }
   };
 
   const closeSidebar = () => {
-    setIsSidebarOpen(false);
+    if (isSmallScreen) {
+      toggleTempDrawer();
+    } else {
+      togglePermDrawer();
+    }
+    // setIsSidebarOpen(false);
   };
+
+  console.log(permDrawer);
 
   return (
     <DashboardLayoutWrapper>
-      {isSmallScreen && (
+      {isSmallScreen && !tempDrawer && (
         <IconButton
+          title="Open menu"
           sx={{
             position: "fixed",
             top: 16,
@@ -55,7 +70,7 @@ const DashboardLayout = ({ children }) => {
             backgroundColor: "#ffdac5",
             color: "white",
             transition: "transform 0.3s ease",
-            transform: isSidebarOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transform: permDrawer ? "rotate(180deg)" : "rotate(0deg)",
             color: "white",
             "&:hover": {
               backgroundColor: "#ffdac5",
@@ -63,37 +78,26 @@ const DashboardLayout = ({ children }) => {
           }}
           onClick={toggleSidebar}
         >
-          {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
+          {tempDrawer ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
       )}
-
-      {isSmallScreen ? (
-        <Drawer
-          variant="temporary"
-          anchor="left"
-          open={isSidebarOpen}
-          onClose={closeSidebar}
-          PaperProps={{ sx: { borderRight: "none" } }}
-        >
-          <AdminSidebar closeSidebar={closeSidebar} />
-        </Drawer>
-      ) : (
-        <Drawer
-          variant="permanent"
-          anchor="left"
-          PaperProps={{ sx: { borderRight: "none" } }}
-          sx={{ width: drawerWidth }}
-        >
-          <AdminSidebar />
-        </Drawer>
-      )}
+      <Drawer
+        open={permDrawer}
+        variant="permanent"
+        anchor="left"
+        PaperProps={{ sx: { borderRight: "none" } }}
+        sx={{ width: drawerWidth }}
+        className="hidden md:block"
+      >
+        <AdminSidebar />
+      </Drawer>
 
       <Box
         className={`${styles["dashboard-main-container"]} ${styles[theme]}`}
         sx={{
           paddingLeft: {
             xs: 0,
-            md: isSidebarOpen ? `${drawerWidth}px` : "60px",
+            md: permDrawer ? `${drawerWidth}px` : "60px",
           },
           transition: "padding-left 0.3s ease-in-out",
         }}
@@ -106,6 +110,17 @@ const DashboardLayout = ({ children }) => {
           </Paper>
         </Container>
       </Box>
+
+      {/* Drawer */}
+      <Drawer
+        open={tempDrawer}
+        variant="temporary"
+        anchor="left"
+        onClose={closeSidebar}
+        PaperProps={{ sx: { borderRight: "none" } }}
+      >
+        <AdminSidebar closeSidebar={closeSidebar} />
+      </Drawer>
     </DashboardLayoutWrapper>
   );
 };
