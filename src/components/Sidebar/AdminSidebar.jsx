@@ -9,20 +9,17 @@ import RenderSidebarList from "./RenderSidebarList";
 import { DRAWER_WIDTH } from "@/theme/drawer";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useMediaQuery } from "@mui/material";
 
 const AdminSidebar = ({ closeSidebar = () => {} }) => {
-  // State variables
   const [filterRoutes, setFilterRoutes] = useState([]);
-  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN); // Default to the "open" state
-  const [isRotated, setIsRotated] = useState(false); // Handle icon rotation state
-  const [isClient, setIsClient] = useState(false); // New state to track client-side rendering
+  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN);
+  const [isRotated, setIsRotated] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  // Fetch routes to render in sidebar dynamically
   const { theme } = useTheme();
 
   useEffect(() => {
-    setIsClient(true); // Ensure this runs only on the client side
+    setIsClient(true);
     let arr = [];
     arr = routes.filter((item) => item.sidebar);
     setFilterRoutes(arr);
@@ -33,7 +30,7 @@ const AdminSidebar = ({ closeSidebar = () => {} }) => {
     setDrawerWidth((prevWidth) =>
       prevWidth === DRAWER_WIDTH.OPEN ? DRAWER_WIDTH.CLOSED : DRAWER_WIDTH.OPEN
     );
-    setIsRotated((prev) => !prev); // Toggle icon animation
+    setIsRotated((prev) => !prev);
   };
 
   if (!isClient) {
@@ -95,87 +92,3 @@ const AdminSidebar = ({ closeSidebar = () => {} }) => {
 };
 
 export default AdminSidebar;
-
-// // new responsivness issue finish in this code
-// "use client";
-
-// import { Box, IconButton, List, Typography } from "@mui/material";
-// import { useTheme } from "next-themes";
-// import { useEffect, useState } from "react";
-// import { routes } from "../../routes/admin";
-// import AdminSidebarActions from "./Actions/AdminSidebarActions";
-// import RenderSidebarList from "./RenderSidebarList";
-// import { motion } from "framer-motion";
-// import Image from "next/image";
-
-// const AdminSidebar = ({ drawerWidth, toggleDrawer, isSidebarOpen }) => {
-//   const [filterRoutes, setFilterRoutes] = useState([]);
-//   const { theme } = useTheme();
-
-//   useEffect(() => {
-//     const sidebarRoutes = routes.filter((route) => route.sidebar);
-//     setFilterRoutes(sidebarRoutes);
-//   }, []);
-
-//   return (
-//     <Box
-//       sx={{
-//         width: isSidebarOpen ? drawerWidth : 60, // Adjust width for half-closed state
-//         overflowX: "hidden",
-//         transition: "width 0.3s ease-in-out",
-//         display: "flex",
-//         flexDirection: "column",
-//         justifyContent: "space-between",
-//         height: "100vh",
-//       }}
-//       className={`sidebar-container ${theme}`}
-//     >
-//       {/* Logo and Toggle Button */}
-//       <Box
-//         sx={{
-//           display: "flex",
-//           alignItems: "center",
-//           justifyContent: isSidebarOpen ? "space-between" : "center",
-//           padding: "16px",
-//         }}
-//       >
-//         {isSidebarOpen && (
-//           <Typography
-//             sx={{ color: "black" }}
-//             textAlign="center"
-//             variant="h5"
-//             className="logo-heading"
-//           >
-//             ZEEK.
-//           </Typography>
-//         )}
-//         <IconButton onClick={toggleDrawer}>
-//           <motion.div
-//             animate={{ rotate: isSidebarOpen ? 180 : 0 }}
-//             transition={{ duration: 0.5, ease: "easeInOut" }}
-//           >
-//             <Image src="/images/menu.svg" alt="Toggle Drawer Icon" width={24} height={24} />
-//           </motion.div>
-//         </IconButton>
-//       </Box>
-
-//       {/* Sidebar Links */}
-//       <Box sx={{ flexGrow: 1 }}>
-//         <List>
-//           {filterRoutes.map((route) => (
-//             <RenderSidebarList key={route.path} route={route} isSidebarOpen={isSidebarOpen} />
-//           ))}
-//         </List>
-//       </Box>
-
-//       {/* Footer Actions */}
-//       {isSidebarOpen && (
-//         <Box sx={{ padding: "16px" }}>
-//           <AdminSidebarActions />
-//         </Box>
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default AdminSidebar;
