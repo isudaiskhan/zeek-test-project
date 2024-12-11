@@ -46,7 +46,6 @@ const AdminSidebarActions = ({ drawerWidth }) => {
         {routes.map((route) => (
           <Link href={route.path} key={route.path}>
             <ListItemButton
-              button
               className="list-item"
               key={route.path}
               selected={pathname === route.path}
@@ -68,7 +67,7 @@ const AdminSidebarActions = ({ drawerWidth }) => {
           </Link>
         ))}
 
-        <ListItemButton button className="list-item" onClick={handleLogout}>
+        <ListItemButton className="list-item" onClick={handleLogout}>
           <Tooltip
             title={drawerWidth === drawer.closed ? "Logout" : ""}
             placement="right"
@@ -83,13 +82,13 @@ const AdminSidebarActions = ({ drawerWidth }) => {
           )}
         </ListItemButton>
         <Image
-        src="/images/side-footer-logo.svg"
-        alt="logo"
-        width={100}
-        height={100}
-        layout="responsive"
-        priority
-      />
+          src="/images/side-footer-logo.svg"
+          alt="logo"
+          width={100}
+          height={100}
+          layout="responsive"
+          priority
+        />
       </List>
     </div>
   );

@@ -127,36 +127,7 @@
 
 // export default RenderSidebarList;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { DRAWER_WIDTH } from "@/theme/drawer"; 
+import { DRAWER_WIDTH } from "@/theme/drawer";
 import { useToggleState } from "@/utils/hooks";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
@@ -208,7 +179,6 @@ const RenderSidebarList = ({
     <div>
       <Link href={route.path} passHref>
         <ListItemButton
-          button
           className="list-item"
           onClick={() => {
             handleListItemClick();
@@ -216,11 +186,18 @@ const RenderSidebarList = ({
           }}
           selected={pathname === route.path}
         >
-          <Tooltip title={isSidebarCollapsed ? route.name : ""} placement="right" arrow>
+          <Tooltip
+            title={isSidebarCollapsed ? route.name : ""}
+            placement="right"
+            arrow
+          >
             <ListItemIcon>{route.icon}</ListItemIcon>
           </Tooltip>
           {!isSidebarCollapsed && (
-            <ListItemText primary={route.name} secondary={route?.description ?? ""} />
+            <ListItemText
+              primary={route.name}
+              secondary={route?.description ?? ""}
+            />
           )}
           {route.subRoutes && !isSidebarCollapsed && (
             <IconButton>
@@ -236,7 +213,6 @@ const RenderSidebarList = ({
             {route.subRoutes.map((subRoute) => (
               <Link key={subRoute.path} href={subRoute.path} passHref>
                 <ListItemButton
-                  button
                   className="list-item"
                   onClick={() => {
                     handleSubListItemClick();
@@ -245,11 +221,18 @@ const RenderSidebarList = ({
                   selected={pathname === subRoute.path}
                   sx={{ pl: 4 }}
                 >
-                  <Tooltip title={isSidebarCollapsed ? subRoute.name : ""} placement="right" arrow>
+                  <Tooltip
+                    title={isSidebarCollapsed ? subRoute.name : ""}
+                    placement="right"
+                    arrow
+                  >
                     <ListItemIcon>{subRoute.icon}</ListItemIcon>
                   </Tooltip>
                   {!isSidebarCollapsed && (
-                    <ListItemText primary={subRoute.name} secondary={subRoute?.description ?? ""} />
+                    <ListItemText
+                      primary={subRoute.name}
+                      secondary={subRoute?.description ?? ""}
+                    />
                   )}
                 </ListItemButton>
               </Link>

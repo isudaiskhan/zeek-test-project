@@ -11,11 +11,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 
-const AdminSidebar = ({
-  handleSidebarDrawerClose,
-  renderToggleButton,
-  renderActions,
-}) => {
+const AdminSidebar = ({ closeSidebar = () => {} }) => {
   // State variables
   const [filterRoutes, setFilterRoutes] = useState([]);
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH.OPEN); // Default to the "open" state
@@ -24,7 +20,6 @@ const AdminSidebar = ({
 
   // Fetch routes to render in sidebar dynamically
   const { theme } = useTheme();
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   useEffect(() => {
     setIsClient(true); // Ensure this runs only on the client side
@@ -86,18 +81,15 @@ const AdminSidebar = ({
               key={route.path}
               route={route}
               drawerWidth={drawerWidth}
-              handleSidebarDrawerClose={handleSidebarDrawerClose}
+              handleSidebarDrawerClose={closeSidebar}
             />
           ))}
         </List>
       </Box>
 
-      {
-        <div className="drawer-footer-actions">
-          <AdminSidebarActions drawerWidth={drawerWidth} />
-          {}
-        </div>
-      }
+      <div className="drawer-footer-actions">
+        <AdminSidebarActions drawerWidth={drawerWidth} />
+      </div>
     </Box>
   );
 };
