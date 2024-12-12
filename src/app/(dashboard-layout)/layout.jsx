@@ -52,30 +52,14 @@ const DashboardLayout = ({ children }) => {
     } else {
       togglePermDrawer();
     }
-    // setIsSidebarOpen(false);
   };
-
-  console.log(permDrawer);
 
   return (
     <DashboardLayoutWrapper>
       {isSmallScreen && !tempDrawer && (
         <IconButton
+          className={`${styles["menu-icon"]}`}
           title="Open menu"
-          sx={{
-            position: "fixed",
-            top: 16,
-            left: 16,
-            zIndex: 1300,
-            backgroundColor: "#ffdac5",
-            color: "white",
-            transition: "transform 0.3s ease",
-            transform: permDrawer ? "rotate(180deg)" : "rotate(0deg)",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#ffdac5",
-            },
-          }}
           onClick={toggleSidebar}
         >
           {tempDrawer ? <CloseIcon /> : <MenuIcon />}
