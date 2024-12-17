@@ -87,11 +87,11 @@ const DashboardLayout = ({ children }) => {
         }}
       >
         <Container className={styles["content-container"]} maxWidth={false}>
-          <Paper elevation={0} className={styles["paper-container"]}>
-            <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <div>{children}</div>
-            </ErrorBoundary>
-          </Paper>
+          {/* <Paper elevation={0} className={styles["paper-container"]}> */}
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <div>{children}</div>
+          </ErrorBoundary>
+          {/* </Paper> */}
         </Container>
       </Box>
 

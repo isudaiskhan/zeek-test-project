@@ -34,6 +34,13 @@ module.exports = {
         "primary-dark": "#aaabae",
       },
     },
+    fontFamily: {
+      sans: ["Nunito", "sans-serif"],
+      inter: ["Inter", "sans-serif"],
+      maven: ["Maven Pro", "sans- serif"],
+
+
+    }
   },
   darkMode: "class",
   plugins: [addVariablesForColors],
