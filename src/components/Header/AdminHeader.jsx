@@ -69,10 +69,14 @@
 
 // export default AdminHeader;
 
-import React from "react";
+import React from 'react'
 
 const AdminHeader = () => {
-  return;
-};
+  return (
+    <div>
+        
+    </div>
+  )
+}
 
-export default AdminHeader;
+export default AdminHeader
