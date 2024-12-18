@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Avatar, Button, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import {
   ArrowForwardIos as ArrowForwardIosIcon,
   ExpandMore as ExpandMoreIcon,
@@ -54,6 +61,124 @@ const Dashboard = () => {
       colors: ["#FFF4C6", "#FFDAC5", "#FFC3BE"],
     },
   });
+
+  // Chart Configuration
+  const lineChartOptions = {
+    chart: {
+      type: "line",
+      toolbar: { show: false },
+    },
+    stroke: {
+      curve: "smooth",
+      width: 2,
+    },
+    grid: {
+      show: true, // Enable grid
+      borderColor: "#D7D7D7", // Solid gridline color
+      strokeDashArray: 0, // Solid lines (no dashes)
+      position: "back", // Gridlines appear behind the chart
+      xaxis: {
+        lines: { show: false }, // Hide vertical gridlines
+      },
+      yaxis: {
+        lines: { show: true }, // Show horizontal gridlines
+      },
+    },
+    yaxis: {
+      min: 0,
+      max: 90,
+      tickAmount: 14,
+      labels: {
+        style: { colors: "#999999" },
+        formatter: function (value) {
+          // Show only center value '54'
+          return value === 54 ? "54" : "";
+        },
+      },
+      axisBorder: { show: true, color: "#D2D2D2", width: 3 },
+    },
+    xaxis: {
+      categories: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      axisBorder: {
+        show: true,
+        color: "#D2D2D2", // Border color
+        height: 3, // Border thickness
+      },
+      axisTicks: {
+        show: false, // Hide ticks if not needed
+      },
+      labels: {
+        style: {
+          colors: "#000",
+          fontSize: "12px",
+        },
+      },
+    },
+    colors: ["#FF7325"],
+    tooltip: { enabled: true },
+  };
+
+  const lineChartSeries = [
+    { name: "Cards", data: [10, 40, 45, 50, 60, 70, 90] },
+  ];
+
+  // Data for the bar chart (customer tiers)
+  const barChartOptions = {
+    chart: { type: "bar", toolbar: { show: false } },
+    grid: {
+      show: true, // Enable grid
+      borderColor: "#f0f0f0", // Solid gridline color
+      strokeDashArray: 0, // Solid lines (no dashes)
+      position: "back", // Gridlines appear behind the chart
+      xaxis: {
+        lines: { show: false }, // Hide vertical gridlines
+      },
+      yaxis: {
+        lines: { show: true }, // Show horizontal gridlines
+      },
+    },
+    yaxis: {
+      min: 0,
+      max: 200,
+      tickAmount: 6,
+      labels: {
+        style: { colors: "#999999" },
+      },
+      axisBorder: { show: true, color: "#E0E0E0", width: 2 },
+    },
+    xaxis: {
+      categories: ["Tier 1", "Tier 2", "Tier 3", "Tier 4"],
+      axisBorder: {
+        show: true,
+        color: "#E0E0E0", // Border color
+        height: 2, // Border thickness
+      },
+      axisTicks: {
+        show: false, // Hide ticks if not needed
+      },
+      labels: {
+        style: {
+          colors: "#999999",
+          fontSize: "12px",
+        },
+      },
+    },
+    plotOptions: {
+      bar: { borderRadius: 3, columnWidth: "8%" },
+    },
+    colors: ["#ff9f43", "#ffcc33", "#f78da7", "#777777"],
+  };
+
+  const barChartSeries = [{ name: "Customers", data: [180, 150, 60, 30] }];
+
   return (
     <div className="p-4">
       <div className="flex flex-col lg:flex-row gap-6">
@@ -291,114 +416,221 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="lg:w-[40%] rounded-2xl shadow-lg mt-5 bg-white p-6 flex flex-col justify-start">
+          <div className="flex items-start justify-between w-full">
+            {/* Left Side - Image */}
+            <div className="flex-shrink-0 bg-[#F8F8F8] rounded-full px-4 py-2.5">
+              <Image
+                src="/images/sale-item.svg"
+                alt="Icon"
+                className="!w-10 !mt-1"
+                layout="responsive"
+                width={50}
+                height={50}
+              />
+            </div>
 
-      <div className="rounded-2xl shadow-lg mt-5 bg-white p-6 w-full flex-1 mx-auto">
-        <div className="flex items-start justify-between w-full">
-          {/* Left Side - Image */}
-          <div className="flex-shrink-0 bg-[#F8F8F8] rounded-full px-4 py-2.5">
-            <Image
-              src="/images/sale-item.svg"
-              alt="Icon"
-              className="!w-10 !mt-1"
-              layout="responsive"
-              width={50}
-              height={50}
+            {/* Center - Text */}
+            <Typography
+              variant="subtitle2"
+              className="text-black !font-sans !text-lg !mt-3 !ps-4 !font-semibold flex-grow"
+            >
+              Top Sale Items
+            </Typography>
+
+            {/* Right Side - Button */}
+            <div>
+              <Button
+                variant="outlined"
+                size="small"
+                className="!mt-3 !text-xs !text-[#5F5F5F] !font-thin !px-4 !font-maven !rounded-full !border-[#C1C1C1]"
+              >
+                See Details
+              </Button>
+            </div>
+          </div>
+
+          {/* Chart Section */}
+          <div className="flex justify-center -mt-14">
+            <ReactApexChart
+              options={state.options}
+              series={state.series}
+              type="polarArea"
+              width={350}
             />
           </div>
 
-          {/* Center - Text */}
-          <Typography
-            variant="subtitle2"
-            className="text-black !font-sans !text-lg !mt-3 !ps-4 !font-semibold flex-grow"
-          >
-            Top Sale Items
-          </Typography>
+          <div className=" flex-1 justify-center items-center">
+            {/* Outer Container */}
+            <div className="bg-white rounded-3xl shadow-lg w-full p-5">
+              {/* Header */}
+              <div className="flex justify-between items-center mb-4">
+                <Typography
+                  variant="h6"
+                  className="text-black !font-sans !text-lg"
+                >
+                  Recent Reviews
+                </Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  className="!text-xs !text-[#5F5F5F] !font-thin !px-5 !font-maven !rounded-full !border-[#C1C1C1]"
+                >
+                  See All
+                </Button>
+              </div>
 
-          {/* Right Side - Button */}
-          <div>
-            <Button
-              variant="outlined"
-              size="small"
-              className="!mt-3 !text-xs !text-[#5F5F5F] !font-thin !px-4 !font-maven !rounded-full !border-[#C1C1C1]"
-            >
-              See Details
-            </Button>
-          </div>
-        </div>
+              {/* Review Content */}
+              <div className="bg-white rounded-xl p-5 shadow-md shadow-gray-200">
+                {/* Profile & Name */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-3">
+                    {/* Avatar */}
+                    <Avatar className="!bg-[#63CEBA] !w-12 !h-12">Z</Avatar>
+                    <Typography className="text-black !font-maven">
+                      Ziyad Mahomed
+                    </Typography>
+                  </div>
+                  {/* Initial Icon */}
+                  <Avatar className="!bg-[#AF855A] !w-8 !h-8 !text-white !font-medium">
+                    Z
+                  </Avatar>
+                </div>
 
-        {/* Chart Section */}
-        <div className="flex justify-center">
-          <ReactApexChart
-            options={state.options}
-            series={state.series}
-            type="polarArea"
-            width={400}
-          />
-        </div>
-      </div>
+                {/* Star Rating */}
+                <div className="flex flex-wrap space-x-1 px-14 mb-3">
+                  <StarRoundedIcon className="text-[#FFD233]" />
+                  <StarRoundedIcon className="text-[#FFD233]" />
+                  <StarRoundedIcon className="text-[#FFD233]" />
+                  <StarRoundedIcon className="text-[#FFD233]" />
+                  <StarRoundedIcon className="text-[#888888]" />
+                </div>
 
-      <div className="p-4 flex justify-center items-center min-h-screen bg-gray-100">
-        {/* Outer Container */}
-        <div className="bg-white rounded-3xl shadow-lg w-full max-w-lg p-5">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-4">
-            <Typography variant="h6" className="text-black !font-sans !text-lg">
-              Recent Reviews
-            </Typography>
-            <Button
-              variant="outlined"
-              size="small"
-              className="!text-xs !text-[#5F5F5F] !font-thin !px-5 !font-maven !rounded-full !border-[#C1C1C1]"
-            >
-              See All
-            </Button>
-          </div>
-
-          {/* Review Content */}
-          <div className="bg-white rounded-xl p-5 shadow-md shadow-gray-200">
-            {/* Profile & Name */}
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center space-x-3">
-                {/* Avatar */}
-                <Avatar className="!bg-[#63CEBA] !w-12 !h-12">Z</Avatar>
-                <Typography className="text-black !font-maven">
-                  Ziyad Mahomed
+                {/* Review Text */}
+                <Typography className="text-black !text-sm !mt-5 !font-maven leading-relaxed">
+                  Cozy atmosphere and great coffee! Friendly staff, though it
+                  can get a bit crowded during peak hours.
                 </Typography>
               </div>
-              {/* Initial Icon */}
-              <Avatar className="!bg-[#AF855A] !w-8 !h-8 !text-white !font-medium">
-                Z
-              </Avatar>
-            </div>
 
-            {/* Star Rating */}
-            <div className="flex flex-wrap space-x-1 px-14 mb-3">
-              <StarRoundedIcon className="text-[#FFD233]" />
-              <StarRoundedIcon className="text-[#FFD233]" />
-              <StarRoundedIcon className="text-[#FFD233]" />
-              <StarRoundedIcon className="text-[#FFD233]" />
-              <StarRoundedIcon className="text-[#888888]" />
+              {/* Reply Button */}
+              <div className="flex justify-start mt-4">
+                <Button
+                  variant="outlined"
+                  size="small"
+                  className="!text-xs !text-[#5F5F5F] !font-thin !px-6 !font-maven !rounded-full !border-[#C1C1C1]"
+                >
+                  Reply
+                </Button>
+              </div>
             </div>
-
-            {/* Review Text */}
-            <Typography className="text-black !text-sm !mt-5 !font-maven leading-relaxed">
-              Cozy atmosphere and great coffee! Friendly staff, though it can
-              get a bit crowded during peak hours.
-            </Typography>
           </div>
+        </div>
 
-          {/* Reply Button */}
-          <div className="flex justify-start mt-4">
-            <Button
-              variant="outlined"
-              size="small"
-              className="!text-xs !text-[#5F5F5F] !font-thin !px-6 !font-maven !rounded-full !border-[#C1C1C1]"
-            >
-              Reply
-            </Button>
+        <div className="rounded-2xl shadow-lg lg:w-[60%] mt-5 bg-white p-6 w-full flex-1 mx-auto">
+          {/* Title */}
+          <Typography variant="h6" className="!mb-4 !font-sans !text-lg">
+            Card Details
+          </Typography>
+          <div className="">
+            {/* Wrapper Card */}
+            <Card className="!p-5 !shadow-lg !rounded-2xl !bg-[#F2F2F2]">
+              {/* Top Chart Section */}
+              <div className="flex flex-col lg:flex-row gap-6">
+                <Box className="!p-3 w-full bg-white rounded-xl shadow-md">
+                  <div className="flex justify-between pt-3 px-5">
+                    <Typography variant="body1" className="!font-sans">
+                      Cards distributed this week
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      className="!text-xs !text-[#5F5F5F] !font-thin !px-4 !font-maven !rounded-full !border-[#C1C1C1]"
+                    >
+                      See Details
+                    </Button>
+                  </div>
+                  <ReactApexChart
+                    options={lineChartOptions}
+                    series={lineChartSeries}
+                    type="area"
+                    height={250}
+                  />
+                </Box>
+              </div>
+
+              <div className="flex flex-wrap gap-4 mt-5">
+                <Box className="relative flex-1 p-6 rounded-lg shadow-lg">
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      src="/images/card.svg"
+                      alt="Background Image"
+                      className="!rounded-2xl"
+                      layout="fill"
+                      objectFit="cover"
+                      objectPosition="center"
+                    />
+                  </div>
+
+                  {/* Top-left Image */}
+                  <div className="absolute top-0 left-0 p-4 z-10">
+                    <Image
+                      src="/images/card-zeek.svg"
+                      alt="Top-left Image"
+                      className="!w-24"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+
+                  {/* Bottom Image */}
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 p-4 z-10">
+                    <Image
+                      src="/images/bottom-image.svg"
+                      alt="Bottom Image"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+
+                  {/* Button positioned at the top-right */}
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    className="absolute top-4 right-4 !text-xs !text-[#5F5F5F] !font-thin !py-1 !px-4 !font-maven !bg-white !rounded-full !border-[#C1C1C1]"
+                  >
+                    Customize
+                  </Button>
+                </Box>
+                {/* Bottom Section: Card + Bar Chart */}
+                <div className="flex-1 lg:w-[60%] w-full">
+                  {/* Customer Tiers Bar Chart */}
+                  <Box className="bg-gray-50 p-4 rounded-lg shadow-md">
+                    <div className="flex justify-between mb-2">
+                      <Typography variant="body1" className="font-medium">
+                        Customer Tiers
+                      </Typography>
+                      <Button variant="outlined" size="small">
+                        See Details
+                      </Button>
+                    </div>
+                    <ReactApexChart
+                      options={barChartOptions}
+                      series={barChartSeries}
+                      type="bar"
+                      height={220}
+                    />
+                  </Box>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
+
+      {/* </div> */}
     </div>
   );
 };
