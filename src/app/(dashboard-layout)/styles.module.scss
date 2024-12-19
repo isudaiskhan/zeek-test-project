@@ -7,7 +7,6 @@
   flex-direction: column;
 
   transition: padding-left 200ms;
-
   .content-container {
     flex-grow: 1;
     margin-top: 1.5rem;
@@ -21,9 +20,12 @@
       background-color: $main-container-paper-bg-light;
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
     }
+
+    @media (max-width: 900px) {
+      padding-left: 20px;
+    }
   }
 }
-
 .menu-icon {
   position: fixed !important;
   top: 16px !important;
