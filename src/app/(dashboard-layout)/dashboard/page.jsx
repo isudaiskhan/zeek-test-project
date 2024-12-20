@@ -75,10 +75,6 @@ const Dashboard = () => {
       },
     },
   });
-  
-    
-  
-  
 
   const lineChartOptions = {
     chart: {
@@ -208,7 +204,7 @@ const Dashboard = () => {
     "/images/tier-3.svg",
     "/images/tier-4.svg",
   ];
-
+  // First bar chart
   const barScatterChart = {
     series: [
       {
@@ -306,64 +302,65 @@ const Dashboard = () => {
             </Button>
           </div>
           <div className="relative flex-1 my-auto h-[14rem] mb-8">
-  {/* Backside Card */}
-  <div className="absolute inset-0 top-0 -mt-4 left-[44px] right-[44px] bg-[#D89C7C] rounded-xl shadow-lg h-[16.5rem]"></div>
+            {/* Backside Card */}
+            <div className="absolute inset-0 top-0 -mt-4 left-[44px] right-[44px] bg-[#D89C7C] rounded-xl shadow-lg h-[16.5rem]"></div>
 
-  {/* Gradient Section */}
-  <div className="relative flex-1 bg-gradient-to-b from-[#FFD1B4] to-[#FFBFA2] rounded-2xl p-5 shadow-md">
-    <div className="flex flex-col items-center relative z-10">
-      <div className="relative w-full flex items-start space-x-4 z-10">
-        <div className="bg-[#FFE6D9] p-1.5 rounded-full shadow-md">
-          <Image
-            src="/images/sales-revenue.svg"
-            className="rounded-full"
-            alt="Custom Icon"
-            width={35}
-            height={30}
-          />
-        </div>
+            {/* Gradient Section */}
+            <div className="relative flex-1 bg-gradient-to-b from-[#FFD1B4] to-[#FFBFA2] rounded-2xl p-5 shadow-md">
+              <div className="flex flex-col items-center relative z-10">
+                <div className="relative w-full flex items-start space-x-4 z-10">
+                  <div className="bg-[#FFE6D9] p-1.5 rounded-full shadow-md">
+                    <Image
+                      src="/images/sales-revenue.svg"
+                      className="rounded-full"
+                      alt="Custom Icon"
+                      width={35}
+                      height={30}
+                    />
+                  </div>
 
-        {/* Title */}
-        <div className="flex flex-col items-start">
-          <Typography
-            variant="body1"
-            className="text-black !font-maven !text-lg !leading-tight"
-          >
-            Received
-          </Typography>
-          <Typography className="text-black !font-maven !text-lg !leading-tight">
-            Today
-          </Typography>
-        </div>
-      </div>
-      <div className="w-full px-2 mt-5">
-        <Typography className="!font-inter !font-thin !text-lg">AED</Typography>
-        <Typography className="text-gray-900 !text-center !font-bold !text-4xl">
-          1109.44
-        </Typography>
+                  {/* Title */}
+                  <div className="flex flex-col items-start">
+                    <Typography
+                      variant="body1"
+                      className="text-black !font-maven !text-lg !leading-tight"
+                    >
+                      Received
+                    </Typography>
+                    <Typography className="text-black !font-maven !text-lg !leading-tight">
+                      Today
+                    </Typography>
+                  </div>
+                </div>
+                <div className="w-full px-2 mt-5">
+                  <Typography className="!font-inter !font-thin !text-lg">
+                    AED
+                  </Typography>
+                  <Typography className="text-gray-900 !text-center !font-bold !text-4xl">
+                    1109.44
+                  </Typography>
 
-        <div className="relative w-full px-1 mt-5">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <Typography className="!font-maven !text-lg text-black">
-                9%
-              </Typography>
-              <NorthIcon className="!ml-2 p-[3px] !text-lg !rounded-full !bg-[#FFE6D9] text-[#0FA958]" />
+                  <div className="relative w-full px-1 mt-5">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <Typography className="!font-maven !text-lg text-black">
+                          9%
+                        </Typography>
+                        <NorthIcon className="!ml-2 p-[3px] !text-lg !rounded-full !bg-[#FFE6D9] text-[#0FA958]" />
+                      </div>
+
+                      <IconButton
+                        size="small"
+                        className="!bg-[#FFE6D9] shadow-md hover:shadow-lg"
+                      >
+                        <ExpandMoreIcon className="text-black" />
+                      </IconButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <IconButton
-              size="small"
-              className="!bg-[#FFE6D9] shadow-md hover:shadow-lg"
-            >
-              <ExpandMoreIcon className="text-black" />
-            </IconButton>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
           {/* Daily Sales Section */}
           <div className="lg:w-[270px]">
@@ -543,7 +540,7 @@ const Dashboard = () => {
                 options={polarChart.options}
                 series={polarChart.series}
                 type="polarArea"
-                width={380}
+                width={300}
               />
             </div>
           </div>
@@ -727,5 +724,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-

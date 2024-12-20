@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardContent, Typography, Chip, Divider } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz"; // Import the icon
+import { Card, CardContent, Typography, Button } from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const cards = [
   { id: 1, segment: "All", frequency: null },
@@ -9,9 +9,9 @@ const cards = [
 ];
 
 const messages = [
-  "“Sweet Deal! 🎉 Buy one pastry, get one FREE! For a limited time only—don’t miss out!”",
-  "“Your favourite pastries are calling! 🥧 Don’t forget our BOGO offer is here for a limited time—grab a friend and indulge together!”",
-  "“Just a reminder: BOGO on all pastries won’t last forever! Come by and treat yourself before the offer ends!”",
+  "Sweet Deal! 🎉 Buy one pastry, get one FREE! For a limited time only—don’t miss out!",
+  "Your favourite pastries are calling! 🍰 Don’t forget our BOGO offer is here for a limited time—grab a friend and indulge together!",
+  "Just a reminder: BOGO on all pastries won’t last forever! Come by and treat yourself before the offer ends!",
 ];
 
 const releaseTimes = [
@@ -22,86 +22,113 @@ const releaseTimes = [
 
 const NotificationOverview = () => {
   return (
-    <div>
-      <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center p-4">
-        <div className="text-2xl font-bold mb-4 self-start ml-4">
-          Active <span className="text-gray-500">3</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-14 w-full px-5">
-          {Array(9)
-            .fill()
-            .map((_, index) => {
-              // Determine border color dynamically based on row
-              const borderColorClass =
-                index < 3
-                  ? "border-b-4 border-0 border-solid border-green-500" // First row
-                  : index < 6
-                  ? "border-b-4 border-0 border-solid border-red-500" // Second row
-                  : "border-b-4 border-0 border-solid border-black"; // Third row
+    <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center p-4">
+      <Typography
+        variant="h5"
+        className="text-black !text-4xl !font-sans !self-start !font-bold"
+      >
+        Notifications
+      </Typography>
+      <Typography className="!text-3xl !font-bold !font-sans !mb-4 !self-start !mt-12 !ml-4">
+        Active <span className="text-[#B3B3B3]"> 3</span>
+      </Typography>
+      <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-14 w-full px-5">
+        {Array(9)
+          .fill()
+          .map((_, index) => {
+            const card = cards[index % 3];
+            const isPlatinum = card.segment === "Platinum";
+            const isFrequencyX5 = card.segment === "Frequency x5";
 
-              return (
-                <Card
-                  key={index}
-                  className={`shadow-md rounded-md border border-gray-200 hover:shadow-lg transition-all ${borderColorClass}`}
-                  sx={{ borderRadius: "5px" }}
-                >
-                  <CardContent>
-                    <div className="flex justify-between items-center mb-3">
-                      <Typography
-                        variant="h5"
-                        className="font-bold font-sans text-[#696969]"
-                      >
-                        BOGO on pastries
-                      </Typography>
-                      <MoreHorizIcon className="text-gray-600 cursor-pointer" />
-                    </div>
-                    <Divider className="mb-3" />
-                    <div className="space-y-2">
-                      {messages.map((message, idx) => (
-                        <Typography
-                          key={idx}
-                          variant="body2"
-                          className="text-gray-600"
-                        >
-                          <div className="flex">
-                            <li className="text-xl text-[#FFDAC5]"></li>
-                            {message}
-                          </div>
-                          {/* {message} */}
-                        </Typography>
-                      ))}
-                    </div>
+            return (
+              <Card
+                key={index}
+                className={`!shadow-md !rounded-md !hover:shadow-lg !transition-all ${
+                  index < 3
+                    ? "border-b-4 border-0 border-solid border-[#28EA84]"
+                    : index < 6
+                    ? "border-b-4 border-0 border-solid border-[#FF7171]"
+                    : "border-b-4 border-0 border-solid border-black"
+                }`}
+              >
+                <CardContent>
+                  <div className="flex justify-between items-center mb-2">
                     <Typography
-                      variant="subtitle2"
-                      className="mt-4 mb-1 text-gray-500"
+                      variant="h5"
+                      className="text-[#696969] !text-xl !font-sans !font-bold"
                     >
-                      Message release times
+                      BOGO on pastries
                     </Typography>
-                    <ul className="list-none ps-2 text-sm text-gray-700 space-y-1">
-                      {releaseTimes.map((time, idx) => (
-                        <li key={idx}>
-                          {idx + 1}. {time}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="flex justify-end items-center mt-4">
-                      {cards[index % 3].frequency ? (
-                        <Chip
-                          label={cards[index % 3].segment}
-                          className="bg-orange-200 text-orange-800"
-                        />
-                      ) : (
-                        <Chip
-                          label={cards[index % 3].segment}
-                          className="bg-gray-200 text-gray-800"
-                        />
-                      )}
+                    <MoreHorizIcon className="text-gray-600 cursor-pointer" />
+                  </div>
+
+                  <Typography
+                    variant="body2"
+                    className="!text-xs !text-[#696969] !px-2 !font-bold !font-sans"
+                  >
+                    Messages
+                  </Typography>
+                  <div className="space-y-2 mt-2">
+                    {messages.map((message, idx) => (
+                      <div
+                        key={idx}
+                        className="!text-xs !text-[#696969] !font-bold !font-sans"
+                      >
+                        <ul className="flex list-none">
+                          <li className="text-xl text-[#FFDAC5]"></li>
+                          <li>{message}</li>
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-4">
+                    <div className="flex justify-between items-center">
+                      <Typography
+                        variant="subtitle2"
+                        className="!mt-4 !mb-1 !font-sans !font-bold !text-xs text-[#696969]"
+                      >
+                        Message release times
+                      </Typography>
                     </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-        </div>
+
+                    <div className="flex flex-row justify-between items-end">
+                      <ul className="list-none ps-2 text-xs font-sans font-bold text-[#696969] space-y-1">
+                        {releaseTimes.map((time, idx) => (
+                          <li key={idx}>
+                            {idx + 1}. {time}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="flex flex-col justify-end items-center mt-2">
+                        <Button
+                          variant="outlined"
+                          color="default"
+                          className="!text-[#696969] !font-sans !font-bold !text-xs !rounded-md !py-1 !px-2 !border-none"
+                        >
+                          Segment
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="default"
+                          className={`${
+                            isPlatinum
+                              ? "!bg-[#B3B3B3] !text-[#222222]"
+                              : isFrequencyX5
+                              ? "!bg-[#FFDAC5] !text-[#696969]"
+                              : "!bg-[#F0EFEF] !text-[#696969]"
+                          } !font-sans !py-1 !font-bold !text-xs !rounded-md !mt-1 !border-none`}
+                        >
+                          {card.segment}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
       </div>
     </div>
   );
