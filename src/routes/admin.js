@@ -39,7 +39,8 @@ export const routes = [
         height={20}
         priority
       />
-    ), sidebar: true,
+    ),
+    sidebar: true,
     isPrivate: true,
   },
 
@@ -47,28 +48,18 @@ export const routes = [
     path: "/dashboard/crm",
     name: "CRM",
     icon: (
-      <Image
-        src="/images/3.svg"
-        alt="CRM"
-        width={20}
-        height={20}
-        priority
-      />
-    ), sidebar: true,
+      <Image src="/images/3.svg" alt="CRM" width={20} height={20} priority />
+    ),
+    sidebar: true,
     isPrivate: true,
   },
   {
     path: "#",
     name: "Campaigns",
     icon: (
-      <Image
-        src="/images/4.svg"
-        alt="Users"
-        width={20}
-        height={20}
-        priority
-      />
-    ), sidebar: true,
+      <Image src="/images/4.svg" alt="Users" width={20} height={20} priority />
+    ),
+    sidebar: true,
     isPrivate: true,
     subRoutes: [
       {
@@ -84,8 +75,6 @@ export const routes = [
     ],
   },
 
-
-
   {
     path: "/dashboard/Analytics",
     name: "Analytics",
@@ -97,10 +86,10 @@ export const routes = [
         height={20}
         priority
       />
-    ), sidebar: true,
+    ),
+    sidebar: true,
     isPrivate: true,
   },
-
 
   {
     path: "/dashboard/Reviews",
@@ -113,10 +102,10 @@ export const routes = [
         height={20}
         priority
       />
-    ), sidebar: true,
+    ),
+    sidebar: true,
     isPrivate: true,
   },
-
 
   {
     path: "/dashboard/Loyalty",
@@ -129,7 +118,8 @@ export const routes = [
         height={24}
         priority
       />
-    ), sidebar: true,
+    ),
+    sidebar: true,
     isPrivate: true,
   },
 
@@ -144,10 +134,10 @@ export const routes = [
         height={20}
         priority
       />
-    ), sidebar: true,
+    ),
+    sidebar: true,
     isPrivate: true,
   },
-
 
   {
     path: "/dashboard/Employees",
@@ -160,7 +150,8 @@ export const routes = [
         height={20}
         priority
       />
-    ), sidebar: true,
+    ),
+    sidebar: true,
     isPrivate: true,
   },
 ];

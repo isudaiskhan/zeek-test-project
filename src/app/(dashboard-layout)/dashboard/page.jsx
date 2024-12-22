@@ -18,6 +18,7 @@ import {
 
 import ReactApexChart from "react-apexcharts";
 import Image from "next/image";
+import Link from "next/link";
 
 const Dashboard = () => {
   const [polarChart, setPolarChart] = useState({
@@ -64,13 +65,13 @@ const Dashboard = () => {
         style: {
           fontSize: "14px",
           fontWeight: "bold",
-          colors: ["#000"], // Text color
-          textAnchor: "middle", // Align text centrally
+          colors: ["#000"],
+          textAnchor: "middle",
         },
         formatter: function (val, opts) {
           const label = opts.w.globals.labels[opts.seriesIndex];
           const value = opts.w.globals.series[opts.seriesIndex];
-          return `${label}\n${value}`; // Add line break between label and value
+          return `${label}\n${value}`;
         },
       },
     },
@@ -182,10 +183,10 @@ const Dashboard = () => {
       axisBorder: { show: true, color: "#E0E0E0", width: 2 },
     },
     xaxis: {
-      categories: ["", "", "", ""], // Empty categories to hide default text
+      categories: ["", "", "", ""],
       axisBorder: { show: true, color: "#E0E0E0", height: 2 },
       axisTicks: { show: false },
-      labels: { show: false }, // Hide default labels
+      labels: { show: false },
     },
     plotOptions: {
       bar: { borderRadius: 3, columnWidth: "12%" },
@@ -305,7 +306,6 @@ const Dashboard = () => {
             {/* Backside Card */}
             <div className="absolute inset-0 top-0 -mt-4 left-[44px] right-[44px] bg-[#D89C7C] rounded-xl shadow-lg h-[16.5rem]"></div>
 
-            {/* Gradient Section */}
             <div className="relative flex-1 bg-gradient-to-b from-[#FFD1B4] to-[#FFBFA2] rounded-2xl p-5 shadow-md">
               <div className="flex flex-col items-center relative z-10">
                 <div className="relative w-full flex items-start space-x-4 z-10">
@@ -668,14 +668,16 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-end">
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    className="!text-xs !bg-white !text-[#5F5F5F] !font-thin !px-4 !font-maven !rounded-full !border-[#C1C1C1]"
-                  >
-                    Customize
-                  </Button>
+                <div className="flex justify-end relative z-20">
+                  <Link href="/dashboard/Loyalty" passHref>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      className="!text-xs !bg-white !text-[#5F5F5F] !font-thin !px-4 !font-maven !rounded-full !border-[#C1C1C1]"
+                    >
+                      Customize
+                    </Button>
+                  </Link>
                 </div>
               </Box>
 
