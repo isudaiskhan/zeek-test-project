@@ -1,6 +1,6 @@
 import React from "react";
 import { TableCell, Box, Typography, Avatar, Checkbox } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
+import InfoIcon from "@mui/icons-material/InfoOutlined";
 
 const CustomTableCell = ({
   type,

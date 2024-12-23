@@ -566,7 +566,9 @@ const Dashboard = () => {
             <div className="bg-white rounded-xl p-5 shadow-md shadow-gray-200">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3">
-                  <Avatar className="!bg-[#63CEBA] !w-12 !h-12">Z</Avatar>
+                  <Avatar className="!bg-[#63CEBA] !w-12 !h-12 text-white">
+                    Z
+                  </Avatar>
                   <Typography className="text-black !font-maven">
                     Ziyad Mahomed
                   </Typography>
