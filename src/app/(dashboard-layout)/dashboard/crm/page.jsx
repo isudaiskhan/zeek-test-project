@@ -71,6 +71,12 @@ const data = [
   },
 ];
 
+const TableHeadStyles = {
+  fontSize: "12px",
+  fontWeight: 500,
+  color: "#ACACAC",
+};
+
 const menuItemStyles = {
   justifyContent: "center",
   alignItems: "center",
@@ -100,6 +106,13 @@ const filters = [
 const Crm = () => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleRowSelect = (index) => {
+    setSelectedRows((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -224,9 +237,7 @@ const Crm = () => {
                     fontSize="small"
                     color="primary"
                   />
-                  <Typography fontWeight="bold" color="#ACACAC">
-                    Name
-                  </Typography>
+                  <Typography sx={TableHeadStyles}>Name</Typography>
                 </Box>
               </TableCell>
               <TableCell>
@@ -235,9 +246,7 @@ const Crm = () => {
                     sx={{ marginRight: 1, color: "#ACACAC" }}
                     fontSize="small"
                   />
-                  <Typography fontWeight="bold" color="#ACACAC">
-                    Email
-                  </Typography>
+                  <Typography sx={TableHeadStyles}>Email</Typography>
                 </Box>
               </TableCell>
               <TableCell>
@@ -246,9 +255,7 @@ const Crm = () => {
                     sx={{ marginRight: 1, color: "#ACACAC" }}
                     fontSize="small"
                   />
-                  <Typography fontWeight="bold" color="#ACACAC">
-                    Last Visited
-                  </Typography>
+                  <Typography sx={TableHeadStyles}>Last Visited</Typography>
                 </Box>
               </TableCell>
               <TableCell>
@@ -260,9 +267,7 @@ const Crm = () => {
                       fontSize: "20px",
                     }}
                   />
-                  <Typography fontWeight="bold" color="#ACACAC">
-                    Tier
-                  </Typography>
+                  <Typography sx={TableHeadStyles}>Tier</Typography>
                 </Box>
               </TableCell>
               <TableCell>
@@ -274,9 +279,7 @@ const Crm = () => {
                       fontSize: "20px",
                     }}
                   />
-                  <Typography fontWeight="bold" color="#ACACAC">
-                    Points
-                  </Typography>
+                  <Typography sx={TableHeadStyles}>Points</Typography>
                 </Box>
               </TableCell>
             </TableRow>
@@ -290,7 +293,18 @@ const Crm = () => {
           </TableHead>
           <TableBody>
             {data.map((row, index) => (
-              <CrmTableRow key={index} index={index} row={row} />
+              <CrmTableRow
+                key={index}
+                index={index}
+                onSelect={handleRowSelect}
+                isSelected={selectedRows.includes(index)}
+                name={row.name}
+                email={row.email}
+                lastVisited={row.lastVisited}
+                tier={row.tier}
+                points={row.points}
+                avatar={row.avatar}
+              />
             ))}
           </TableBody>
         </Table>
