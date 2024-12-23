@@ -31,7 +31,13 @@ const CustomTableCell = ({
               alt={data.name}
               sx={{ width: 32, height: 32, marginRight: 1 }}
             />
-            <Typography>{data.name}</Typography>
+            <Typography
+              fontSize="14px"
+              color="#777777"
+              sx={{ fontWeight: 700 }}
+            >
+              {data.name}
+            </Typography>
           </Box>
         </TableCell>
       );
@@ -44,6 +50,8 @@ const CustomTableCell = ({
               borderRadius: "4px",
               justifyItems: "center",
               textAlign: "center",
+              fontSize: "14px",
+              fontWeight: 700,
               ...tierStyle,
             }}
           >
@@ -53,7 +61,11 @@ const CustomTableCell = ({
       );
     default:
       return (
-        <TableCell sx={{ ...tableCellSX, ...extraStyles }}>{data}</TableCell>
+        <TableCell sx={{ ...tableCellSX, ...extraStyles }}>
+          <Typography fontSize="14px" color="#777777" sx={{ fontWeight: 700 }}>
+            {data}
+          </Typography>
+        </TableCell>
       );
   }
 };

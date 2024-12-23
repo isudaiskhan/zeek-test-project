@@ -17,16 +17,16 @@ import {
   ListItemIcon,
 } from "@mui/material";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
+import AccountCircleIcon from "@mui/icons-material/AccountCircleOutlined";
+import MailIcon from "@mui/icons-material/MailOutlineOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
-import LayersIcon from "@mui/icons-material/Layers";
 import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import { FilterAlt } from "@mui/icons-material";
 import SendNotification from "@/components/Modal/SendNotification/SendNotification";
 import CrmTableRow from "@/components/TableRow/CrmTableRow/CrmTableRow";
 import { Add } from "@mui/icons-material";
+import { GoDatabase } from "react-icons/go";
+import { RiMedalLine } from "react-icons/ri";
 
 const data = [
   {
@@ -85,6 +85,7 @@ const badgeStyles = (color, bgColor) => ({
   backgroundColor: bgColor,
   padding: "4px 8px",
   borderRadius: 1,
+  fontSize: "14px",
   textAlign: "center",
   width: "40%",
 });
@@ -122,7 +123,7 @@ const Crm = () => {
     <div className="p-4">
       <Box className="flex flex-wrap items-center justify-between p-4 gap-4">
         <div className="flex items-center w-full sm:w-auto">
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant="h5" fontWeight="bold" fontSize="40px">
             Customers
           </Typography>
         </div>
@@ -182,6 +183,7 @@ const Crm = () => {
                     borderRadius: 1,
                     textAlign: "center",
                     width: "80%",
+                    fontSize: "14px",
                   }}
                 >
                   30 days since last visit
@@ -191,11 +193,13 @@ const Crm = () => {
                 <ListItemIcon>
                   <Add />
                 </ListItemIcon>
-                <Typography sx={{ fontWeight: "bold" }}>Add segment</Typography>
+                <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+                  Add segment
+                </Typography>
               </MenuItem>
               <Divider sx={{ my: 1 }} />
               <MenuItem sx={menuItemStyles}>
-                <Typography sx={{ fontWeight: "bold" }}>
+                <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
                   Apply Filter
                 </Typography>
               </MenuItem>
@@ -229,7 +233,7 @@ const Crm = () => {
                 <Box display="flex" alignItems="center">
                   <MailIcon
                     sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="medium"
+                    fontSize="small"
                   />
                   <Typography fontWeight="bold" color="#ACACAC">
                     Email
@@ -240,7 +244,7 @@ const Crm = () => {
                 <Box display="flex" alignItems="center">
                   <AccessTimeIcon
                     sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="medium"
+                    fontSize="small"
                   />
                   <Typography fontWeight="bold" color="#ACACAC">
                     Last Visited
@@ -249,9 +253,12 @@ const Crm = () => {
               </TableCell>
               <TableCell>
                 <Box display="flex" alignItems="center">
-                  <MilitaryTechIcon
-                    sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="medium"
+                  <RiMedalLine
+                    style={{
+                      marginRight: "8px",
+                      color: "#ACACAC",
+                      fontSize: "20px",
+                    }}
                   />
                   <Typography fontWeight="bold" color="#ACACAC">
                     Tier
@@ -260,9 +267,12 @@ const Crm = () => {
               </TableCell>
               <TableCell>
                 <Box display="flex" alignItems="center">
-                  <LayersIcon
-                    sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="medium"
+                  <GoDatabase
+                    style={{
+                      marginRight: "8px",
+                      color: "#ACACAC",
+                      fontSize: "20px",
+                    }}
                   />
                   <Typography fontWeight="bold" color="#ACACAC">
                     Points

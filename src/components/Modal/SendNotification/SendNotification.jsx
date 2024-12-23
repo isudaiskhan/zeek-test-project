@@ -11,6 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 const SendNotification = ({ open, onClose }) => {
   return (
@@ -28,14 +33,20 @@ const SendNotification = ({ open, onClose }) => {
     >
       <DialogTitle>
         <Box className="p-4">
-          <Typography variant="h5">Send Notification</Typography>
+          <Typography variant="h5" fontSize="32px" sx={{ fontWeight: 400 }}>
+            Create Notification
+          </Typography>
         </Box>
         <Divider />
       </DialogTitle>
       <DialogContent>
         <Box display="flex" alignItems="start" className="p-4">
           <div className="flex flex-col space-y-4">
-            <Typography variant="h5" className="mb-4">
+            <Typography
+              variant="h5"
+              fontSize="24px"
+              sx={{ fontWeight: 400, marginBottom: 1 }}
+            >
               Which Segment would you like to notify?
             </Typography>
             <Button
@@ -54,7 +65,11 @@ const SendNotification = ({ open, onClose }) => {
         </Box>
         <Box display="flex" alignItems="start" className="p-4">
           <div className="flex flex-col space-y-4 w-full">
-            <Typography variant="h5" className="mb-4">
+            <Typography
+              variant="h5"
+              fontSize="24px"
+              sx={{ fontWeight: 400, marginBottom: 1 }}
+            >
               Your Message
             </Typography>
             <TextField
@@ -77,7 +92,11 @@ const SendNotification = ({ open, onClose }) => {
         <Box display="flex" alignItems="start" className="p-4">
           <div className="flex flex-col space-y-4 w-full">
             <div className="flex flex-row gap-4">
-              <Typography variant="h5" className="mb-4">
+              <Typography
+                variant="h5"
+                fontSize="24px"
+                sx={{ fontWeight: 400, marginBottom: 1 }}
+              >
                 Schedule Notification Timing
               </Typography>
               <Button
@@ -90,6 +109,26 @@ const SendNotification = ({ open, onClose }) => {
               >
                 <Add fontSize="small" sx={{ color: "black" }} />
               </Button>
+            </div>
+            <div className="flex flex-row gap-4">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker", "TimePicker"]}>
+                  <DatePicker
+                    label="DD/MM/YYYY"
+                    sx={{
+                      backgroundColor: "#F4F4F4",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <TimePicker
+                    label="00:00"
+                    sx={{
+                      backgroundColor: "#F4F4F4",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
             </div>
           </div>
         </Box>
