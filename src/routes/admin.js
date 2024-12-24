@@ -63,12 +63,12 @@ export const routes = [
     isPrivate: true,
     subRoutes: [
       {
-        path: "/dashboard/notifications/notification",
+        path: "/dashboard/campaigns/notification",
         name: "Notification",
         icon: <SubdirectoryArrowRight />,
       },
       {
-        path: "/dashboard/notifications",
+        path: "/dashboard/campaigns/segments",
         name: "Segments",
         icon: <SubdirectoryArrowRight />,
       },
@@ -76,7 +76,7 @@ export const routes = [
   },
 
   {
-    path: "/dashboard/Analytics",
+    path: "/dashboard/analytics",
     name: "Analytics",
     icon: (
       <Image
@@ -108,7 +108,7 @@ export const routes = [
   },
 
   {
-    path: "/dashboard/Loyalty",
+    path: "/dashboard/loyalty",
     name: "Loyalty",
     icon: (
       <Image

@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const zeek = () => {
+const Zeek = () => {
   return (
     <>
-      <div>
-        zeek
-      </div>
+      <div>Zeek</div>
     </>
-  )
-}
+  );
+};
 
-export default zeek
+export default Zeek;
