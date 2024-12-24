@@ -140,7 +140,7 @@ export const routes = [
   },
 
   {
-    path: "/dashboard/Employees",
+    path: "/dashboard/employees",
     name: "Employees",
     icon: (
       <Image
