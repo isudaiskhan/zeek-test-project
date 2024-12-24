@@ -124,7 +124,7 @@ export const routes = [
   },
 
   {
-    path: "/dashboard/Branches",
+    path: "/dashboard/branches",
     name: "Branches",
     icon: (
       <Image
