@@ -92,7 +92,7 @@ export const routes = [
   },
 
   {
-    path: "/dashboard/Reviews",
+    path: "/dashboard/reviews",
     name: "Reviews",
     icon: (
       <Image
