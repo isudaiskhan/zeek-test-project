@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const BarChart = ({ chartSeries }) => {
+const BarChart = ({ chartSeries, haveSize, size }) => {
   const chartOptions = {
     chart: {
       type: "bar",
@@ -54,7 +54,7 @@ const BarChart = ({ chartSeries }) => {
         options={chartOptions}
         series={chartSeries}
         type="bar"
-        height={350}
+        height={haveSize ? size : 350}
       />
     </div>
   );
