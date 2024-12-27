@@ -61,13 +61,13 @@ const EmployeeFilters = ({
         </Box>
         <Divider sx={{ my: 1 }} />
         {roleFilters.map((role) => (
-          <>
-            <MenuItem key={role.id} sx={menuItemStyles}>
+          <React.Fragment key={role.id}>
+            <MenuItem sx={menuItemStyles}>
               <Checkbox />
               <Chip label={role.label} sx={chipStyles} />
             </MenuItem>
             <Divider sx={{ my: 1 }} />
-          </>
+          </React.Fragment>
         ))}
 
         {/* Branches Section */}
@@ -76,13 +76,13 @@ const EmployeeFilters = ({
         </Box>
         <Divider />
         {branchFilters.map((branch) => (
-          <>
-            <MenuItem key={branch.id} sx={menuItemStyles}>
+          <React.Fragment key={branch.id}>
+            <MenuItem sx={menuItemStyles}>
               <Checkbox />
               <Chip label={branch.label} sx={chipStyles} />
             </MenuItem>
             <Divider sx={{ my: 1 }} />
-          </>
+          </React.Fragment>
         ))}
 
         {/* Add Segment and Apply Filter */}

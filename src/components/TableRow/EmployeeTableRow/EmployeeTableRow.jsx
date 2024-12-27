@@ -65,17 +65,17 @@ const EmployeeTableRow = ({
           <Typography sx={TextStyles}>{branch}</Typography>
         </CustomTableCell>
         <CustomTableCell>
-          <Typography sx={TextStyles}>
-            <Chip
-              label={role}
-              sx={{
-                backgroundColor: role === "Manager" ? "#B3B3B3" : "#ECECEC",
-                color: role === "Manager" ? "#222222" : "#898989",
-                borderRadius: "4px",
-                padding: "2px 8px",
-              }}
-            />
-          </Typography>
+          <Chip
+            label={role}
+            sx={{
+              backgroundColor: role === "Manager" ? "#B3B3B3" : "#ECECEC",
+              color: role === "Manager" ? "#222222" : "#898989",
+              borderRadius: "4px",
+              padding: "2px 8px",
+              fontSize: "13px",
+              fontWeight: 500,
+            }}
+          />
         </CustomTableCell>
       </TableRow>
       <TableRow sx={{ "& td, & th": { border: 0 } }}>
