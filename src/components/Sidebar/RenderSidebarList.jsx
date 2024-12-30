@@ -80,35 +80,36 @@ const RenderSidebarList = ({
 
       {route.subRoutes && (
         <Collapse in={sidebarOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {route.subRoutes.map((subRoute) => (
-              <Link key={subRoute.path} href={subRoute.path} passHref>
-                <ListItemButton
-                  className="list-item"
-                  onClick={() => {
-                    handleSubListItemClick();
-                    closeSidebarOnClick();
-                  }}
-                  selected={pathname === subRoute.path}
-                  sx={{ pl: 4 }}
-                >
-                  <Tooltip
-                    title={isSidebarCollapsed ? subRoute.name : ""}
-                    placement="right"
-                    arrow
+          <div className={` ${isSidebarCollapsed ? "" : "ml-8"}`}>
+            <List component="div" disablePadding>
+              {route.subRoutes.map((subRoute) => (
+                <Link key={subRoute.path} href={subRoute.path} passHref>
+                  <ListItemButton
+                    className="list-item sub-route-style"
+                    onClick={() => {
+                      handleSubListItemClick();
+                      closeSidebarOnClick();
+                    }}
+                    selected={pathname === subRoute.path}
                   >
-                    <ListItemIcon>{subRoute.icon}</ListItemIcon>
-                  </Tooltip>
-                  {!isSidebarCollapsed && (
-                    <ListItemText
-                      primary={subRoute.name}
-                      secondary={subRoute?.description ?? ""}
-                    />
-                  )}
-                </ListItemButton>
-              </Link>
-            ))}
-          </List>
+                    <Tooltip
+                      title={isSidebarCollapsed ? subRoute.name : ""}
+                      placement="right"
+                      arrow
+                    >
+                      <ListItemIcon>{subRoute.icon}</ListItemIcon>
+                    </Tooltip>
+                    {!isSidebarCollapsed && (
+                      <ListItemText
+                        primary={subRoute.name}
+                        secondary={subRoute?.description ?? ""}
+                      />
+                    )}
+                  </ListItemButton>
+                </Link>
+              ))}
+            </List>
+          </div>
         </Collapse>
       )}
     </div>

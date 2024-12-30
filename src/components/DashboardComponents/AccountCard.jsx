@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const AccountCard = () => {
   return (
-    <div className="xl:w-[30%] lg:w-1/2 w-full rounded-2xl shadow-lg bg-white p-6 flex flex-col justify-between">
+    <div className="xl:w-[30%] w-full rounded-2xl shadow-lg bg-white p-6 flex flex-col justify-between">
       <div>
         <Typography
           variant="subtitle2"

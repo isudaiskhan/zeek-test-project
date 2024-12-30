@@ -2,25 +2,26 @@ import React from "react";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
-const CardComponent = ({ card, index, messages, releaseTimes }) => {
+const CardComponent = ({ card, status, index, messages, releaseTimes }) => {
   const buttonStyles = [
     { backgroundColor: "#F0EFEF", color: "#696969", label: "All" },
     { backgroundColor: "#B3B3B3", color: "#222222", label: "Platinum" },
     { backgroundColor: "#FFDAC5", color: "#696969", label: "Frequency X5" },
   ];
 
+  const borderColor =
+    status === "active"
+      ? "border-[#28EA84]"
+      : status === "inactive"
+      ? "border-[#FF7171]"
+      : "border-[#696969]";
+
   const buttonStyle =
     buttonStyles[index % buttonStyles.length] || buttonStyles[0];
   return (
     <Card
       key={index}
-      className={`!shadow-md !rounded-md !hover:shadow-lg !transition-all ${
-        index < 3
-          ? "border-b-4 border-0 border-solid border-[#28EA84]"
-          : index < 6
-          ? "border-b-4 border-0 border-solid border-[#FF7171]"
-          : "border-b-4 border-0 border-solid border-[#696969]"
-      }`}
+      className={`border-b-4 border-0 border-solid rounded-md shadow-md hover:shadow-lg transition-all ${borderColor}`}
     >
       <CardContent>
         <div className="flex justify-between items-center mb-2">
@@ -33,7 +34,6 @@ const CardComponent = ({ card, index, messages, releaseTimes }) => {
           <MoreHorizIcon className="text-gray-600 cursor-pointer" />
         </div>
 
-        {/* Messages Section */}
         <Typography
           variant="body2"
           className="!text-xs !text-[#696969] !px-2 !font-bold !font-sans"
@@ -84,7 +84,7 @@ const CardComponent = ({ card, index, messages, releaseTimes }) => {
               </Button>
               <div className="flex justify-start mt-2">
                 <Button
-                  className="!py-0 !px-3 font-sans !rounded-md "
+                  className="!py-0 !px-3 !font-bold !font-sans !rounded-md "
                   sx={{
                     backgroundColor: buttonStyle.backgroundColor,
                     color: buttonStyle.color,

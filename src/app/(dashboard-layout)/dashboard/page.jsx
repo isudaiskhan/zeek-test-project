@@ -6,7 +6,6 @@ import SaleItemsCard from "@/components/DashboardComponents/SaleItemsCard";
 import RecentReviewsCard from "@/components/DashboardComponents/RecentReviewsCard";
 import CardDetails from "@/components/DashboardComponents/CardDetails";
 import AccountCard from "@/components/DashboardComponents/AccountCard";
-import ZeekCard from "@/components/DashboardComponents/ZeekCard";
 
 const Dashboard = () => {
   return (
@@ -14,8 +13,6 @@ const Dashboard = () => {
       <div className="flex flex-col flex-wrap lg:flex-row gap-6">
         <SalesRevenueCard />
         <AccountCard />
-
-        <ZeekCard />
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">

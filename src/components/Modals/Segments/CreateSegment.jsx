@@ -1,40 +1,15 @@
-import {
-  Box,
-  Modal,
-  Typography,
-  Button,
-  TextField,
-  IconButton,
-} from "@mui/material";
+"use client";
+import { Box, Modal, Typography, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import AddIcon from "@mui/icons-material/Add";
+import SuccessModal from "../SuccessModal";
 
-const segments = [
-  { tag: "All", people: 152, created: "October 2, 2024", campaigns: 7 },
-  { tag: "Platinum", people: 12, created: "October 2, 2024", campaigns: 3 },
-  { tag: "Gold", people: 23, created: "October 2, 2024", campaigns: 4 },
-  { tag: "Silver", people: 47, created: "October 2, 2024", campaigns: 1 },
-  { tag: "Bronze", people: 70, created: "October 2, 2024", campaigns: 2 },
-  { tag: "Frequency x3", people: 24, created: "October 2, 2024", campaigns: 7 },
-  { tag: "Frequency x5", people: 11, created: "October 2, 2024", campaigns: 7 },
-];
-
-const Dialog = () => {
+const CreateSegment = ({ open, onClose }) => {
   const [modalState, setModalState] = useState({
     create: false,
     publish: false,
     draft: false,
   });
-
-  const handleOpenModal = (modalType) => {
-    setModalState({
-      create: modalType === "create",
-      publish: modalType === "publish",
-      draft: modalType === "draft",
-    });
-  };
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const handleCloseModal = () => {
     setModalState({
@@ -42,29 +17,22 @@ const Dialog = () => {
       publish: false,
       draft: false,
     });
+    onClose();
+  };
+
+  const handleCreateClick = () => {
+    setSuccessModalOpen(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setSuccessModalOpen(false);
+    handleCloseModal();
   };
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
-        <Typography variant="h4" className="!font-bold !text-4xl">
-          Segments
-          <span className="text-[#B3B3B3] text-4xl ml-3 font-bold">
-            {segments.length}
-          </span>
-        </Typography>
-        <IconButton
-          className="!bg-[#FFECE1] !me-7 !p-1 !hover:bg-orange-200 !text-[#FF762A] !border !border-[#FFE0CE] !border-solid !rounded-xl"
-          aria-label="add"
-          onClick={() => handleOpenModal("create")}
-        >
-          <AddIcon className="!text-4xl" />
-        </IconButton>
-      </div>
-
-      {/* Modal Component */}
       <Modal
-        open={modalState.create}
+        open={open}
         onClose={handleCloseModal}
         className="!backdrop-blur-sm"
       >
@@ -132,7 +100,7 @@ const Dialog = () => {
                 Cancel
               </Button>
               <Button
-                onClick={() => handleOpenModal("publish")}
+                onClick={handleCreateClick}
                 className="!bg-[#FFECE1] !px-8 !py-2 !text-black !text-sm !font-sans !rounded-md"
               >
                 Create
@@ -142,44 +110,15 @@ const Dialog = () => {
         </Box>
       </Modal>
 
-      {/* Publish Modal */}
-      <Modal
-        open={modalState.publish}
-        onClose={handleCloseModal}
-        className="flex items-center justify-center !backdrop-blur-sm"
-      >
-        <motion.div
-          className="w-full md:w-1/4 bg-white !rounded-xl !shadow-lg mx-auto !my-8 !p-12"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/approved.svg"
-              alt="Placeholder"
-              className="mb-4 w-[120px] h-[120px] object-cover"
-              width={120}
-              height={120}
-            />
-            <Typography
-              variant="h6"
-              className="!mb-12 text-center !text-xl !font-sans !mt-5"
-            >
-              Your segment has been created successfully!
-            </Typography>
-            <Button
-              onClick={handleCloseModal}
-              className="!mt-3 !bg-[#F4F4F4] !text-[#787878] !py-2 !rounded-lg w-full"
-            >
-              Continue
-            </Button>
-          </div>
-        </motion.div>
-      </Modal>
+      <SuccessModal
+        open={successModalOpen}
+        onClose={handleCloseSuccessModal}
+        imageSrc="/images/approved.svg"
+        message="Your segment has been created successfully!"
+        buttonText="Continue"
+      />
     </>
   );
 };
 
-export default Dialog;
+export default CreateSegment;

@@ -1,14 +1,4 @@
-import {
-  ArrowRight,
-  BarChart,
-  Dashboard,
-  Message,
-  Notifications,
-  Person,
-  Reviews,
-  SubdirectoryArrowRight,
-  Timeline,
-} from "@mui/icons-material";
+import { SubdirectoryArrowRight } from "@mui/icons-material";
 import Image from "next/image";
 
 export const routes = [

@@ -28,11 +28,8 @@ export const routes = [
 ];
 
 const AdminSidebarActions = ({ drawerWidth }) => {
-  // router
   const pathname = usePathname();
   const router = useRouter();
-
-  // redux
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -81,14 +78,27 @@ const AdminSidebarActions = ({ drawerWidth }) => {
             <ListItemText primary="Log Out" secondary="" />
           )}
         </ListItemButton>
-        <Image
-          src="/images/side-footer-logo.svg"
-          alt="logo"
-          width={100}
-          height={100}
-          layout="responsive"
-          priority
-        />
+
+        {drawerWidth === drawer.open ? (
+          <Image
+            src="/images/side-footer-logo.svg"
+            alt="Open Logo"
+            width={100}
+            height={100}
+            layout="responsive"
+            priority
+          />
+        ) : (
+          <Image
+            src="/images/expend-sidebar-logo.svg"
+            className="!mt-3 !w-14"
+            alt="Closed Logo"
+            width={10}
+            height={10}
+            layout="responsive"
+            priority
+          />
+        )}
       </List>
     </div>
   );

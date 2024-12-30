@@ -5,7 +5,7 @@ import React from "react";
 
 const ZeekCard = () => {
   return (
-    <Box className="relative xl:hidden block lg:flex-1 my-auto p-6 rounded-lg lg:h-60 h-72">
+    <Box className="relative flex-1 my-auto p-6 rounded-lg h-52">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/card.svg"
