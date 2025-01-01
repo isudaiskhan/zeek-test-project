@@ -1,7 +1,15 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-const CustomButton = ({ bgColor, textColor, text, onClick, icon }) => {
+const CustomButton = ({
+  bgColor,
+  textColor,
+  text,
+  onClick,
+  icon,
+  startIcon,
+  isLandingPage,
+}) => {
   return (
     <Button
       variant="outlined"
@@ -13,7 +21,9 @@ const CustomButton = ({ bgColor, textColor, text, onClick, icon }) => {
           backgroundColor: `${bgColor}CC`, // Slightly transparent on hover
         },
         borderRadius: "8px",
+        width: isLandingPage ? "100%" : "auto",
       }}
+      startIcon={startIcon}
     >
       {text || icon}
     </Button>

@@ -1,0 +1,135 @@
+/* eslint-disable @next/next/no-img-element */
+import { MoreHoriz } from "@mui/icons-material";
+import { Box, Card, Typography } from "@mui/material";
+import React from "react";
+
+const LoyaltyCard = ({ background, onClick }) => {
+  return (
+    <Card
+      sx={{
+        direction: "column",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+        borderRadius: "8px",
+        padding: "24px",
+        cursor: "pointer",
+        transition: "transform 0.3s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.05)",
+        },
+        "&:active": {
+          transform: "scale(0.95)",
+        },
+      }}
+      onClick={onClick}
+    >
+      <div className="flex justify-end items-end mb-2">
+        <MoreHoriz />
+      </div>
+      <div
+        className="flex flex-col p-4 py-2 justify-center rounded-xl shadow-lg h-[200px]"
+        style={{
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
+          objectFit: "contain",
+        }}
+      >
+        <div className="flex justify-start items-start">
+          <Typography
+            sx={{
+              color: "#000000",
+              fontSize: "28px",
+              fontWeight: 900,
+              textAlign: "start",
+            }}
+          >
+            ZEEK.
+          </Typography>
+        </div>
+        <div className="flex justify-end items-end">
+          <img
+            src="/images/sato.png"
+            alt="Custom Icon"
+            width="128px"
+            height="58px"
+          />
+        </div>
+        <div className="flex flex-col justify-start items-start py-1">
+          <Typography
+            sx={{
+              color: "#000000",
+              fontSize: "11px",
+              fontWeight: 400,
+            }}
+          >
+            CARD NO.
+          </Typography>
+          <Typography
+            sx={{
+              color: "#000000",
+              fontSize: "16px",
+              fontWeight: 600,
+            }}
+          >
+            HL28GR098K2
+          </Typography>
+        </div>
+      </div>
+      <div className="flex flex-row justify-between items-center py-6">
+        <Typography
+          sx={{
+            color: "#000000",
+            fontSize: "14px",
+            fontWeight: 400,
+          }}
+        >
+          SATO Loyalty Card
+        </Typography>
+        <Box className="w-[93px] h-[20px] bg-[#C4E5FF] items-center justify-center rounded-md">
+          <Typography
+            sx={{
+              color: "#005B8C",
+              fontSize: "12px",
+              fontWeight: 700,
+              textAlign: "center",
+            }}
+          >
+            Loyalty
+          </Typography>
+        </Box>
+      </div>
+      <div className="flex justify-start items-start py-2">
+        <Typography
+          sx={{
+            color: "#000000",
+            fontSize: "14px",
+            fontWeight: 400,
+          }}
+        >
+          204 Customers
+        </Typography>
+      </div>
+      <div className="flex flex-row justify-between items-center py-2">
+        <Typography
+          sx={{
+            color: "#73D3A1",
+            fontSize: "14px",
+            fontWeight: 700,
+          }}
+        >
+          Live
+        </Typography>
+        <Typography
+          sx={{
+            color: "#A4A4A4",
+            fontSize: "14px",
+            fontWeight: 400,
+          }}
+        >
+          Created 2024/11/10 8:14
+        </Typography>
+      </div>
+    </Card>
+  );
+};
+
+export default LoyaltyCard;
