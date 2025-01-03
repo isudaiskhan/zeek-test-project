@@ -22,7 +22,7 @@ import MailIcon from "@mui/icons-material/MailOutlineOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import { FilterAlt } from "@mui/icons-material";
-import SendNotification from "@/components/Modal/Notifications/SendNotification";
+import SendNotification from "@/components/Modals/SendNotification/SendNotification";
 import CrmTableRow from "@/components/TableRow/CrmTableRow/CrmTableRow";
 import { Add } from "@mui/icons-material";
 import { GoDatabase } from "react-icons/go";
