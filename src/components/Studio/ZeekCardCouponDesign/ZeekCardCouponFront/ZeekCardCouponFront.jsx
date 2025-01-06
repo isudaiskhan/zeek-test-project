@@ -32,12 +32,14 @@ const ZeekCardCouponFront = ({
         <Box
           className="absolute"
           sx={{
-            clipPath: `circle(17.2% at 50% 0)`,
-            width: "60%",
-            height: "60%",
-            left: "20%",
-            zIndex: 1,
+            top: "-15%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: isOverview ? "60px" : "100px",
+            height: isOverview ? "60px" : "100px",
             backgroundColor: "white",
+            borderRadius: "100%",
+            boxShadow: "inset 0 -8px 10px rgba(0, 0, 0, 0.2)",
           }}
         ></Box>
         <Box

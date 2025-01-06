@@ -12,6 +12,7 @@ import ZeekCardDesign from "@/components/Studio/ZeekCardDesign/ZeekCardDesign";
 import LandingPage from "@/components/Studio/LandingPage/LandingPage";
 import RightSideBar from "@/components/Studio/RightSideBar/RightSideBar";
 import OverViewPage from "@/components/Studio/OverViewPage/OverViewPage";
+import { QRCodeSVG } from "qrcode.react";
 
 const CreateCardLoyalty = () => {
   const [value, setValue] = React.useState(0);
@@ -21,6 +22,18 @@ const CreateCardLoyalty = () => {
   const [thirdColor, setThirdColor] = React.useState("#768CEA");
   const [bannerColor, setBannerColor] = React.useState("#77E2FC");
   const [backgroundColor, setBackgroundColor] = React.useState("#FFFFFF");
+  const [selectedCode, setSelectedCode] = React.useState({
+    component: QRCodeSVG,
+    props: {
+      value: "https://example1s.com",
+      size: 150,
+      title: "QRCODE",
+    },
+  });
+
+  const handleQRCodeSelect = (component, props) => {
+    setSelectedCode({ component, props });
+  };
 
   const handleBannerColorChange = (event) => {
     setBannerColor(event.target.value);
@@ -92,6 +105,8 @@ const CreateCardLoyalty = () => {
                 backgroundColor={backgroundColor}
                 handleBannerColorChange={handleBannerColorChange}
                 handleBackgroundColorChange={handleBackgroundColorChange}
+                handleQRCodeSelect={handleQRCodeSelect}
+                selectedCode={selectedCode}
               />
             </Grid>
           )}
@@ -108,6 +123,7 @@ const CreateCardLoyalty = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               {currentPage === 2 && (
@@ -115,6 +131,7 @@ const CreateCardLoyalty = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               {currentPage === 3 && (
@@ -122,6 +139,7 @@ const CreateCardLoyalty = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               {currentPage === 4 && (
@@ -135,6 +153,7 @@ const CreateCardLoyalty = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               <CustomPagination

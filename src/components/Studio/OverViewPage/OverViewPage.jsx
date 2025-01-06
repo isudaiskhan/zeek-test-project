@@ -8,7 +8,12 @@ import ZeekCardFront from "../ZeekCardDesign/ZeekCardFront/ZeekCardFront";
 import ZeekCardBack from "../ZeekCardDesign/ZeekCardBack/ZeekCardBack";
 import OverViewLandingPage from "../OverViewLandingPage/OverViewLandingPage";
 
-const OverViewPage = ({ firstColor, secondColor, thirdColor }) => {
+const OverViewPage = ({
+  firstColor,
+  secondColor,
+  thirdColor,
+  selectedCode,
+}) => {
   return (
     <Box className="px-4 py-8" sx={{ width: "80vw" }}>
       <div className="flex flex-row justify-evenly items-center">
@@ -20,6 +25,7 @@ const OverViewPage = ({ firstColor, secondColor, thirdColor }) => {
             firstColor={firstColor}
             secondColor={secondColor}
             thirdColor={thirdColor}
+            selectedCode={selectedCode}
             isOverview
           />
           <AppleCardBack isOverview />
@@ -32,6 +38,7 @@ const OverViewPage = ({ firstColor, secondColor, thirdColor }) => {
             firstColor={firstColor}
             secondColor={secondColor}
             thirdColor={thirdColor}
+            selectedCode={selectedCode}
             isOverview
           />
           <GoogleCardBack isOverview />
@@ -44,6 +51,7 @@ const OverViewPage = ({ firstColor, secondColor, thirdColor }) => {
             firstColor={firstColor}
             secondColor={secondColor}
             thirdColor={thirdColor}
+            selectedCode={selectedCode}
             isOverview
           />
           <ZeekCardBack isOverview />

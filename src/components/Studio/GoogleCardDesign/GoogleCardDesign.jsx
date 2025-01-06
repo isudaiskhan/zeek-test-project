@@ -3,7 +3,12 @@ import React from "react";
 import GoogleCardFront from "./GoogleCardFront/GoogleCardFront";
 import GoogleCardBack from "./GoogleCardBack/GoogleCardBack";
 
-const GoogleCardDesign = ({ firstColor, secondColor, thirdColor }) => {
+const GoogleCardDesign = ({
+  firstColor,
+  secondColor,
+  thirdColor,
+  selectedCode,
+}) => {
   return (
     <>
       <Box className="flex flex-col gap-1 items-center justify-center w-full">
@@ -17,6 +22,7 @@ const GoogleCardDesign = ({ firstColor, secondColor, thirdColor }) => {
           firstColor={firstColor}
           secondColor={secondColor}
           thirdColor={thirdColor}
+          selectedCode={selectedCode}
         />
         <GoogleCardBack />
       </Box>

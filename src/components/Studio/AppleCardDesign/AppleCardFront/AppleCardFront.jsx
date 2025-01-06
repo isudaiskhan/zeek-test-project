@@ -7,7 +7,9 @@ const AppleCardFront = ({
   secondColor,
   thirdColor,
   isOverview,
+  selectedCode,
 }) => {
+  console.log("selectedCode", selectedCode);
   return (
     <Card
       sx={{
@@ -62,13 +64,24 @@ const AppleCardFront = ({
           </div>
         )}
         <div className="flex justify-center items-center py-1">
-          <Image
+          {/* <Image
             src="/images/barcode.png"
             alt="sato"
             width={isOverview ? 96 : 150}
             height={isOverview ? 96 : 150}
             loader={() => "/images/barcode.png"}
-          />
+          /> */}
+          {selectedCode.component && (
+            <selectedCode.component
+              {...selectedCode.props}
+              {...(selectedCode.props.title === "QRCODE"
+                ? { size: isOverview ? 96 : 150 }
+                : {
+                    height: isOverview ? 50 : selectedCode.props.height,
+                    width: isOverview ? 1 : selectedCode.props.width,
+                  })}
+            />
+          )}
         </div>
         <div className="flex flex-col justify-start items-start pb-4 px-4">
           <Typography

@@ -2,7 +2,13 @@ import { Box, Card, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
-const ZeekCardFront = ({ firstColor, secondColor, thirdColor, isOverview }) => {
+const ZeekCardFront = ({
+  firstColor,
+  secondColor,
+  thirdColor,
+  isOverview,
+  selectedCode,
+}) => {
   return (
     <Card
       sx={{
@@ -34,13 +40,17 @@ const ZeekCardFront = ({ firstColor, secondColor, thirdColor, isOverview }) => {
             isOverview ? "mt-10" : "mt-14"
           } `}
         >
-          <Image
-            src="/images/barcode.png"
-            alt="sato"
-            width={isOverview ? 96 : 192}
-            height={isOverview ? 96 : 192}
-            loader={() => "/images/barcode.png"}
-          />
+          {selectedCode.component && (
+            <selectedCode.component
+              {...selectedCode.props}
+              {...(selectedCode.props.title === "QRCODE"
+                ? { size: isOverview ? 96 : 192 }
+                : {
+                    height: isOverview ? 50 : selectedCode.props.height,
+                    width: isOverview ? 1 : selectedCode.props.width,
+                  })}
+            />
+          )}
         </div>
         <div
           className={`flex flex-col justify-start items-start ${

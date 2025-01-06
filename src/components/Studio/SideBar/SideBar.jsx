@@ -21,6 +21,11 @@ const SideBar = ({
   backgroundColor,
   handleBannerColorChange,
   handleBackgroundColorChange,
+  handleQRCodeSelect,
+  selectedCode,
+  handleBarcodeValueChange,
+  barcodeValue,
+  QRCODEDATA,
 }) => {
   return (
     <Box
@@ -74,7 +79,15 @@ const SideBar = ({
         />
       )}
       {value === 1 && <ItemsTab />}
-      {value === 2 && <BarCodeTab />}
+      {value === 2 && (
+        <BarCodeTab
+          handleQRCodeSelect={handleQRCodeSelect}
+          selectedCode={selectedCode}
+          handleBarcodeValueChange={handleBarcodeValueChange}
+          barcodeValue={barcodeValue}
+          QRCODEDATA={QRCODEDATA}
+        />
+      )}
     </Box>
   );
 };

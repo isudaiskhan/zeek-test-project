@@ -7,6 +7,7 @@ const GoogleCardFront = ({
   secondColor,
   thirdColor,
   isOverview,
+  selectedCode,
 }) => {
   return (
     <Card
@@ -34,12 +35,17 @@ const GoogleCardFront = ({
         </div>
         <Divider sx={{ width: "100%" }} />
         <div className="flex justify-center items-center py-4 mt-5">
-          <Image
-            src="/images/barcode.png"
-            alt="sato"
-            width={isOverview ? 96 : 192}
-            height={isOverview ? 96 : 192}
-          />
+          {selectedCode.component && (
+            <selectedCode.component
+              {...selectedCode.props}
+              {...(selectedCode.props.title === "QRCODE"
+                ? { size: isOverview ? 96 : 192 }
+                : {
+                    height: isOverview ? 50 : selectedCode.props.height,
+                    width: isOverview ? 1 : selectedCode.props.width,
+                  })}
+            />
+          )}
         </div>
         {isOverview !== true && (
           <div className="flex flex-col justify-start items-start p-4">
