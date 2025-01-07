@@ -52,9 +52,9 @@ const AnalyticsCard = ({ title, subtitle, amount, chart }) => {
                 color: "#333333",
               }}
             >
-              Monthly
+              Expand
             </Typography>
-            <KeyboardArrowDownIcon sx={{ color: "#333333" }} fontSize="small" />
+            {/* <KeyboardArrowDownIcon sx={{ color: "#333333" }} fontSize="small" /> */}
           </Box>
         </div>
       </div>

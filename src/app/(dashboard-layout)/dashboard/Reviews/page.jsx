@@ -68,14 +68,19 @@ const reviewDataArray = [
       "Good experience overall. The lattes are excellent, but I found the prices a bit high. Worth visiting for a relaxing afternoon.",
   },
 ];
+const ratingData = [
+  { stars: 5, count: 331, color: "#28EA84" },
+  { stars: 4, count: 132, color: "#B881FF" },
+  { stars: 3, count: 69, color: "#FFD233" },
+  { stars: 2, count: 17, color: "#8FE8FF" },
+  { stars: 1, count: 5, color: "#FF7B31" },
+];
 const Reviews = () => {
-  const ratingData = [
-    { stars: 5, count: 331, color: "#28EA84" },
-    { stars: 4, count: 132, color: "#B881FF" },
-    { stars: 3, count: 69, color: "#FFD233" },
-    { stars: 2, count: 17, color: "#8FE8FF" },
-    { stars: 1, count: 5, color: "#FF7B31" },
-  ];
+  const [replyActive, setReplyActive] = React.useState(null);
+
+  const handleReplyClick = (id) => {
+    setReplyActive((prevId) => (prevId === id ? null : id));
+  };
 
   const totalReviews = ratingData.reduce((acc, item) => acc + item.count, 0);
 
@@ -213,20 +218,19 @@ const Reviews = () => {
       </Box>
       <Box className="w-full px-10 py-5">
         {reviewDataArray.map((item) => (
-          <>
-            <ReviewCard
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              clv={item.clv}
-              totalReviews={item.totalReviews}
-              rating={item.rating}
-              date={item.date}
-              reviewText={item.reviewText}
-              avatar={item.avatar}
-            />
-            <Divider key={`divider-${item.id}`} />
-          </>
+          <ReviewCard
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            clv={item.clv}
+            totalReviews={item.totalReviews}
+            rating={item.rating}
+            date={item.date}
+            reviewText={item.reviewText}
+            avatar={item.avatar}
+            replyActive={replyActive}
+            handleReplyClick={handleReplyClick}
+          />
         ))}
       </Box>
     </div>
