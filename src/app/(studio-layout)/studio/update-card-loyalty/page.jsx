@@ -5,16 +5,23 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Grid from "@mui/material/Grid2";
 import React from "react";
 import SideBar from "@/components/Studio/SideBar/SideBar";
-import CustomPagination from "@/components/Studio/CustomPagination/CustomPagination";
 import AppleCardDesign from "@/components/Studio/AppleCardDesign/AppleCardDesign";
 import GoogleCardDesign from "@/components/Studio/GoogleCardDesign/GoogleCardDesign";
 import ZeekCardDesign from "@/components/Studio/ZeekCardDesign/ZeekCardDesign";
 import LandingPage from "@/components/Studio/LandingPage/LandingPage";
 import RightSideBar from "@/components/Studio/RightSideBar/RightSideBar";
 import OverViewPage from "@/components/Studio/OverViewPage/OverViewPage";
-import { BARCODE_TYPES } from "@/enums/barcode";
+import { QRCodeSVG } from "qrcode.react";
+import CustomTab from "@/components/Studio/CustomTab/CustomTab";
 
-const CreateCardLoyalty = () => {
+const tabs = [
+  { label: "Apple Wallet", value: 1 },
+  { label: "Google Wallet", value: 2 },
+  { label: "Zeek Wallet", value: 3 },
+  { label: "Landing Page", value: 4 },
+];
+
+const UpdateCardLoyalty = () => {
   const [value, setValue] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [firstColor, setFirstColor] = React.useState("#77E2FC");
@@ -23,12 +30,20 @@ const CreateCardLoyalty = () => {
   const [bannerColor, setBannerColor] = React.useState("#77E2FC");
   const [backgroundColor, setBackgroundColor] = React.useState("#FFFFFF");
   const [selectedCode, setSelectedCode] = React.useState({
-    type: BARCODE_TYPES.QRCODE,
-    value: "https://zeek.com",
+    component: QRCodeSVG,
+    props: {
+      value: "https://example1s.com",
+      size: 150,
+      title: "QRCODE",
+    },
   });
 
-  const handleCodeSelect = (codeType, codeValue) => {
-    setSelectedCode({ type: codeType, value: codeValue });
+  const handleTabClick = (tab) => {
+    setCurrentPage(tab);
+  };
+
+  const handleQRCodeSelect = (component, props) => {
+    setSelectedCode({ component, props });
   };
 
   const handleBannerColorChange = (event) => {
@@ -79,9 +94,12 @@ const CreateCardLoyalty = () => {
         >
           {currentPage === 5 ? "Overview" : "Zeek Card Studio Design"}
         </Typography>
-        {currentPage === 5 && (
-          <CustomButton text="Done" textColor="#FF5B00" bgColor="#FFDAC5" />
-        )}
+
+        <CustomButton
+          text="Update Card"
+          textColor="#FF5B00"
+          bgColor="#FFDAC5"
+        />
       </div>
       <Box className="py-10">
         <Grid container spacing={2}>
@@ -101,7 +119,7 @@ const CreateCardLoyalty = () => {
                 backgroundColor={backgroundColor}
                 handleBannerColorChange={handleBannerColorChange}
                 handleBackgroundColorChange={handleBackgroundColorChange}
-                handleCodeSelect={handleCodeSelect}
+                handleQRCodeSelect={handleQRCodeSelect}
                 selectedCode={selectedCode}
               />
             </Grid>
@@ -121,8 +139,14 @@ const CreateCardLoyalty = () => {
                   {currentPage === 3 && "Zeek Wallet Card Design"}
                   {currentPage === 4 && "Landing Page Design"}
                 </Typography>
-                {currentPage !== 5 && <Divider sx={{ width: "100%" }} />}
+                <Divider sx={{ width: "100%" }} />
               </Box>
+              <CustomTab
+                tabs={tabs}
+                activeTab={currentPage}
+                handleTabClick={handleTabClick}
+                isUpdateLoyalty
+              />
               {currentPage === 1 && (
                 <AppleCardDesign
                   firstColor={firstColor}
@@ -161,11 +185,6 @@ const CreateCardLoyalty = () => {
                   selectedCode={selectedCode}
                 />
               )}
-              <CustomPagination
-                totalPages={5}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-              />
             </Box>
           </Grid>
           {currentPage === 4 && (
@@ -179,4 +198,4 @@ const CreateCardLoyalty = () => {
   );
 };
 
-export default CreateCardLoyalty;
+export default UpdateCardLoyalty;

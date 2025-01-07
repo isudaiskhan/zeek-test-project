@@ -5,10 +5,17 @@ import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import CouponCard from "@/components/Loyalty/CouponCard/CouponCard";
 import CouponPastryCard from "@/components/Loyalty/CouponPastryCard/CouponPastryCard";
 import LoyaltyCard from "@/components/Loyalty/LoyaltyCard/LoyaltyCard";
+import CustomTab from "@/components/Studio/CustomTab/CustomTab";
 import { Add } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import React, { useState } from "react";
+
+const tabs = [
+  { label: "Live Cards", value: "live" },
+  { label: "Inactive Cards", value: "inactive" },
+  { label: "Draft Cards", value: "draft" },
+];
 
 const Loyalty = () => {
   const [activeTab, setActiveTab] = useState("live");
@@ -35,7 +42,7 @@ const Loyalty = () => {
           />
         </div>
       </Box>
-      <Box className="flex flex-col items-center justify-center gap-1 py-5">
+      {/* <Box className="flex flex-col items-center justify-center gap-1 py-5">
         <div className="w-[80%] flex flex-row gap-2 items-center justify-center bg-white p-2 rounded-md shadow-md">
           <Box
             onClick={() => handleTabClick("live")}
@@ -95,14 +102,24 @@ const Loyalty = () => {
             </Typography>
           </Box>
         </div>
-      </Box>
+      </Box> */}
+      <CustomTab
+        tabs={tabs}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
       <Box className="flex flex-col items-center justify-center gap-1 py-5">
         <div className="w-[80%]">
           {activeTab === "live" && (
             <div>
               <Grid container spacing={2}>
                 <Grid item size={{ xs: 12, md: 4 }}>
-                  <LoyaltyCard background="/images/loyaltyCard.png" />
+                  <LoyaltyCard
+                    background="/images/loyaltyCard.png"
+                    onClick={() =>
+                      (window.location.href = "/studio/update-card-loyalty")
+                    }
+                  />
                 </Grid>
                 <Grid item size={{ xs: 12, md: 4 }}>
                   <CouponCard background="#48617D" />

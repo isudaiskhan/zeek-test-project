@@ -2,7 +2,6 @@ import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import {
   Box,
   Checkbox,
-  Divider,
   FormControlLabel,
   FormGroup,
   TextField,
@@ -14,12 +13,6 @@ import React from "react";
 const LandingPage = ({ bannerColor, backgroundColor }) => {
   return (
     <>
-      <Box className="flex flex-col gap-1 items-center justify-center w-full">
-        <Typography sx={{ fontWeight: 700, fontSize: "24px" }}>
-          Landing Page Design
-        </Typography>
-        <Divider sx={{ width: "100%" }} />
-      </Box>
       <Box
         className="flex flex-col my-14 h-[550px] w-[725px] overflow-hidden"
         sx={{
