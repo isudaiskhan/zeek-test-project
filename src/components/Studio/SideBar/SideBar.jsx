@@ -26,6 +26,7 @@ const SideBar = ({
   handleBarcodeValueChange,
   barcodeValue,
   QRCODEDATA,
+  handleCodeSelect,
 }) => {
   return (
     <Box
@@ -86,6 +87,7 @@ const SideBar = ({
           handleBarcodeValueChange={handleBarcodeValueChange}
           barcodeValue={barcodeValue}
           QRCODEDATA={QRCODEDATA}
+          handleCodeSelect={handleCodeSelect}
         />
       )}
     </Box>

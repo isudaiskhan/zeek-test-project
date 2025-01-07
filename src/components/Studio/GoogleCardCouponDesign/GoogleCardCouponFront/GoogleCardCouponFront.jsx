@@ -1,12 +1,14 @@
 import { Box, Card, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
+import CustomBarCode from "../../CustomBarCode/CustomBarCode";
 
 const GoogleCardCouponFront = ({
   firstColor,
   secondColor,
   thirdColor,
   isOverview,
+  selectedCode,
 }) => {
   const headingSX = {
     fontSize: isOverview ? "8px" : "14px",
@@ -93,14 +95,17 @@ const GoogleCardCouponFront = ({
             isOverview ? "py-2" : "py-4"
           } mt-4`}
         >
-          <Image
-            src="/images/barcode.png"
-            alt="sato"
-            width={isOverview ? 96 : 162}
-            height={isOverview ? 96 : 162}
-            loader={() => "/images/barcode.png"}
-            className="!z-50"
-          />
+          {selectedCode.type && (
+            <div className="!z-50">
+              <CustomBarCode
+                value={selectedCode.value}
+                size={isOverview ? 96 : 162}
+                width={isOverview ? 1 : 2}
+                height={isOverview ? 50 : 100}
+                type={selectedCode.type}
+              />
+            </div>
+          )}
         </div>
       </Box>
     </Card>

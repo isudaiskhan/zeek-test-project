@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import React from "react";
-import { QRCodeSVG } from "qrcode.react";
-import Barcode from "react-barcode";
+import CustomBarCode from "../../CustomBarCode/CustomBarCode";
+import { BARCODE_TYPES } from "@/enums/barcode";
 
-const BarCodeTab = ({ handleQRCodeSelect, selectedCode }) => {
+const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
   const [barcodeChecked, setBarcodeChecked] = React.useState(true);
   const [securityChecked, setSecurityChecked] = React.useState(true);
   const [rotationChecked, setRotationChecked] = React.useState(true);
@@ -61,24 +61,21 @@ const BarCodeTab = ({ handleQRCodeSelect, selectedCode }) => {
         </div>
         <div className="flex flex-row justify-between items-center gap-4 py-2">
           <Box
-            className={`flex w-[120] h-[120] justify-center items-center rounded-md ${
-              selectedCode.props.value === "https://example1s.com"
+            className={`flex w-[120px] h-[120px] justify-center items-center rounded-md ${
+              selectedCode.type === BARCODE_TYPES.QRCODE
                 ? "bg-[#FFDAC5]"
                 : "bg-[#EAEAEA]"
-            }  p-4 cursor-pointer`}
+            } p-4 cursor-pointer`}
             onClick={() =>
-              handleQRCodeSelect(QRCodeSVG, {
-                value: "https://example1s.com",
-                size: 150,
-                title: "QRCODE",
-              })
+              handleCodeSelect(BARCODE_TYPES.QRCODE, "https://example2.com")
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
-              <QRCodeSVG
-                value="https://example1s.com"
+              <CustomBarCode
+                value="https://example2.com"
                 size={80}
-                title="QRCODE"
+                title="My QR Code"
+                type={BARCODE_TYPES.QRCODE}
               />
               <Typography sx={{ fontWeight: 400, fontSize: "11px" }}>
                 QR Code
@@ -86,24 +83,21 @@ const BarCodeTab = ({ handleQRCodeSelect, selectedCode }) => {
             </Box>
           </Box>
           <Box
-            className={`flex w-[120] h-[120] justify-center items-center rounded-md  ${
-              selectedCode.props.value === "https://example2.com"
+            className={`flex w-[120px] h-[120px] justify-center items-center rounded-md ${
+              selectedCode.type === BARCODE_TYPES.AZTEC
                 ? "bg-[#FFDAC5]"
                 : "bg-[#EAEAEA]"
             } p-4 cursor-pointer`}
             onClick={() =>
-              handleQRCodeSelect(QRCodeSVG, {
-                value: "https://example2.com",
-                size: 150,
-                title: "QRCODE",
-              })
+              handleCodeSelect(BARCODE_TYPES.AZTEC, "https://example.com")
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
-              <QRCodeSVG
-                value="https://example2.com"
+              <CustomBarCode
+                value="https://example.com"
                 size={80}
-                title="QRCODE"
+                title="My QR Code"
+                type={BARCODE_TYPES.AZTEC}
               />
               <Typography sx={{ fontWeight: 400, fontSize: "11px" }}>
                 QR Code
@@ -113,30 +107,23 @@ const BarCodeTab = ({ handleQRCodeSelect, selectedCode }) => {
         </div>
         <div className="flex flex-row justify-between items-center gap-4 py-2">
           <Box
-            className={`flex w-[120px] h-[80px] justify-center items-center rounded-md  ${
-              selectedCode.props.value === "https://example3.com"
+            className={`flex w-[120px] h-[80px] justify-center items-center rounded-md ${
+              selectedCode.type === BARCODE_TYPES.CODE128
                 ? "bg-[#FFDAC5]"
                 : "bg-[#EAEAEA]"
             } px-1 py-1 cursor-pointer`}
             onClick={() =>
-              handleQRCodeSelect(Barcode, {
-                value: "https://example3.com",
-                displayValue: false,
-                width: 2,
-                height: 100,
-                background: "transparent",
-                title: "BARCODE",
-              })
+              handleCodeSelect(BARCODE_TYPES.CODE128, "https://example3.com")
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
-              <Barcode
+              <CustomBarCode
                 value="https://example3.com"
-                displayValue={false}
                 width={0.4}
                 height={20}
-                background="transparent"
-                title="BARCODE"
+                title="My Barcode"
+                format="CODE128"
+                type={BARCODE_TYPES.CODE128}
               />
               <Typography sx={{ fontWeight: 400, fontSize: "11px" }}>
                 Bar Code
@@ -145,28 +132,22 @@ const BarCodeTab = ({ handleQRCodeSelect, selectedCode }) => {
           </Box>
           <Box
             className={`flex w-[120px] h-[80px] justify-center items-center rounded-md  ${
-              selectedCode.props.value === "https://example4.com"
+              selectedCode.type === BARCODE_TYPES.PDF147
                 ? "bg-[#FFDAC5]"
                 : "bg-[#EAEAEA]"
             } px-0 py-1 cursor-pointer`}
             onClick={() =>
-              handleQRCodeSelect(Barcode, {
-                value: "https://example4.com",
-                displayValue: false,
-                width: 2,
-                height: 100,
-                background: "transparent",
-                title: "BARCODE",
-              })
+              handleCodeSelect(BARCODE_TYPES.PDF147, "https://example45.com")
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
-              <Barcode
-                value="https://example4.com"
-                displayValue={false}
+              <CustomBarCode
+                value="https://example45.com"
                 width={0.4}
                 height={20}
-                background="transparent"
+                title="My Barcode"
+                format="CODE128"
+                type={BARCODE_TYPES.PDF147}
               />
               <Typography sx={{ fontWeight: 400, fontSize: "11px" }}>
                 Bar Code

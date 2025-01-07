@@ -1,6 +1,7 @@
 import { Box, Card, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
+import CustomBarCode from "../../CustomBarCode/CustomBarCode";
 
 const GoogleCardFront = ({
   firstColor,
@@ -35,15 +36,13 @@ const GoogleCardFront = ({
         </div>
         <Divider sx={{ width: "100%" }} />
         <div className="flex justify-center items-center py-4 mt-5">
-          {selectedCode.component && (
-            <selectedCode.component
-              {...selectedCode.props}
-              {...(selectedCode.props.title === "QRCODE"
-                ? { size: isOverview ? 96 : 192 }
-                : {
-                    height: isOverview ? 50 : selectedCode.props.height,
-                    width: isOverview ? 1 : selectedCode.props.width,
-                  })}
+          {selectedCode.type && (
+            <CustomBarCode
+              value={selectedCode.value}
+              size={isOverview ? 96 : 192}
+              width={isOverview ? 1 : 2}
+              height={isOverview ? 50 : 100}
+              type={selectedCode.type}
             />
           )}
         </div>

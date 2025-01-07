@@ -1,0 +1,6 @@
+export const BARCODE_TYPES = {
+  QRCODE: "QRCODE",
+  AZTEC: "AZTEC",
+  CODE128: "CODE128",
+  PDF147: "PDF147",
+};

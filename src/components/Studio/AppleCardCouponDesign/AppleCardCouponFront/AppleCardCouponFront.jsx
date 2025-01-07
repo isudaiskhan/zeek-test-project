@@ -1,12 +1,14 @@
 import { Box, Card, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
+import CustomBarCode from "../../CustomBarCode/CustomBarCode";
 
 const AppleCardCouponFront = ({
   firstColor,
   secondColor,
   thirdColor,
   isOverview,
+  selectedCode,
 }) => {
   const headingSX = {
     fontSize: isOverview ? "8px" : "14px",
@@ -74,11 +76,11 @@ const AppleCardCouponFront = ({
             <Typography sx={headingSX}>LOCATION(S)</Typography>
             <Typography sx={subTextSX}>All location</Typography>
           </div>
-          <div className="flex flex-col gap-2 justify-center items-center p-2">
+          <div className="flex flex-col gap-2 justify-center items-center p-2 !z-50">
             <Typography sx={headingSX}>VALID UNTIL</Typography>
             <Typography sx={subTextSX}>November 30, 2024</Typography>
           </div>
-          <div className="flex flex-col gap-2 justify-end items-end p-2">
+          <div className="flex flex-col gap-2 justify-end items-end p-2 !z-50">
             <Typography sx={headingSX}>TYPE</Typography>
             <Typography sx={subTextSX}>One-time use</Typography>
           </div>
@@ -96,14 +98,17 @@ const AppleCardCouponFront = ({
             isOverview ? "py-2" : "py-4"
           }`}
         >
-          <Image
-            src="/images/barcode.png"
-            alt="sato"
-            width={isOverview ? 96 : 162}
-            height={isOverview ? 96 : 162}
-            loader={() => "/images/barcode.png"}
-            className="!z-50"
-          />
+          {selectedCode.type && (
+            <div className="!z-50">
+              <CustomBarCode
+                value={selectedCode.value}
+                size={isOverview ? 96 : 162}
+                width={isOverview ? 1 : 2}
+                height={isOverview ? 50 : 100}
+                type={selectedCode.type}
+              />
+            </div>
+          )}
         </div>
       </Box>
     </Card>

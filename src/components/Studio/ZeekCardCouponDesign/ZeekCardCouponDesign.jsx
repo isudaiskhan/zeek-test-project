@@ -3,7 +3,12 @@ import React from "react";
 import ZeekCardCouponFront from "./ZeekCardCouponFront/ZeekCardCouponFront";
 import ZeekCardCouponBack from "./ZeekCardCouponBack/ZeekCardCouponBack";
 
-const ZeekCardCouponDesign = ({ firstColor, secondColor, thirdColor }) => {
+const ZeekCardCouponDesign = ({
+  firstColor,
+  secondColor,
+  thirdColor,
+  selectedCode,
+}) => {
   return (
     <>
       <Box className="flex flex-col gap-1 items-center justify-center w-full">
@@ -17,6 +22,7 @@ const ZeekCardCouponDesign = ({ firstColor, secondColor, thirdColor }) => {
           firstColor={firstColor}
           secondColor={secondColor}
           thirdColor={thirdColor}
+          selectedCode={selectedCode}
         />
         <ZeekCardCouponBack />
       </Box>

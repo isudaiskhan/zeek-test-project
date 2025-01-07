@@ -3,7 +3,12 @@ import React from "react";
 import AppleCardCouponFront from "./AppleCardCouponFront/AppleCardCouponFront";
 import AppleCardCouponBack from "./AppleCardCouponBack/AppleCardCouponBack";
 
-const AppleCardCouponDesign = ({ firstColor, secondColor, thirdColor }) => {
+const AppleCardCouponDesign = ({
+  firstColor,
+  secondColor,
+  thirdColor,
+  selectedCode,
+}) => {
   return (
     <>
       <Box className="flex flex-col gap-1 items-center justify-center w-full">
@@ -17,6 +22,7 @@ const AppleCardCouponDesign = ({ firstColor, secondColor, thirdColor }) => {
           firstColor={firstColor}
           secondColor={secondColor}
           thirdColor={thirdColor}
+          selectedCode={selectedCode}
         />
         <AppleCardCouponBack />
       </Box>

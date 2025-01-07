@@ -7,7 +7,12 @@ import GoogleCardCouponBack from "../GoogleCardCouponDesign/GoogleCardCouponBack
 import ZeekCardCouponFront from "../ZeekCardCouponDesign/ZeekCardCouponFront/ZeekCardCouponFront";
 import ZeekCardCouponBack from "../ZeekCardCouponDesign/ZeekCardCouponBack/ZeekCardCouponBack";
 
-const CouponOverview = ({ firstColor, secondColor, thirdColor }) => {
+const CouponOverview = ({
+  firstColor,
+  secondColor,
+  thirdColor,
+  selectedCode,
+}) => {
   return (
     <Box className="px-4 py-8" sx={{ width: "80vw" }}>
       <div className="flex flex-row justify-evenly items-center">
@@ -20,6 +25,7 @@ const CouponOverview = ({ firstColor, secondColor, thirdColor }) => {
             secondColor={secondColor}
             thirdColor={thirdColor}
             isOverview
+            selectedCode={selectedCode}
           />
           <AppleCardCouponBack isOverview />
         </div>
@@ -32,6 +38,7 @@ const CouponOverview = ({ firstColor, secondColor, thirdColor }) => {
             secondColor={secondColor}
             thirdColor={thirdColor}
             isOverview
+            selectedCode={selectedCode}
           />
           <GoogleCardCouponBack isOverview />
         </div>
@@ -44,6 +51,7 @@ const CouponOverview = ({ firstColor, secondColor, thirdColor }) => {
             secondColor={secondColor}
             thirdColor={thirdColor}
             isOverview
+            selectedCode={selectedCode}
           />
           <ZeekCardCouponBack isOverview />
         </div>

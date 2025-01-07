@@ -11,6 +11,7 @@ import AppleCardCouponDesign from "@/components/Studio/AppleCardCouponDesign/App
 import GoogleCardCouponDesign from "@/components/Studio/GoogleCardCouponDesign/GoogleCardCouponDesign";
 import ZeekCardCouponDesign from "@/components/Studio/ZeekCardCouponDesign/ZeekCardCouponDesign";
 import CouponOverview from "@/components/Studio/CouponOverview/CouponOverview";
+import { BARCODE_TYPES } from "@/enums/barcode";
 
 const CouponCard = () => {
   const [value, setValue] = React.useState(0);
@@ -18,6 +19,14 @@ const CouponCard = () => {
   const [firstColor, setFirstColor] = React.useState("#48617D");
   const [secondColor, setSecondColor] = React.useState("#48617D");
   const [thirdColor, setThirdColor] = React.useState("#48617D");
+  const [selectedCode, setSelectedCode] = React.useState({
+    type: BARCODE_TYPES.QRCODE,
+    value: "https://zeek.com",
+  });
+
+  const handleCodeSelect = (codeType, codeValue) => {
+    setSelectedCode({ type: codeType, value: codeValue });
+  };
 
   const handleFirstColorChange = (event) => {
     setFirstColor(event.target.value);
@@ -77,6 +86,8 @@ const CouponCard = () => {
                 handleSecondColorChange={handleSecondColorChange}
                 handleThirdColorChange={handleThirdColorChange}
                 currentPage={currentPage}
+                selectedCode={selectedCode}
+                handleCodeSelect={handleCodeSelect}
               />
             </Grid>
           )}
@@ -93,6 +104,7 @@ const CouponCard = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               {currentPage === 2 && (
@@ -100,6 +112,7 @@ const CouponCard = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               {currentPage === 3 && (
@@ -107,6 +120,7 @@ const CouponCard = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
               {currentPage === 4 && (
@@ -114,6 +128,7 @@ const CouponCard = () => {
                   firstColor={firstColor}
                   secondColor={secondColor}
                   thirdColor={thirdColor}
+                  selectedCode={selectedCode}
                 />
               )}
 
