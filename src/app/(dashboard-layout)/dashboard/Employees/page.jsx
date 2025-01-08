@@ -18,6 +18,7 @@ import { PiGitBranch } from "react-icons/pi";
 import { FaRegAddressCard } from "react-icons/fa6";
 import EmployeeTableRow from "@/components/TableRow/EmployeeTableRow/EmployeeTableRow";
 import EmployeeFilters from "@/components/EmployeeFilters/EmployeeFilters";
+import EmployeeModal from "@/components/Modals/EmployeeModal/EmployeeModal";
 
 const data = [
   {
@@ -82,6 +83,11 @@ const TableHeadStyles = {
 const Employees = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
+
+  const handleOpenEmployeeModal = () => {
+    setOpenEmployeeModal(true);
+  };
 
   const handleRowSelect = (index) => {
     setSelectedRows((prev) =>
@@ -135,6 +141,7 @@ const Employees = () => {
             text="Add Employee"
             bgColor="#FFDAC5"
             textColor="#787878"
+            onClick={handleOpenEmployeeModal}
           />
         </div>
       </Box>
@@ -211,6 +218,12 @@ const Employees = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      {openEmployeeModal && (
+        <EmployeeModal
+          open={openEmployeeModal}
+          onClose={() => setOpenEmployeeModal(false)}
+        />
+      )}
     </div>
   );
 };

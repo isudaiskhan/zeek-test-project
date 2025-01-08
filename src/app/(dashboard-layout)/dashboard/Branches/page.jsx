@@ -1,9 +1,9 @@
 "use client";
 import CustomButton from "@/components/Custom/CustomButton/CustomButton";
+import BranchModal from "@/components/Modals/BranchModal/BranchModal";
 import BranchesTableRow from "@/components/TableRow/BranchesTableRow/BranchesTableRow";
 import { AccountCircleOutlined } from "@mui/icons-material";
 import { MailOutlineOutlined } from "@mui/icons-material";
-import { FilterAlt } from "@mui/icons-material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import {
   Box,
@@ -56,6 +56,11 @@ const data = [
 
 const Branches = () => {
   const [selectedRows, setSelectedRows] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
   const handleRowSelect = (index) => {
     setSelectedRows((prev) =>
@@ -73,19 +78,10 @@ const Branches = () => {
 
         <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto justify-end">
           <CustomButton
-            text="Clear Filters"
-            bgColor="#FFFFFF"
-            textColor="#787878"
-          />
-          <CustomButton
-            icon={<FilterAlt />}
-            bgColor="#FFFFFF"
-            textColor="#787878"
-          />
-          <CustomButton
-            text="Send Notification"
+            text="Add New Branch"
             bgColor="#FFDAC5"
-            textColor="#787878"
+            textColor="#FF5B00"
+            onClick={handleOpenModal}
           />
         </div>
       </Box>
@@ -156,6 +152,10 @@ const Branches = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {openModal && (
+        <BranchModal open={openModal} onClose={() => setOpenModal(false)} />
+      )}
     </div>
   );
 };

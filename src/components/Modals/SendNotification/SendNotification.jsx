@@ -71,7 +71,7 @@ const SendNotification = ({ open, onClose }) => {
             >
               Which Segment would you like to notify?
             </Typography>
-            <div className="flex flex-row gap-4">
+            <div className="flex md:flex-row flex-col gap-4">
               {[
                 "Bronze",
                 "Silver",
@@ -136,16 +136,6 @@ const SendNotification = ({ open, onClose }) => {
               >
                 Schedule Notification Timing
               </Typography>
-              <Button
-                variant="outlined"
-                sx={{
-                  backgroundColor: "#F4F4F4",
-                  color: "black",
-                  borderRadius: "8px",
-                }}
-              >
-                <Add fontSize="small" sx={{ color: "black" }} />
-              </Button>
             </div>
             <div className="flex flex-row gap-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
