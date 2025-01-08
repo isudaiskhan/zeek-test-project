@@ -11,8 +11,8 @@ import ZeekCardDesign from "@/components/Studio/ZeekCardDesign/ZeekCardDesign";
 import LandingPage from "@/components/Studio/LandingPage/LandingPage";
 import RightSideBar from "@/components/Studio/RightSideBar/RightSideBar";
 import OverViewPage from "@/components/Studio/OverViewPage/OverViewPage";
-import { QRCodeSVG } from "qrcode.react";
 import CustomTab from "@/components/Studio/CustomTab/CustomTab";
+import { BARCODE_TYPES } from "@/enums/barcode";
 
 const tabs = [
   { label: "Apple Wallet", value: 1 },
@@ -30,20 +30,16 @@ const UpdateCardLoyalty = () => {
   const [bannerColor, setBannerColor] = React.useState("#77E2FC");
   const [backgroundColor, setBackgroundColor] = React.useState("#FFFFFF");
   const [selectedCode, setSelectedCode] = React.useState({
-    component: QRCodeSVG,
-    props: {
-      value: "https://example1s.com",
-      size: 150,
-      title: "QRCODE",
-    },
+    type: BARCODE_TYPES.QRCODE,
+    value: "https://zeek.com",
   });
+
+  const handleCodeSelect = (codeType, codeValue) => {
+    setSelectedCode({ type: codeType, value: codeValue });
+  };
 
   const handleTabClick = (tab) => {
     setCurrentPage(tab);
-  };
-
-  const handleQRCodeSelect = (component, props) => {
-    setSelectedCode({ component, props });
   };
 
   const handleBannerColorChange = (event) => {
@@ -119,7 +115,7 @@ const UpdateCardLoyalty = () => {
                 backgroundColor={backgroundColor}
                 handleBannerColorChange={handleBannerColorChange}
                 handleBackgroundColorChange={handleBackgroundColorChange}
-                handleQRCodeSelect={handleQRCodeSelect}
+                handleCodeSelect={handleCodeSelect}
                 selectedCode={selectedCode}
               />
             </Grid>
