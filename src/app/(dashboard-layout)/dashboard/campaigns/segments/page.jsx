@@ -7,14 +7,14 @@ import { segments, tagStyles } from "@/utils/dummy-data";
 import CreateSegment from "@/components/Modals/Segments/CreateSegment";
 
 const Segments = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setOpenModal(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setOpenModal(false);
   };
 
   return (
@@ -51,7 +51,9 @@ const Segments = () => {
         </div>
       </div>
 
-      <CreateSegment open={isModalOpen} onClose={handleCloseModal} />
+      {openModal && (
+        <CreateSegment open={openModal} onClose={handleCloseModal} />
+      )}
     </>
   );
 };

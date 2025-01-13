@@ -1,3 +1,4 @@
+import { HelpSharp } from "@mui/icons-material";
 import { SubdirectoryArrowRight } from "@mui/icons-material";
 import Image from "next/image";
 
@@ -136,6 +137,28 @@ export const routes = [
       <Image
         src="/images/9.svg"
         alt="Employees"
+        width={20}
+        height={20}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+  {
+    path: "dashboard/help-center",
+    name: "Help Center",
+    icon: <HelpSharp />,
+    sidebar: true,
+    isPrivate: true,
+  },
+  {
+    path: "/dashboard/business-profile",
+    name: "Business Profile",
+    icon: (
+      <Image
+        src="/images/sato-sidebar.svg"
+        alt="Business Profile"
         width={20}
         height={20}
         priority

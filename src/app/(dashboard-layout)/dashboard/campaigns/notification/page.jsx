@@ -5,6 +5,7 @@ import NotificationModal from "@/components/Modals/Notifications/CreateNotificat
 import { Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { notificationsData } from "@/utils/dummy-data";
+import SendNotification from "@/components/Modals/SendNotification/SendNotification";
 
 const Notifications = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -73,16 +74,9 @@ const Notifications = () => {
         status="draft"
       />
 
-      <NotificationModal
-        openModal={openModal}
-        handleCloseModal={handleCloseModal}
-        openPublishModal={openPublishModal}
-        handleOpenPublishModal={handleOpenPublishModal}
-        handleClosePublishModal={handleClosePublishModal}
-        openDraftModal={openDraftModal}
-        handleOpenDraftModal={handleOpenDraftModal}
-        handleCloseDraftModal={handleCloseDraftModal}
-      />
+      {openModal && (
+        <SendNotification open={openModal} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };

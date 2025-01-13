@@ -85,7 +85,7 @@ const AdminSidebar = ({ closeSidebar = () => {} }) => {
       </Box>
 
       <div className="drawer-footer-actions">
-        <AdminSidebarActions drawerWidth={drawerWidth} />
+        {/* <AdminSidebarActions drawerWidth={drawerWidth} /> */}
       </div>
     </Box>
   );

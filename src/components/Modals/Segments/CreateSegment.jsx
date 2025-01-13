@@ -92,6 +92,36 @@ const CreateSegment = ({ open, onClose }) => {
                 )
               )}
             </div>
+            <div className="flex flex-col space-y-4">
+              <Typography className="!font-sans !text-sm !text-[#A1A1A1] !mt-7">
+                Frequency of visits per month
+              </Typography>
+              <div className="flex md:flex-row flex-col gap-4">
+                {[
+                  "2x Frequency",
+                  "3x Frequency",
+                  "5x Frequency",
+                  "7x Frequency",
+                ].map((item, index) => (
+                  <Box
+                    className="bg-white rounded-xl py-2 px-5 cursor-pointer"
+                    sx={{ boxShadow: "0px 0px 6px 0px #00000040" }}
+                    key={index}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#5B5B5B",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {item}
+                    </Typography>
+                  </Box>
+                ))}
+              </div>
+            </div>
             <div className="flex justify-end mt-6">
               <Button
                 onClick={handleCloseModal}
