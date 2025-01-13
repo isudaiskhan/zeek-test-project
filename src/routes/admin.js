@@ -1,6 +1,7 @@
 import { HelpSharp } from "@mui/icons-material";
 import { SubdirectoryArrowRight } from "@mui/icons-material";
 import Image from "next/image";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 export const routes = [
   {
@@ -113,7 +114,13 @@ export const routes = [
     sidebar: true,
     isPrivate: true,
   },
-
+  {
+    path: "/dashboard/promotions",
+    name: "Promotions",
+    icon: <LocalOfferIcon fontSize="small" sx={{ color: "#888888" }} />,
+    sidebar: true,
+    isPrivate: true,
+  },
   {
     path: "/dashboard/branches",
     name: "Branches",
