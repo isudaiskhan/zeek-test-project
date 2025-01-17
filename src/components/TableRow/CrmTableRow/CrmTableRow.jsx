@@ -1,24 +1,27 @@
 import CustomTableCell from "@/components/Custom/CustomTableCell/CustomTableCell";
+import ViewCustomerModal from "@/components/Modals/ViewCustomerModal/ViewCustomerModal";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
 import {
   Avatar,
   Box,
   Checkbox,
+  IconButton,
   TableCell,
   TableRow,
   Typography,
 } from "@mui/material";
+import React, { useState } from "react";
 
 const getTierStyle = (tier) => {
   switch (tier) {
     case "Platinum":
-      return { backgroundColor: "#b0b0b0", color: "#fff" };
+      return { backgroundColor: "#0000004D", color: "#222222" };
     case "Gold":
-      return { backgroundColor: "#ffd700", color: "#000" };
+      return { backgroundColor: "#FFD23340", color: "#FFC700" };
     case "Silver":
-      return { backgroundColor: "#c0c0c0", color: "#000" };
+      return { backgroundColor: "#ECECEC", color: "#898989" };
     case "Bronze":
-      return { backgroundColor: "#cd7f32", color: "#000" };
+      return { backgroundColor: "#BE8E5E40", color: "#86684A" };
     default:
       return {};
   }
@@ -41,6 +44,16 @@ const CrmTableRow = ({
   points,
   avatar,
 }) => {
+  const [openViewCustomer, setOpenViewCustomer] = useState(false);
+
+  const handleViewCustomer = () => {
+    setOpenViewCustomer(true);
+  };
+
+  const handleCloseViewCustomer = () => {
+    setOpenViewCustomer(false);
+  };
+
   return (
     <>
       <TableRow
@@ -52,7 +65,21 @@ const CrmTableRow = ({
       >
         <CustomTableCell selected={isSelected}>
           <Box display="flex" alignItems="center">
-            <InfoIcon sx={{ marginRight: 1, color: "#b0b0b0" }} />
+            <IconButton
+              onClick={() =>
+                handleViewCustomer({
+                  index,
+                  name,
+                  email,
+                  avatar,
+                  tier,
+                  points,
+                  lastVisited,
+                })
+              }
+            >
+              <InfoIcon sx={{ marginRight: 1, color: "#b0b0b0" }} />
+            </IconButton>
             <Checkbox
               checked={isSelected}
               onChange={() => onSelect(index)}
@@ -66,7 +93,11 @@ const CrmTableRow = ({
             <Avatar
               src={avatar}
               alt={name}
-              sx={{ width: 32, height: 32, marginRight: 1 }}
+              sx={{
+                width: 32,
+                height: 32,
+                marginRight: 1,
+              }}
             />
             <Typography sx={TextStyles}>{name}</Typography>
           </Box>
@@ -93,7 +124,7 @@ const CrmTableRow = ({
           </Box>
         </CustomTableCell>
         <CustomTableCell>
-          <Typography sx={TextStyles}>{points}</Typography>
+          <Typography sx={TextStyles}>{points} Points</Typography>
         </CustomTableCell>
       </TableRow>
       <TableRow sx={{ "& td, & th": { border: 0 } }}>
@@ -103,6 +134,20 @@ const CrmTableRow = ({
           className="bg-gray-100"
         />
       </TableRow>
+
+      {openViewCustomer && (
+        <ViewCustomerModal
+          open={openViewCustomer}
+          onClose={handleCloseViewCustomer}
+          index={index}
+          name={name}
+          email={email}
+          avatar={avatar}
+          tier={tier}
+          points={points}
+          lastVisited={lastVisited}
+        />
+      )}
     </>
   );
 };

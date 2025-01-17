@@ -34,7 +34,7 @@ const data = [
     email: "huzefadico@thezeekcompany.com",
     lastVisited: "October 14, 2024",
     tier: "Platinum",
-    points: "921 points",
+    points: "921",
     avatar: "/images/user.png",
   },
   {
@@ -42,7 +42,7 @@ const data = [
     email: "ziyadmahomed@thezeekcompany.com",
     lastVisited: "October 27, 2024",
     tier: "Gold",
-    points: "602 points",
+    points: "602",
     avatar: "/images/user.png",
   },
   {
@@ -50,7 +50,7 @@ const data = [
     email: "rashedalzaabi@thezeekcompany.com",
     lastVisited: "October 19, 2024",
     tier: "Silver",
-    points: "345 points",
+    points: "345",
     avatar: "/images/user.png",
   },
   {
@@ -58,7 +58,7 @@ const data = [
     email: "bobjoe@thezeekcompany.com",
     lastVisited: "October 14, 2024",
     tier: "Bronze",
-    points: "90 points",
+    points: "90",
     avatar: "/images/user.png",
   },
   {
@@ -66,7 +66,7 @@ const data = [
     email: "sarahthomas@thezeekcompany.com",
     lastVisited: "October 14, 2024",
     tier: "Platinum",
-    points: "800 points",
+    points: "800",
     avatar: "/images/user.png",
   },
 ];
