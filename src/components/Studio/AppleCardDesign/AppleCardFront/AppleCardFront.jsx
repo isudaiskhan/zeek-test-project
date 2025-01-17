@@ -10,7 +10,6 @@ const AppleCardFront = ({
   isOverview,
   selectedCode,
 }) => {
-  console.log(selectedCode, "selectedCode");
   return (
     <Card
       sx={{
