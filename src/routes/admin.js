@@ -153,7 +153,7 @@ export const routes = [
     isPrivate: true,
   },
   {
-    path: "dashboard/help-center",
+    path: "/dashboard/help-center",
     name: "Help Center",
     icon: <HelpSharp />,
     sidebar: true,
@@ -173,5 +173,18 @@ export const routes = [
     ),
     sidebar: true,
     isPrivate: true,
+  },
+];
+
+export const helpCenterRoutes = [
+  {
+    path: "/dashboard/help-center/faq",
+    name: "FAQ",
+    sidebar: true,
+  },
+  {
+    path: "/dashboard/help-center/help-desk",
+    name: "Help Desk",
+    sidebar: true,
   },
 ];
