@@ -20,7 +20,7 @@ const StudioLayout = ({ children }) => {
         transition: "0.3s ease-in-out",
       }}
     >
-      <Container className={styles["content-container"]} maxWidth="xl">
+      <Container className={styles["content-container"]} maxWidth="100%">
         {/* <Paper elevation={0} className={styles["paper-container"]}> */}
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <div>{children}</div>

@@ -25,7 +25,7 @@ const Sidebar = ({ activeMenu, handleSelect }) => {
           return (
             <Link key={index} href={subRoute?.path} passHref>
               <ListItemButton
-                className={`!font-inter !text-[14px] text-center w-auto !cursor-pointer !transition-all !duration-300 ease-in-out !my-7 ${
+                className={`!font-inter !text-center !text-[14px] w-auto !cursor-pointer !transition-all !duration-300 ease-in-out !my-7 ${
                   isActive
                     ? "!bg-[#FFEEE4] !rounded-full !text-[#E65300] hover:bg-[#FFE3D8] hover:shadow-lg hover:text-[#FF6600]"
                     : "hover:bg-[#FFE3D8] !rounded-full hover:shadow-lg hover:text-[#FF6600]"
@@ -36,7 +36,7 @@ const Sidebar = ({ activeMenu, handleSelect }) => {
                 <ListItemText
                   primary={
                     <span
-                      className={`!font-inter !text-[14px] ${
+                      className={`!font-inter !text-center !text-[14px] ${
                         isActive ? "!text-[#E65300]" : "text-[#838383]"
                       }`}
                     >

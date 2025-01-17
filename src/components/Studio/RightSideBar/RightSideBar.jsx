@@ -19,13 +19,12 @@ const RightSideBar = () => {
   };
   return (
     <Box
-      className="flex flex-col p-3 w-[20%]"
+      className="flex flex-col p-3 w-[18%]"
       sx={{
         boxShadow: "-1px 2px 20px 0px #00000040",
         border: "1px light #000000",
         position: "absolute",
-        right: -207,
-        top: 120,
+        right: 0,
         height: "100vh",
         overflow: "hidden",
         overflowY: "scroll",
