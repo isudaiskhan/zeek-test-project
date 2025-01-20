@@ -154,3 +154,75 @@ export const tagStyles = {
   "Frequency x3": "bg-[#FFDAC5] text-[#696969]",
   "Frequency x5": "bg-[#FFDAC5] text-[#696969]",
 };
+
+
+export const businessData = {
+  businessName: "SATO Café and Lounge",
+  businessType: "Business",
+  location: "Dubai, UAE",
+  owner: {
+    name: "Darius White",
+    title: "Business Owner",
+    location: "Dubai, UAE",
+    email: "Dariuswhite@satocafé.com",
+    phone: "+1 437 123 4567",
+    role: "Owner",
+  },
+  address: {
+    country: "United Arab Emirates",
+    city: "Dubai",
+    street: "Jumerirah Beach Road",
+    postalCode: "12345",
+    floor: "N/A",
+  },
+};
+
+
+export const manageSessions = [
+  {
+    device: "MacBook Pro",
+    location: "Dubai, UAE",
+    lastActive: "Yesterday (2024-12-31, 21:00:00)",
+  },
+  {
+    device: "Lenovo ThinkPad",
+    location: "Dubai, UAE",
+    lastActive: "Yesterday (2024-12-31, 21:00:00)",
+  },
+  {
+    device: "MacBook Air",
+    location: "Dubai, UAE",
+    lastActive: "Yesterday (2024-12-31, 21:00:00)",
+  },
+  {
+    device: "Microsoft Surface Pro",
+    location: "Dubai, UAE",
+    lastActive: "Yesterday (2024-12-31, 21:00:00)",
+  },
+];
+
+
+export const images = [
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+  "/images/media-gallery.svg",
+];
+
+export const subscriptionBillingData = {
+  planName: 'Basic plan',
+  description: 'The Basic Plan provides all the core features to get started with your loyalty program and customer engagement.',
+  nextPaymentDate: 'Jan 1, 2025',
+  amount: 'AED 370.00',
+  lastInvoiceDate: 'Dec 1, 2024',
+  businessName: 'SATO Café',
+  email: 'Dariuswhite@satocafé.com',
+  cardType: 'Mastercard',
+  cardEnding: '0000',
+};
+

@@ -1,5 +1,4 @@
-import { HelpSharp } from "@mui/icons-material";
-import { SubdirectoryArrowRight } from "@mui/icons-material";
+import { HelpSharp, SubdirectoryArrowRight } from "@mui/icons-material";
 import Image from "next/image";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
@@ -185,6 +184,55 @@ export const helpCenterRoutes = [
   {
     path: "/dashboard/help-center/help-desk",
     name: "Help Desk",
+    sidebar: true,
+  },
+];
+
+export const businessProfileRoutes = [
+  {
+    path: "/dashboard/business-profile/profile",
+    name: "Profile",
+    sidebar: true,
+  },
+  {
+    path: "/dashboard/business-profile/security",
+    name: "Security",
+    sidebar: true,
+  },
+
+  {
+    path: "/dashboard/business-profile/menu",
+    name: "Menu",
+    sidebar: true,
+  },
+
+  {
+    path: "/dashboard/business-profile/media-gallery",
+    name: "Media Gallery",
+    sidebar: true,
+  },
+
+  {
+    path: "/dashboard/business-profile/points-management",
+    name: "Points Management",
+    sidebar: true,
+  },
+
+  {
+    path: "/dashboard/business-profile/roles-permissions",
+    name: "Roles and Permissions",
+    sidebar: true,
+  },
+
+  {
+    path: "/dashboard/business-profile/analytics-settings",
+    name: "Analytics Settings",
+    sidebar: true,
+  },
+
+  {
+    path: "/dashboard/business-profile/subscription-billing",
+    name: "Subscription & Billing",
     sidebar: true,
   },
 ];
