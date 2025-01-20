@@ -9,6 +9,7 @@ import CustomTab from "@/components/Studio/CustomTab/CustomTab";
 import { Add } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const tabs = [
@@ -23,6 +24,8 @@ const Loyalty = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const router = useRouter();
 
   return (
     <div className="p-4">
@@ -116,9 +119,7 @@ const Loyalty = () => {
                 <Grid item size={{ xs: 12, md: 4 }}>
                   <LoyaltyCard
                     background="/images/loyaltyCard.png"
-                    onClick={() =>
-                      (window.location.href = "/studio/update-card-loyalty")
-                    }
+                    onClick={() => router.push("/studio/update-card-loyalty")}
                   />
                 </Grid>
                 <Grid item size={{ xs: 12, md: 4 }}>

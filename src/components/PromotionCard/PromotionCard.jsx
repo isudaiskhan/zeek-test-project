@@ -53,7 +53,24 @@ const PromotionCard = ({
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}
+          sx={{
+            "& .MuiMenu-list": {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            },
+          }}
         >
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+          >
+            Deactivate
+          </MenuItem>
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+          >
+            Download QR Code
+          </MenuItem>
           <MenuItem sx={{ color: "#FF5B00" }}>Delete</MenuItem>
         </Menu>
       </div>

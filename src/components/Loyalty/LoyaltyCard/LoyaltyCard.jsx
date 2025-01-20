@@ -1,9 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 import { MoreHoriz } from "@mui/icons-material";
-import { Box, Card, Typography } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  Card,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 
 const LoyaltyCard = ({ background, onClick }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
   return (
     <Card
       sx={{
@@ -12,18 +27,53 @@ const LoyaltyCard = ({ background, onClick }) => {
         borderRadius: "8px",
         padding: "24px",
         cursor: "pointer",
-        transition: "transform 0.3s ease-in-out",
-        "&:hover": {
-          transform: "scale(1.05)",
-        },
-        "&:active": {
-          transform: "scale(0.95)",
-        },
+        // transition: "transform 0.3s ease-in-out",
+        // "&:hover": {
+        //   transform: "scale(1.05)",
+        // },
+        // "&:active": {
+        //   transform: "scale(0.95)",
+        // },
       }}
-      onClick={onClick}
     >
       <div className="flex justify-end items-end mb-2">
-        <MoreHoriz />
+        <IconButton onClick={handleMenuOpen}>
+          <MoreHoriz />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleCloseMenu}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+          sx={{
+            "& .MuiMenu-list": {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            },
+          }}
+        >
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+            onClick={onClick}
+          >
+            Update
+          </MenuItem>
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+          >
+            Deactivate
+          </MenuItem>
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+          >
+            Download QR Code
+          </MenuItem>
+          <MenuItem sx={{ color: "#FF5B00" }}>Delete</MenuItem>
+        </Menu>
       </div>
       <div
         className="flex flex-col p-4 py-2 justify-center rounded-xl shadow-lg h-[200px]"
