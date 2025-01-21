@@ -8,6 +8,7 @@ const AppleCardCouponDesign = ({
   secondColor,
   thirdColor,
   selectedCode,
+  imagePreview,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const AppleCardCouponDesign = ({
           secondColor={secondColor}
           thirdColor={thirdColor}
           selectedCode={selectedCode}
+          imagePreview={imagePreview}
         />
         <AppleCardCouponBack />
       </Box>

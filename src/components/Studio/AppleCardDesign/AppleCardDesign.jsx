@@ -8,6 +8,7 @@ const AppleCardDesign = ({
   secondColor,
   thirdColor,
   selectedCode,
+  imagePreview,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const AppleCardDesign = ({
           secondColor={secondColor}
           thirdColor={thirdColor}
           selectedCode={selectedCode}
+          imagePreview={imagePreview}
         />
         <AppleCardBack />
       </Box>

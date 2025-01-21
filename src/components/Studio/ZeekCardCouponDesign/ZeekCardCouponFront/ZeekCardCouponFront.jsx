@@ -9,6 +9,7 @@ const ZeekCardCouponFront = ({
   thirdColor,
   isOverview,
   selectedCode,
+  imagePreview,
 }) => {
   const headingSX = {
     fontSize: isOverview ? "8px" : "14px",
@@ -25,7 +26,7 @@ const ZeekCardCouponFront = ({
       sx={{
         boxShadow: "-1px 2px 20px 0px #00000040",
         width: isOverview ? "266px" : "451px",
-        height: isOverview ? "291px" : "493px",
+        // height: isOverview ? "291px" : "493px",
         backgroundColor: firstColor,
         backgroundImage: `linear-gradient(to left bottom, ${firstColor},${secondColor}, ${thirdColor})`,
       }}
@@ -34,7 +35,7 @@ const ZeekCardCouponFront = ({
         <Box
           className="absolute"
           sx={{
-            top: "-15%",
+            top: imagePreview ? "-10%" : "-15%",
             left: "50%",
             transform: "translateX(-50%)",
             width: isOverview ? "60px" : "100px",
@@ -47,7 +48,7 @@ const ZeekCardCouponFront = ({
         <Box
           className="absolute"
           sx={{
-            bottom: isOverview ? 0 : -20,
+            bottom: isOverview ? 0 : imagePreview ? 140 : -20,
             right: 0,
             padding: isOverview ? "2px" : "4px",
             borderRadius: "4px",
@@ -120,6 +121,18 @@ const ZeekCardCouponFront = ({
                 type={selectedCode.type}
               />
             </div>
+          )}
+        </div>
+        <div className="flex justify-center items-center w-full p-0">
+          {imagePreview && (
+            <Image
+              src={imagePreview}
+              alt="card"
+              width={isOverview ? 267 : 451}
+              height={isOverview ? 100 : 150}
+              loader={() => imagePreview}
+              className="object-cover"
+            />
           )}
         </div>
       </Box>

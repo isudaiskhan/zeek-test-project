@@ -4,7 +4,6 @@ import { QRCodeSVG } from "qrcode.react";
 import Barcode from "react-barcode";
 
 const CustomBarCode = ({ value, size, title, type, format, width, height }) => {
-  console.log(type, "type");
   return (
     <>
       {(type === BARCODE_TYPES.QRCODE || type === BARCODE_TYPES.AZTEC) && (

@@ -1,9 +1,10 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import React from "react";
 import UploadImage from "@/components/Studio/UploadImage";
 import ColorPicker from "@/components/Studio/ColorPicker/ColorPicker";
 import LandingPageColorPicker from "../../LandingPageColorPicker/LandingPageColorPicker";
+import { Delete } from "@mui/icons-material";
 
 const ThemeTab = ({
   firstColor,
@@ -17,6 +18,9 @@ const ThemeTab = ({
   backgroundColor,
   handleBannerColorChange,
   handleBackgroundColorChange,
+  imagePreview,
+  handleImageChange,
+  handleRemoveImage,
 }) => {
   return (
     <>
@@ -158,6 +162,7 @@ const ThemeTab = ({
             />
           </Box>
           <Divider sx={{ width: "100%", mt: 4 }} />
+          {/* {Image Preview} */}
           <Box className="flex flex-col justify-start items-start px-5 pt-10 text-wrap">
             <Typography
               sx={{
@@ -178,12 +183,19 @@ const ThemeTab = ({
               purchasing. This recommended dimensions of{" "}
               <strong> 1125 x 432 pixels.</strong>
             </Typography>
-            <UploadImage
-              isHero
-              onClick={(e) =>
-                e.currentTarget.querySelector('input[type="file"]').click()
-              }
-            />
+            <div className="flex flex-row gap-4">
+              <UploadImage
+                isHero
+                // onClick={(e) =>
+                //   e.currentTarget.querySelector('input[type="file"]').click()
+                // }
+                onImageChange={handleImageChange}
+                imagePreview={imagePreview}
+              />
+              <IconButton onClick={handleRemoveImage} disableRipple>
+                <Delete fontSize="large" sx={{ color: "red" }} />
+              </IconButton>
+            </div>
           </Box>
         </div>
       )}

@@ -9,6 +9,7 @@ const ZeekCardStampFront = ({
   thirdColor,
   isOverview,
   selectedCode,
+  imagePreview,
 }) => {
   return (
     <Card
@@ -16,7 +17,7 @@ const ZeekCardStampFront = ({
         borderRadius: "16px",
         boxShadow: "-1px 2px 20px 0px #00000040",
         width: isOverview ? "266px" : "451px",
-        height: isOverview ? "291px" : "493px",
+        // height: isOverview ? "291px" : "493px",
       }}
     >
       <Box>
@@ -116,6 +117,18 @@ const ZeekCardStampFront = ({
           >
             HL28GR098K2
           </Typography>
+        </div>
+        <div className="flex justify-center items-center w-full p-0">
+          {imagePreview && (
+            <Image
+              src={imagePreview}
+              alt="card"
+              width={isOverview ? 267 : 451}
+              height={isOverview ? 100 : 150}
+              loader={() => imagePreview}
+              className="object-cover"
+            />
+          )}
         </div>
       </Box>
     </Card>

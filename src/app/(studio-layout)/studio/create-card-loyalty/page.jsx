@@ -14,6 +14,7 @@ import RightSideBar from "@/components/Studio/RightSideBar/RightSideBar";
 import OverViewPage from "@/components/Studio/OverViewPage/OverViewPage";
 import { BARCODE_TYPES } from "@/enums/barcode";
 import { useRouter } from "next/navigation";
+import { getImageBase64URL } from "@/utils/helper-functions";
 
 const CreateCardLoyalty = () => {
   const [value, setValue] = React.useState(0);
@@ -27,6 +28,18 @@ const CreateCardLoyalty = () => {
     type: BARCODE_TYPES.QRCODE,
     value: "https://zeek.com",
   });
+  const [imagePreview, setImagePreview] = React.useState(null);
+
+  const handleImageChange = async (file) => {
+    if (file) {
+      const base64URL = await getImageBase64URL(file);
+      setImagePreview(base64URL);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+  };
 
   const router = useRouter();
 
@@ -108,6 +121,9 @@ const CreateCardLoyalty = () => {
                 handleBackgroundColorChange={handleBackgroundColorChange}
                 handleCodeSelect={handleCodeSelect}
                 selectedCode={selectedCode}
+                imagePreview={imagePreview}
+                handleImageChange={handleImageChange}
+                handleRemoveImage={handleRemoveImage}
               />
             </Grid>
           )}
@@ -135,6 +151,7 @@ const CreateCardLoyalty = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 2 && (
@@ -143,6 +160,7 @@ const CreateCardLoyalty = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 3 && (
@@ -151,6 +169,7 @@ const CreateCardLoyalty = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 4 && (

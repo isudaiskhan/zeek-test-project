@@ -8,6 +8,7 @@ const ZeekCardDesign = ({
   secondColor,
   thirdColor,
   selectedCode,
+  imagePreview,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const ZeekCardDesign = ({
           secondColor={secondColor}
           thirdColor={thirdColor}
           selectedCode={selectedCode}
+          imagePreview={imagePreview}
         />
         <ZeekCardBack />
       </Box>

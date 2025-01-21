@@ -27,6 +27,9 @@ const SideBar = ({
   barcodeValue,
   QRCODEDATA,
   handleCodeSelect,
+  imagePreview,
+  handleImageChange,
+  handleRemoveImage,
 }) => {
   return (
     <Box
@@ -77,6 +80,9 @@ const SideBar = ({
           backgroundColor={backgroundColor}
           handleBannerColorChange={handleBannerColorChange}
           handleBackgroundColorChange={handleBackgroundColorChange}
+          imagePreview={imagePreview}
+          handleImageChange={handleImageChange}
+          handleRemoveImage={handleRemoveImage}
         />
       )}
       {value === 1 && <ItemsTab />}

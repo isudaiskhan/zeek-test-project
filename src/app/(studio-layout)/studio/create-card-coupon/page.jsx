@@ -12,6 +12,7 @@ import GoogleCardCouponDesign from "@/components/Studio/GoogleCardCouponDesign/G
 import ZeekCardCouponDesign from "@/components/Studio/ZeekCardCouponDesign/ZeekCardCouponDesign";
 import CouponOverview from "@/components/Studio/CouponOverview/CouponOverview";
 import { BARCODE_TYPES } from "@/enums/barcode";
+import { getImageBase64URL } from "@/utils/helper-functions";
 
 const CouponCard = () => {
   const [value, setValue] = React.useState(0);
@@ -23,6 +24,18 @@ const CouponCard = () => {
     type: BARCODE_TYPES.QRCODE,
     value: "https://zeek.com",
   });
+  const [imagePreview, setImagePreview] = React.useState(null);
+
+  const handleImageChange = async (file) => {
+    if (file) {
+      const base64URL = await getImageBase64URL(file);
+      setImagePreview(base64URL);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+  };
 
   const handleCodeSelect = (codeType, codeValue) => {
     setSelectedCode({ type: codeType, value: codeValue });
@@ -90,6 +103,9 @@ const CouponCard = () => {
                 currentPage={currentPage}
                 selectedCode={selectedCode}
                 handleCodeSelect={handleCodeSelect}
+                imagePreview={imagePreview}
+                handleImageChange={handleImageChange}
+                handleRemoveImage={handleRemoveImage}
               />
             </Grid>
           )}
@@ -116,6 +132,7 @@ const CouponCard = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 2 && (
@@ -124,6 +141,7 @@ const CouponCard = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 3 && (
@@ -132,6 +150,7 @@ const CouponCard = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 4 && (

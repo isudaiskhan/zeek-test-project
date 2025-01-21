@@ -12,6 +12,7 @@ import GoogleStampCardDesign from "@/components/Studio/GoogleStampCardDesign/Goo
 import ZeekStampCardDesign from "@/components/Studio/ZeekStampCardDesign/ZeekStampCardDesign";
 import StampCardOverview from "@/components/Studio/StampCardOverview/StampCardOverview";
 import { useRouter } from "next/navigation";
+import { getImageBase64URL } from "@/utils/helper-functions";
 
 const CreateStamp = () => {
   const [value, setValue] = React.useState(0);
@@ -23,6 +24,18 @@ const CreateStamp = () => {
     type: BARCODE_TYPES.QRCODE,
     value: "https://zeek.com",
   });
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleImageChange = async (file) => {
+    if (file) {
+      const base64URL = await getImageBase64URL(file);
+      setImagePreview(base64URL);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+  };
 
   const router = useRouter();
 
@@ -92,6 +105,9 @@ const CreateStamp = () => {
                 currentPage={currentPage}
                 selectedCode={selectedCode}
                 handleCodeSelect={handleCodeSelect}
+                imagePreview={imagePreview}
+                handleImageChange={handleImageChange}
+                handleRemoveImage={handleRemoveImage}
               />
             </Grid>
           )}
@@ -118,6 +134,7 @@ const CreateStamp = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 2 && (
@@ -126,6 +143,7 @@ const CreateStamp = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 3 && (
@@ -134,6 +152,7 @@ const CreateStamp = () => {
                     secondColor={secondColor}
                     thirdColor={thirdColor}
                     selectedCode={selectedCode}
+                    imagePreview={imagePreview}
                   />
                 )}
                 {currentPage === 4 && (

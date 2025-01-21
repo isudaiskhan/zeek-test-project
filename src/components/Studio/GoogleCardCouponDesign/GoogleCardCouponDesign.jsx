@@ -8,6 +8,7 @@ const GoogleCardCouponDesign = ({
   secondColor,
   thirdColor,
   selectedCode,
+  imagePreview,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const GoogleCardCouponDesign = ({
           secondColor={secondColor}
           thirdColor={thirdColor}
           selectedCode={selectedCode}
+          imagePreview={imagePreview}
         />
         <GoogleCardCouponBack />
       </Box>

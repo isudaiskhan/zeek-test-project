@@ -8,6 +8,7 @@ const ZeekStampCardDesign = ({
   secondColor,
   thirdColor,
   selectedCode,
+  imagePreview,
 }) => {
   return (
     <Box className="flex flex-row gap-2 items-center justify-evenly w-full py-14">
@@ -16,6 +17,7 @@ const ZeekStampCardDesign = ({
         secondColor={secondColor}
         thirdColor={thirdColor}
         selectedCode={selectedCode}
+        imagePreview={imagePreview}
       />
       <ZeekCardStampBack />
     </Box>

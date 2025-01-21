@@ -9,6 +9,7 @@ const GoogleCardCouponFront = ({
   thirdColor,
   isOverview,
   selectedCode,
+  imagePreview,
 }) => {
   const headingSX = {
     fontSize: isOverview ? "8px" : "14px",
@@ -26,7 +27,7 @@ const GoogleCardCouponFront = ({
         borderRadius: "16px",
         boxShadow: "-1px 2px 20px 0px #00000040",
         width: isOverview ? "266px" : "451px",
-        height: isOverview ? "291px" : "493px",
+        // height: isOverview ? "291px" : "493px",
         backgroundColor: firstColor,
         backgroundImage: `linear-gradient(to left bottom, ${firstColor},${secondColor}, ${thirdColor})`,
       }}
@@ -35,7 +36,7 @@ const GoogleCardCouponFront = ({
         <Box
           className="absolute"
           sx={{
-            bottom: isOverview ? 0 : -40,
+            bottom: isOverview ? 0 : imagePreview ? 140 : -40,
             right: 0,
             padding: isOverview ? "2px" : "4px",
             borderRadius: "4px",
@@ -105,6 +106,18 @@ const GoogleCardCouponFront = ({
                 type={selectedCode.type}
               />
             </div>
+          )}
+        </div>
+        <div className="flex justify-center items-center w-full p-0">
+          {imagePreview && (
+            <Image
+              src={imagePreview}
+              alt="card"
+              width={isOverview ? 267 : 451}
+              height={isOverview ? 100 : 150}
+              loader={() => imagePreview}
+              className="object-cover"
+            />
           )}
         </div>
       </Box>
