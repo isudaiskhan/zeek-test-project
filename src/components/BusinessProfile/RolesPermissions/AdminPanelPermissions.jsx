@@ -25,10 +25,10 @@ const AdminPanelPermissions = () => {
   });
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
-  const handleSelectChange = (field) => (event) => {
+  const handleSelectChange = (event) => {
     setSelectedOptions({
       ...selectedOptions,
-      [field]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -39,6 +39,7 @@ const AdminPanelPermissions = () => {
   const handleCloseSuccessModal = () => {
     setSuccessModalOpen(false);
   };
+
   return (
     <div>
       <Box className="!space-y-6 !mt-10">
@@ -110,11 +111,12 @@ const AdminPanelPermissions = () => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="customerRelationshipManager"
                 labelId="customerRelationshipManager-select-label"
                 label="Select role..."
                 value={selectedOptions.customerRelationshipManager}
-                onChange={handleSelectChange("customerRelationshipManager")}
-                className="!font-inter max-w-80"
+                onChange={(e) => handleSelectChange(e)}
+                className="!font-inter max-w-80 bg-[#F9F9F9]"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
                 <MenuItem value="option2">Option 2</MenuItem>
@@ -140,11 +142,12 @@ const AdminPanelPermissions = () => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="campaigns"
                 labelId="campaigns-select-label"
                 label="Select role..."
                 value={selectedOptions.campaigns}
-                onChange={handleSelectChange("campaigns")}
-                className="!font-inter max-w-80"
+                onChange={(e) => handleSelectChange(e)}
+                className="!font-inter max-w-80 bg-[#F9F9F9]"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
                 <MenuItem value="option2">Option 2</MenuItem>
@@ -170,11 +173,12 @@ const AdminPanelPermissions = () => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="analytics"
                 labelId="analytics-select-label"
                 label="Select role..."
                 value={selectedOptions.analytics}
-                onChange={handleSelectChange("analytics")}
-                className="!font-inter max-w-80"
+                onChange={(e) => handleSelectChange(e)}
+                className="!font-inter max-w-80 bg-[#F9F9F9]"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
                 <MenuItem value="option2">Option 2</MenuItem>
@@ -200,11 +204,12 @@ const AdminPanelPermissions = () => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="reviews"
                 labelId="reviews-select-label"
                 label="Select role..."
                 value={selectedOptions.reviews}
-                onChange={handleSelectChange("reviews")}
-                className="!font-inter max-w-80"
+                onChange={(e) => handleSelectChange(e)}
+                className="!font-inter max-w-80 bg-[#F9F9F9]"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
                 <MenuItem value="option2">Option 2</MenuItem>
@@ -229,11 +234,12 @@ const AdminPanelPermissions = () => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="branches"
                 labelId="branches-select-label"
                 label="Select role..."
                 value={selectedOptions.branches}
-                onChange={handleSelectChange("branches")}
-                className="!font-inter max-w-80"
+                onChange={(e) => handleSelectChange(e)}
+                className="!font-inter max-w-80 bg-[#F9F9F9]"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
                 <MenuItem value="option2">Option 2</MenuItem>
@@ -259,11 +265,12 @@ const AdminPanelPermissions = () => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="employees"
                 labelId="employees-select-label"
                 label="Select role..."
                 value={selectedOptions.employees}
-                onChange={handleSelectChange("employees")}
-                className="!font-inter max-w-80"
+                onChange={(e) => handleSelectChange(e)}
+                className="!font-inter max-w-80 bg-[#F9F9F9]"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
                 <MenuItem value="option2">Option 2</MenuItem>

@@ -1,14 +1,25 @@
 import React from "react";
-import { Card, Typography, Button, Box } from "@mui/material";
+import { Button, Box, Typography, Card } from "@mui/material";
 import Image from "next/image";
 import { FaRegEdit } from "react-icons/fa";
 
-const ProfileBusinessName = ({ name, type, location }) => {
+const ProfileBusinessName = ({ name, type, location, onEdit }) => {
   return (
     <Box>
-      <Typography className="!font-bold !mt-10 !mb-5" variant="h5">
-        Profile
-      </Typography>
+      <div className="flex justify-between items-center px-5">
+        <Typography className="!font-bold !mt-10 !mb-5" variant="h5">
+          Profile
+        </Typography>
+
+        <Button
+          onClick={onEdit}
+          variant="outlined"
+          className="!text-xs !ml-auto !text-[#5F5F5F] !font-thin !px-5 !font-maven !rounded-full !border-[#C1C1C1] flex justify-between items-center"
+        >
+          Edit
+          <FaRegEdit className="ml-2 text-xs text-[#888888]" />
+        </Button>
+      </div>
 
       <Card className="!rounded-lg !border !border-[#E7E7E7] !border-solid !shadow-none p-4 flex items-center">
         <Box className="mr-6 flex-shrink-0">
@@ -40,17 +51,8 @@ const ProfileBusinessName = ({ name, type, location }) => {
             {location}
           </Typography>
         </Box>
-
-        <Button
-          variant="outlined"
-          className="!text-xs !text-[#5F5F5F] !font-thin !px-5 !font-maven !rounded-full !border-[#C1C1C1] flex justify-between items-center !me-3"
-        >
-          Edit
-          <FaRegEdit className="ml-2 text-xs text-[#888888]" />
-        </Button>
       </Card>
     </Box>
   );
 };
-
 export default ProfileBusinessName;

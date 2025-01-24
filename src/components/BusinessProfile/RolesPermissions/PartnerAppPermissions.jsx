@@ -20,10 +20,10 @@ const PartnerAppPermissions = () => {
   });
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
-  const handleSelectChange = (field) => (event) => {
+  const handleSelectChange = (event) => {
     setSelectedOptions({
       ...selectedOptions,
-      [field]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -53,10 +53,11 @@ const PartnerAppPermissions = () => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Select...</InputLabel>
             <Select
+              name="dashboard"
               labelId="dashboard-select-label"
               label="Select role..."
               value={selectedOptions.dashboard}
-              onChange={handleSelectChange("dashboard")}
+              onChange={(e) => handleSelectChange(e)}
               className="!font-inter max-w-80"
             >
               <MenuItem value="option1">Option 1</MenuItem>
@@ -79,10 +80,11 @@ const PartnerAppPermissions = () => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Select...</InputLabel>
             <Select
+              name="rewards"
               labelId="rewards-select-label"
               label="Select role..."
               value={selectedOptions.rewards}
-              onChange={handleSelectChange("rewards")}
+              onChange={(e) => handleSelectChange(e)}
               className="!font-inter max-w-80"
             >
               <MenuItem value="option1">Option 1</MenuItem>
@@ -105,10 +107,11 @@ const PartnerAppPermissions = () => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Select...</InputLabel>
             <Select
+              name="cards"
               labelId="cards-select-label"
               label="Select role..."
               value={selectedOptions.cards}
-              onChange={handleSelectChange("cards")}
+              onChange={(e) => handleSelectChange(e)}
               className="!font-inter max-w-80"
             >
               <MenuItem value="option1">Option 1</MenuItem>
@@ -131,10 +134,11 @@ const PartnerAppPermissions = () => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Select...</InputLabel>
             <Select
+              name="currentplan"
               labelId="current-plan-select-label"
               label="Select role..."
               value={selectedOptions.currentPlan}
-              onChange={handleSelectChange("currentPlan")}
+              onChange={(e) => handleSelectChange(e)}
               className="!font-inter max-w-80"
             >
               <MenuItem value="option1">Option 1</MenuItem>
@@ -160,7 +164,7 @@ const PartnerAppPermissions = () => {
               labelId="subscriptions-select-label"
               label="Select role..."
               value={selectedOptions.subscriptions}
-              onChange={handleSelectChange("subscriptions")}
+              onChange={(e) => handleSelectChange(e)}
               className="!font-inter max-w-80"
             >
               <MenuItem value="option1">Option 1</MenuItem>

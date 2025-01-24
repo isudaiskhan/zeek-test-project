@@ -26,10 +26,10 @@ const CreateNewRole = ({ onClose }) => {
   });
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
-  const handleSelectChange = (field) => (event) => {
+  const handleSelectChange = (event) => {
     setSelectedOptions({
       ...selectedOptions,
-      [field]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -133,10 +133,11 @@ const CreateNewRole = ({ onClose }) => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="customerRelationshipManager"
                 labelId="customerRelationshipManager-select-label"
                 label="Select role..."
                 value={selectedOptions.customerRelationshipManager}
-                onChange={handleSelectChange("customerRelationshipManager")}
+                onChange={(e) => handleSelectChange(e)}
                 className="!font-inter max-w-80"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
@@ -163,10 +164,11 @@ const CreateNewRole = ({ onClose }) => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="campaigns"
                 labelId="campaigns-select-label"
                 label="Select role..."
                 value={selectedOptions.campaigns}
-                onChange={handleSelectChange("campaigns")}
+                onChange={(e) => handleSelectChange(e)}
                 className="!font-inter max-w-80"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
@@ -193,10 +195,11 @@ const CreateNewRole = ({ onClose }) => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="analytics"
                 labelId="analytics-select-label"
                 label="Select role..."
                 value={selectedOptions.analytics}
-                onChange={handleSelectChange("analytics")}
+                onChange={(e) => handleSelectChange(e)}
                 className="!font-inter max-w-80"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
@@ -223,10 +226,11 @@ const CreateNewRole = ({ onClose }) => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="reviews"
                 labelId="reviews-select-label"
                 label="Select role..."
                 value={selectedOptions.reviews}
-                onChange={handleSelectChange("reviews")}
+                onChange={(e) => handleSelectChange(e)}
                 className="!font-inter max-w-80"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
@@ -252,10 +256,11 @@ const CreateNewRole = ({ onClose }) => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="branches"
                 labelId="branches-select-label"
                 label="Select role..."
                 value={selectedOptions.branches}
-                onChange={handleSelectChange("branches")}
+                onChange={(e) => handleSelectChange(e)}
                 className="!font-inter max-w-80"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
@@ -282,10 +287,11 @@ const CreateNewRole = ({ onClose }) => {
             <FormControl fullWidth variant="outlined">
               <InputLabel>Select...</InputLabel>
               <Select
+                name="employees"
                 labelId="employees-select-label"
                 label="Select role..."
                 value={selectedOptions.employees}
-                onChange={handleSelectChange("employees")}
+                onChange={(e) => handleSelectChange(e)}
                 className="!font-inter max-w-80"
               >
                 <MenuItem value="option1">Option 1</MenuItem>
