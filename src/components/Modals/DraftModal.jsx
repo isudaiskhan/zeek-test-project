@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Dialog, DialogContent, Typography } from "@mui/material";
 import Image from "next/image";
 
-const DraftModal = ({ open, onClose, imageSrc, message, buttonText }) => {
+const DraftModal = ({ open, onClose, message, buttonText }) => {
   return (
     <Dialog
       open={open}
@@ -16,11 +16,12 @@ const DraftModal = ({ open, onClose, imageSrc, message, buttonText }) => {
     >
       <DialogContent className="flex flex-col items-center">
         <Image
-          src={imageSrc}
+          src="/images/draft.svg"
           alt="Status Icon"
-          className="mb-4 w-[120px] h-[120px] object-cover"
+          className="mb-4 w-[168px] h-[168px] object-cover"
           width={100}
           height={100}
+          loader={() => "/images/draft.svg"}
         />
         <Typography
           variant="h6"

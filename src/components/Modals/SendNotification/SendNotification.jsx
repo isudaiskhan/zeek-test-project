@@ -2,9 +2,7 @@ import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import { Add } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Dialog,
-  DialogContent,
   DialogTitle,
   Divider,
   TextField,
@@ -16,8 +14,30 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import CustomDialogContent from "@/components/Custom/CustomDialogContent/CustomDialogContent";
+import SuccessDialog from "../SuccessModal";
+import DraftModal from "../DraftModal";
 
 const SendNotification = ({ open, onClose }) => {
+  const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
+  const [openDraftModal, setOpenDraftModal] = React.useState(false);
+
+  const handleOpenSuccessModal = () => {
+    setOpenSuccessModal(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setOpenSuccessModal(false);
+  };
+
+  const handleOpenDraftModal = () => {
+    setOpenDraftModal(true);
+  };
+
+  const handleCloseDraftModal = () => {
+    setOpenDraftModal(false);
+  };
+
   return (
     <Dialog
       open={open}
@@ -26,8 +46,8 @@ const SendNotification = ({ open, onClose }) => {
       maxWidth="md"
       sx={{
         "& .MuiDialog-paper": {
-          width: "50%",
-          maxWidth: "50%",
+          width: "55%",
+          maxWidth: "55%",
         },
       }}
     >
@@ -39,7 +59,7 @@ const SendNotification = ({ open, onClose }) => {
         </Box>
         <Divider />
       </DialogTitle>
-      <DialogContent>
+      <CustomDialogContent>
         <Box className="flex flex-col justify-start items-start p-4">
           <Typography
             sx={{
@@ -179,15 +199,37 @@ const SendNotification = ({ open, onClose }) => {
               textColor="#787878"
               onClick={onClose}
             />
-            <CustomButton text="Draft" bgColor="#F4F4F4" textColor="#787878" />
+            <CustomButton
+              text="Draft"
+              bgColor="#F4F4F4"
+              textColor="#787878"
+              onClick={handleOpenDraftModal}
+            />
             <CustomButton
               text="Publish"
               bgColor="#FFECE1"
               textColor="#FF5B00"
+              onClick={handleOpenSuccessModal}
             />
           </div>
         </Box>
-      </DialogContent>
+      </CustomDialogContent>
+      {openSuccessModal && (
+        <SuccessDialog
+          open={openSuccessModal}
+          onClose={handleCloseSuccessModal}
+          message="Your Notification has been sent out successfully!"
+          buttonText="Continue"
+        />
+      )}
+      {openDraftModal && (
+        <DraftModal
+          open={openDraftModal}
+          onClose={handleCloseDraftModal}
+          message="Your Notification has been put in your draft!"
+          buttonText="Continue"
+        />
+      )}
     </Dialog>
   );
 };

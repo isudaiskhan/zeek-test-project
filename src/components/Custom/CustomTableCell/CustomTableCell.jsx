@@ -6,10 +6,17 @@ const tableCellSX = {
   padding: "8px",
 };
 
-const CustomTableCell = ({ children }) => {
+const CustomTableCell = ({ children, justifyItems }) => {
   return (
     <>
-      <TableCell sx={{ ...tableCellSX }}>{children}</TableCell>
+      <TableCell
+        sx={{
+          ...tableCellSX,
+          justifyItems: justifyItems,
+        }}
+      >
+        {children}
+      </TableCell>
     </>
   );
 };

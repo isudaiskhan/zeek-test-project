@@ -108,9 +108,11 @@ const CrmTableRow = ({
         <CustomTableCell>
           <Typography sx={TextStyles}>{lastVisited}</Typography>
         </CustomTableCell>
-        <CustomTableCell>
+        <CustomTableCell justifyItems="center">
           <Box
             sx={{
+              width: "77px",
+              height: "26px",
               padding: "4px 2px",
               borderRadius: "4px",
               justifyItems: "center",

@@ -2,7 +2,6 @@ import {
   Autocomplete,
   Box,
   Dialog,
-  DialogContent,
   DialogTitle,
   Divider,
   TextField,
@@ -12,6 +11,8 @@ import React from "react";
 import Grid from "@mui/material/Grid2";
 import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import CustomTextField from "@/components/CustomTextField/CustomTextField";
+import CustomDialogContent from "@/components/Custom/CustomDialogContent/CustomDialogContent";
+import SuccessDialog from "../SuccessModal";
 
 const openingTimingOptions = [
   { label: "10:00 AM ", value: "10:00 AM" },
@@ -39,6 +40,16 @@ const managers = [
 const subHeadingSX = { fontWeight: 400, fontSize: "14px" };
 
 const BranchModal = ({ open, onClose }) => {
+  const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
+
+  const handleOpenSuccessModal = () => {
+    setOpenSuccessModal(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setOpenSuccessModal(false);
+  };
+
   return (
     <Dialog
       open={open}
@@ -52,183 +63,188 @@ const BranchModal = ({ open, onClose }) => {
         },
       }}
     >
-      <div className="p-4">
-        <DialogTitle>
-          <Typography sx={{ fontSize: "32px", fontWeight: 400 }}>
-            Add New Branch
+      <DialogTitle>
+        <Typography sx={{ fontSize: "32px", fontWeight: 400 }}>
+          Add New Branch
+        </Typography>
+        <Divider sx={{ mt: 1 }} />
+      </DialogTitle>
+      <CustomDialogContent>
+        <Box className="p-4">
+          <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>
+            Branch Details
           </Typography>
-          <Divider sx={{ mt: 1 }} />
-        </DialogTitle>
-        <DialogContent>
-          <Box className="p-4">
-            <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>
-              Branch Details
-            </Typography>
-          </Box>
-          <Box className="p-4">
-            <Grid container spacing={2}>
-              <Grid item size={{ xs: 12, md: 4 }}>
-                <div className="flex flex-col gap-10 justify-start items-start w-full">
-                  <div className="flex flex-col gap-2">
-                    <Typography sx={subHeadingSX}>Branch Name</Typography>
-                    <CustomTextField placeholder="Name" />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Typography sx={subHeadingSX}>
-                      Branch Contact Number
-                    </Typography>
-                    <CustomTextField placeholder="+971..." />
-                  </div>
+        </Box>
+        <Box className="p-4">
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <div className="flex flex-col gap-7 justify-start items-start w-full">
+                <div className="flex flex-col gap-2">
+                  <Typography sx={subHeadingSX}>Branch Name</Typography>
+                  <CustomTextField placeholder="Name" />
                 </div>
-              </Grid>
-              <Grid item size={{ xs: 12, md: 4 }}>
-                <div className="flex flex-col gap-2 justify-start items-start">
-                  <Typography sx={subHeadingSX}>Address</Typography>
-                  <CustomTextField placeholder="Street" />
-                  <CustomTextField placeholder="City" />
-                  <CustomTextField placeholder="Emirate" />
-                </div>
-              </Grid>
-              <Grid item size={{ xs: 12, md: 4 }}>
-                <div className="flex flex-col justify-start items-start gap-2">
+                <div className="flex flex-col gap-2">
                   <Typography sx={subHeadingSX}>
-                    Branch ID (Optional)
+                    Branch Contact Number
                   </Typography>
-                  <CustomTextField placeholder="Branch ID" />
+                  <CustomTextField placeholder="+971..." />
                 </div>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box className="p-4">
-            <div className="flex flex-col justify-start items-start gap-2 w-[40%]">
-              <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>
-                Operational Details
-              </Typography>
-              <Typography sx={subHeadingSX}>Operational Hours</Typography>
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  color: "#737373",
-                }}
-              >
-                If your business is not operating, select “closed” for both
-                opening and closing times.
-              </Typography>
-            </div>
-            <div className="flex flex-col justify-start items-start gap-4 mt-6">
-              {[
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday",
-              ].map((day) => (
-                <div className="flex flex-col gap-1" key={day}>
-                  <Typography
-                    sx={{ fontSize: "14px", fontWeight: 400, color: "#737373" }}
-                  >
-                    {day}
-                  </Typography>
-                  <div className="flex flex-col md:flex-row justify-between">
-                    <Autocomplete
-                      disablePortal
-                      options={openingTimingOptions}
-                      sx={{ width: 300 }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          size="small"
-                          placeholder="Opening Time"
-                          sx={{
-                            borderRadius: "16px", // For rounded corners
-                            backgroundColor: "#F4F4F4",
-                            width: "80%",
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: "16px",
-                            },
-                          }}
-                        />
-                      )}
-                    />
-                    <Autocomplete
-                      disablePortal
-                      options={closingTimingOptions}
-                      sx={{ width: 300 }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          placeholder="Closing Time"
-                          size="small"
-                          sx={{
-                            borderRadius: "16px", // For rounded corners
-                            backgroundColor: "#F4F4F4",
-                            width: "80%",
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: "16px",
-                            },
-                          }}
-                        />
-                      )}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Box>
-          <Box className="p-4">
-            <div className="flex flex-col justify-start items-start gap-6">
-              <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>
-                Manager Assignment
-              </Typography>
-              <div className="flex flex-col gap-2">
-                <Typography sx={subHeadingSX}>Select Manager</Typography>
-                <Autocomplete
-                  disablePortal
-                  options={managers}
-                  sx={{ width: 300 }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      placeholder="Select..."
-                      size="small"
-                      sx={{
-                        borderRadius: "16px", // For rounded corners
-                        backgroundColor: "#F4F4F4",
-                        width: "80%",
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "16px",
-                        },
-                      }}
-                    />
-                  )}
-                />
               </div>
-            </div>
-          </Box>
-          <Box className="p-4">
-            <div className="flex flex-row gap-4 justify-center items-center">
-              <CustomButton
-                text="Cancel"
-                bgColor="#F4F4F4"
-                textColor="#787878"
-                onClick={onClose}
+            </Grid>
+            <Grid item size={{ xs: 12, md: 4 }}>
+              <div className="flex flex-col gap-2 justify-start items-start">
+                <Typography sx={subHeadingSX}>Address</Typography>
+                <CustomTextField placeholder="Street" />
+                <CustomTextField placeholder="City" />
+                <CustomTextField placeholder="Emirate" />
+              </div>
+            </Grid>
+            <Grid item size={{ xs: 12, md: 4 }}>
+              <div className="flex flex-col justify-start items-start gap-2">
+                <Typography sx={subHeadingSX}>Branch ID (Optional)</Typography>
+                <CustomTextField placeholder="Branch ID" />
+              </div>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="p-4">
+          <div className="flex flex-col justify-start items-start gap-2 w-[40%]">
+            <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>
+              Operational Details
+            </Typography>
+            <Typography sx={subHeadingSX}>Operational Hours</Typography>
+            <Typography
+              sx={{
+                fontSize: "14px",
+                fontWeight: 400,
+                color: "#737373",
+              }}
+            >
+              If your business is not operating, select “closed” for both
+              opening and closing times.
+            </Typography>
+          </div>
+          <div className="flex flex-col justify-start items-start gap-4 mt-6">
+            {[
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ].map((day) => (
+              <div className="flex flex-col gap-1" key={day}>
+                <Typography
+                  sx={{ fontSize: "14px", fontWeight: 400, color: "#737373" }}
+                >
+                  {day}
+                </Typography>
+                <div className="flex flex-col md:flex-row justify-between">
+                  <Autocomplete
+                    disablePortal
+                    options={openingTimingOptions}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        size="small"
+                        placeholder="Opening Time"
+                        sx={{
+                          borderRadius: "16px", // For rounded corners
+                          backgroundColor: "#F4F4F4",
+                          width: "80%",
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "16px",
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                  <Autocomplete
+                    disablePortal
+                    options={closingTimingOptions}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        placeholder="Closing Time"
+                        size="small"
+                        sx={{
+                          borderRadius: "16px", // For rounded corners
+                          backgroundColor: "#F4F4F4",
+                          width: "80%",
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "16px",
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Box>
+        <Box className="p-4">
+          <div className="flex flex-col justify-start items-start gap-6">
+            <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>
+              Manager Assignment
+            </Typography>
+            <div className="flex flex-col gap-2">
+              <Typography sx={subHeadingSX}>Select Manager</Typography>
+              <Autocomplete
+                disablePortal
+                options={managers}
+                sx={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Select..."
+                    size="small"
+                    sx={{
+                      borderRadius: "16px", // For rounded corners
+                      backgroundColor: "#F4F4F4",
+                      width: "80%",
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "16px",
+                      },
+                    }}
+                  />
+                )}
               />
+            </div>
+          </div>
+        </Box>
+        <Box className="p-4">
+          <div className="flex flex-row gap-4 justify-center items-center">
+            <CustomButton
+              text="Cancel"
+              bgColor="#F4F4F4"
+              textColor="#787878"
+              onClick={onClose}
+            />
 
-              <CustomButton
-                text="Add Branch"
-                bgColor="#FFECE1"
-                textColor="#FF5B00"
-              />
-            </div>
-          </Box>
-        </DialogContent>
-      </div>
+            <CustomButton
+              text="Add Branch"
+              bgColor="#FFECE1"
+              textColor="#FF5B00"
+              onClick={handleOpenSuccessModal}
+            />
+          </div>
+        </Box>
+      </CustomDialogContent>
+      {openSuccessModal && (
+        <SuccessDialog
+          open={openSuccessModal}
+          onClose={handleCloseSuccessModal}
+          message="Your Branch has been added successfully"
+          buttonText="Continue"
+        />
+      )}
     </Dialog>
   );
 };

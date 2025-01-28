@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Dialog, DialogContent, Typography } from "@mui/material";
 import Image from "next/image";
 
-const SuccessDialog = ({ open, onClose, imageSrc, message, buttonText }) => {
+const SuccessDialog = ({ open, onClose, message, buttonText }) => {
   return (
     <Dialog
       open={open}
@@ -16,11 +16,12 @@ const SuccessDialog = ({ open, onClose, imageSrc, message, buttonText }) => {
     >
       <DialogContent className="flex flex-col items-center">
         <Image
-          src={imageSrc}
+          src="/images/approved.svg"
           alt="Success"
-          className="mb-4 w-[120px] h-[120px] object-cover"
+          className="mb-4 w-[200px] h-[200px] object-cover"
           width={100}
           height={100}
+          loader={() => "/images/approved.svg"}
         />
         <Typography
           variant="h6"

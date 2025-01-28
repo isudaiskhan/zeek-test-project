@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { List, ListItemText, Box, ListItemButton } from "@mui/material";
 import { businessProfileRoutes } from "@/routes/admin";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { removeAuthUser } from "@/redux/slices/authUser";
 
 const ProfileSidebar = ({ activeMenu, handleSelect }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  // redux
+  const dispatch = useDispatch();
   const [currentActiveMenu, setCurrentActiveMenu] = useState(activeMenu);
 
   useEffect(() => {
@@ -17,8 +23,9 @@ const ProfileSidebar = ({ activeMenu, handleSelect }) => {
     }
   }, [pathname]);
 
-  const handleLogout = () => {
-    console.log("Logging out...");
+  const handleLogout = async () => {
+    dispatch(removeAuthUser());
+    router.push("/auth/login");
   };
 
   return (

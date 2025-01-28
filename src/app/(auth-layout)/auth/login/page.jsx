@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 
 import { setAuthUser } from "@/redux/slices/authUser";
 import { login } from "@/services/auth";
-import { getUserProfile } from "@/services/users";
+import { getBusinessProfile } from "@/services/users";
 import { useSubmitHandler } from "@/utils/hooks";
 import { LoginSchema } from "@/utils/yup-schemas";
 import LoginIcon from "@mui/icons-material/Login";
@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+
 import { projectName } from "theme/theme-config";
 
 const Login = () => {
@@ -38,15 +39,13 @@ const Login = () => {
       loadingMsg: "Logging in...",
       successMsg: "Logged in successfully",
       onSubmit: async () => {
-        const { email, rememberMe } = values;
+        const { email, password, rememberMe } = values;
 
-        // const res = await login(email, password);
+        const res = await login(email, password);
 
-        // const { token } = res;
-        const token = "dummy token";
-        // const userData = await getUserProfile(token);
+        const { token } = res;
 
-        const userData = { email };
+        const userData = await getBusinessProfile(token);
 
         const reduxState = {
           userData,

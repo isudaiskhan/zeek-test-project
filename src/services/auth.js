@@ -7,11 +7,7 @@ export const login = async (email, password) => {
     password,
   };
 
-  return axios.post(`/auth/login`, data, {
-    auth: {
-      ...basicUsernameAndPassword,
-    },
-  });
+  return axios.post(`/auth/login/business`, data);
 };
 
 export const signup = async (data) => {
