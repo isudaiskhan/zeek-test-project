@@ -1,8 +1,13 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
 import ZeekCard from "./ZeekCard";
+import dynamic from "next/dynamic";
+
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const CardDetails = () => {
   const lineChartOptions = {

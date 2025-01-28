@@ -6,8 +6,13 @@ import {
   North as NorthIcon,
 } from "@mui/icons-material";
 
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
+
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 const SalesRevenueCard = () => {
   // First bar chart

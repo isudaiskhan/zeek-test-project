@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Button, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import ReactApexChart from "react-apexcharts";
+import dynamic from "next/dynamic";
+// import ReactApexChart from "react-apexcharts";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const SaleItemsCard = () => {
   const [polarChart, setPolarChart] = useState({

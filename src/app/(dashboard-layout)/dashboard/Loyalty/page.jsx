@@ -41,7 +41,7 @@ const Loyalty = () => {
             icon={<Add fontSize="large" sx={{ color: "#FF762A" }} />}
             bgColor="#FFDAC5"
             textColor="#787878"
-            onClick={() => (window.location.href = "/studio/add-card")}
+            onClick={() => router.push("/studio/add-card")}
           />
         </div>
       </Box>

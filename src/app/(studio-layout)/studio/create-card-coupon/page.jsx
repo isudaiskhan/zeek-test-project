@@ -13,6 +13,7 @@ import ZeekCardCouponDesign from "@/components/Studio/ZeekCardCouponDesign/ZeekC
 import CouponOverview from "@/components/Studio/CouponOverview/CouponOverview";
 import { BARCODE_TYPES } from "@/enums/barcode";
 import { getImageBase64URL } from "@/utils/helper-functions";
+import { useRouter } from "next/navigation";
 
 const CouponCard = () => {
   const [value, setValue] = React.useState(0);
@@ -25,6 +26,8 @@ const CouponCard = () => {
     value: "https://zeek.com",
   });
   const [imagePreview, setImagePreview] = React.useState(null);
+
+  const router = useRouter();
 
   const handleImageChange = async (file) => {
     if (file) {
@@ -69,7 +72,7 @@ const CouponCard = () => {
             textColor="black"
             bgColor="#EAEAEA"
             startIcon={<ArrowBackIosIcon fontSize="small" />}
-            onClick={() => (window.location.href = "/dashboard/loyalty")}
+            onClick={() => router.push("/dashboard/loyalty")}
           />
 
           <Typography

@@ -73,7 +73,6 @@ const Login = () => {
       <Container>
         <Grid2 container>
           <Grid2
-            item
             size={{
               xs: 12,
             }}
