@@ -15,6 +15,8 @@ import {
   Checkbox,
   Divider,
   ListItemIcon,
+  TablePagination,
+  TableFooter,
 } from "@mui/material";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -27,49 +29,8 @@ import CrmTableRow from "@/components/TableRow/CrmTableRow/CrmTableRow";
 import { Add } from "@mui/icons-material";
 import { GoDatabase } from "react-icons/go";
 import { RiMedalLine } from "react-icons/ri";
-
-const data = [
-  {
-    name: "Huzefa Dico",
-    email: "huzefadico@thezeekcompany.com",
-    lastVisited: "October 14, 2024",
-    tier: "Platinum",
-    points: "921",
-    avatar: "/images/user.png",
-  },
-  {
-    name: "Ziyad Mahomed",
-    email: "ziyadmahomed@thezeekcompany.com",
-    lastVisited: "October 27, 2024",
-    tier: "Gold",
-    points: "602",
-    avatar: "/images/user.png",
-  },
-  {
-    name: "Rashed Al Zaabi",
-    email: "rashedalzaabi@thezeekcompany.com",
-    lastVisited: "October 19, 2024",
-    tier: "Silver",
-    points: "345",
-    avatar: "/images/user.png",
-  },
-  {
-    name: "Bob Joe",
-    email: "bobjoe@thezeekcompany.com",
-    lastVisited: "October 14, 2024",
-    tier: "Bronze",
-    points: "90",
-    avatar: "/images/user.png",
-  },
-  {
-    name: "Sarah Thomas",
-    email: "sarahthomas@thezeekcompany.com",
-    lastVisited: "October 14, 2024",
-    tier: "Platinum",
-    points: "800",
-    avatar: "/images/user.png",
-  },
-];
+import { useGetCRMData } from "@/services/crm";
+import Spinner from "@/components/Spinner/Spinner";
 
 const TableHeadStyles = {
   fontSize: "12px",
@@ -107,6 +68,22 @@ const Crm = () => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const { data, isLoading, isError } = useGetCRMData(
+    page + 1,
+    rowsPerPage > 0 ? rowsPerPage : 0
+  );
+
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleRowSelect = (index) => {
     setSelectedRows((prev) =>
@@ -132,12 +109,19 @@ const Crm = () => {
 
   const isOpen = Boolean(anchorEl);
 
+  if (isError) {
+    return <div>Error Loading Data....</div>;
+  }
+
   return (
     <div className="p-4">
       <Box className="flex flex-wrap items-center justify-between p-4 gap-4">
         <div className="flex items-center w-full sm:w-auto">
-          <Typography variant="h5" fontWeight="bold" fontSize="40px">
+          <Typography variant="h4" className="!font-bold !text-4xl">
             Customers
+            <span className="text-[#B3B3B3] text-4xl ml-3 font-bold">
+              {data?.totalCount ? data?.totalCount : 0}
+            </span>
           </Typography>
         </div>
 
@@ -226,89 +210,109 @@ const Crm = () => {
           />
         </div>
       </Box>
-      <TableContainer>
-        <Table size="medium">
-          <TableHead>
-            <TableRow sx={{ "& td, & th": { border: 0 } }}>
-              <TableCell>
-                <Box display="flex" alignItems="center">
-                  <AccountCircleIcon
-                    sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="small"
-                    color="primary"
-                  />
-                  <Typography sx={TableHeadStyles}>Name</Typography>
-                </Box>
-              </TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="center">
-                  <MailIcon
-                    sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="small"
-                  />
-                  <Typography sx={TableHeadStyles}>Email</Typography>
-                </Box>
-              </TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="center">
-                  <AccessTimeIcon
-                    sx={{ marginRight: 1, color: "#ACACAC" }}
-                    fontSize="small"
-                  />
-                  <Typography sx={TableHeadStyles}>Last Visited</Typography>
-                </Box>
-              </TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="center">
-                  <RiMedalLine
-                    style={{
-                      marginRight: "8px",
-                      color: "#ACACAC",
-                      fontSize: "20px",
-                    }}
-                  />
-                  <Typography sx={TableHeadStyles}>Tier</Typography>
-                </Box>
-              </TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="center">
-                  <GoDatabase
-                    style={{
-                      marginRight: "8px",
-                      color: "#ACACAC",
-                      fontSize: "20px",
-                    }}
-                  />
-                  <Typography sx={TableHeadStyles}>Points</Typography>
-                </Box>
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ "& td, & th": { border: 0 } }}>
-              <TableCell
-                colSpan={5}
-                sx={{ padding: "4px 0" }}
-                className="bg-gray-100"
-              />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row, index) => (
-              <CrmTableRow
-                key={index}
-                index={index}
-                onSelect={handleRowSelect}
-                isSelected={selectedRows.includes(index)}
-                name={row.name}
-                email={row.email}
-                lastVisited={row.lastVisited}
-                tier={row.tier}
-                points={row.points}
-                avatar={row.avatar}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <TableContainer>
+          <Table size="medium">
+            <TableHead>
+              <TableRow sx={{ "& td, & th": { border: 0 } }}>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <AccountCircleIcon
+                      sx={{ marginRight: 1, color: "#ACACAC" }}
+                      fontSize="small"
+                      color="primary"
+                    />
+                    <Typography sx={TableHeadStyles}>Name</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <MailIcon
+                      sx={{ marginRight: 1, color: "#ACACAC" }}
+                      fontSize="small"
+                    />
+                    <Typography sx={TableHeadStyles}>Email</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <AccessTimeIcon
+                      sx={{ marginRight: 1, color: "#ACACAC" }}
+                      fontSize="small"
+                    />
+                    <Typography sx={TableHeadStyles}>Last Visited</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <RiMedalLine
+                      style={{
+                        marginRight: "8px",
+                        color: "#ACACAC",
+                        fontSize: "20px",
+                      }}
+                    />
+                    <Typography sx={TableHeadStyles}>Tier</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <GoDatabase
+                      style={{
+                        marginRight: "8px",
+                        color: "#ACACAC",
+                        fontSize: "20px",
+                      }}
+                    />
+                    <Typography sx={TableHeadStyles}>Points</Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ "& td, & th": { border: 0 } }}>
+                <TableCell
+                  colSpan={5}
+                  sx={{ padding: "4px 0" }}
+                  className="bg-gray-100"
+                />
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {data?.data?.map((item, index) => (
+                <CrmTableRow
+                  key={item?._id}
+                  index={index}
+                  onSelect={handleRowSelect}
+                  isSelected={selectedRows.includes(index)}
+                  name={item?.user?.name}
+                  email={item?.user?.email}
+                  lastVisited={item?.lastVisit}
+                  tier={item?.userTier}
+                  points={item?.points}
+                  avatar={item?.user?.image}
+                />
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                  count={data?.totalCount ? data?.totalCount : 0}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={(event, newPage) => handleChangePage(newPage)}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  showFirstButton
+                  showLastButton
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      )}
+
       {open && <SendNotification open={open} onClose={handleClose} />}
     </div>
   );

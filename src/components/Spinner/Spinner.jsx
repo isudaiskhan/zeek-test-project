@@ -1,7 +1,7 @@
 import { HalfCircleSpinner } from "react-epic-spinners";
 import colorVariables from "@/styles/colors.module.scss";
 
-const primaryColor = colorVariables.primary;
+const primaryColor = colorVariables.secondary;
 
 const Spinner = ({
   size = 40,

@@ -1,4 +1,5 @@
 import CustomTableCell from "@/components/Custom/CustomTableCell/CustomTableCell";
+import { fileBaseURL } from "@/utils/urls";
 import { InfoOutlined } from "@mui/icons-material";
 import {
   Avatar,
@@ -51,7 +52,7 @@ const EmployeeTableRow = ({
               }}
             />
             <Avatar
-              src={avatar}
+              src={`${fileBaseURL}${avatar}`}
               alt={name}
               sx={{ width: 32, height: 32, marginRight: 1 }}
             />
@@ -68,12 +69,13 @@ const EmployeeTableRow = ({
           <Chip
             label={role}
             sx={{
-              backgroundColor: role === "Manager" ? "#B3B3B3" : "#ECECEC",
-              color: role === "Manager" ? "#222222" : "#898989",
+              backgroundColor: role === "manager" ? "#B3B3B3" : "#ECECEC",
+              color: role === "manager" ? "#222222" : "#898989",
               borderRadius: "4px",
               padding: "2px 8px",
               fontSize: "13px",
               fontWeight: 500,
+              textTransform: "capitalize",
             }}
           />
         </CustomTableCell>

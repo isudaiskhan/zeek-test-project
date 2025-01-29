@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -96,4 +97,22 @@ export const useSubmitHandler = () => {
   };
 
   return { submitHandler, submitLoading };
+};
+
+export const useInvalidateQuery = () => {
+  const queryClient = useQueryClient();
+
+  const invalidateQuery = (queryKey) => {
+    queryClient.invalidateQueries(queryKey, {
+      onSuccess: () => {
+        // console
+        console.log(`${queryKey} query invalidated successfully`);
+      },
+      onError: (error) => {
+        console.error(`Error invalidating ${queryKey} query:`, error);
+      },
+    });
+  };
+
+  return { invalidateQuery };
 };

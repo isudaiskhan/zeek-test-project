@@ -1,5 +1,7 @@
 import CustomTableCell from "@/components/Custom/CustomTableCell/CustomTableCell";
 import ViewCustomerModal from "@/components/Modals/ViewCustomerModal/ViewCustomerModal";
+import { BUSINESS_TIERS } from "@/enums/tiers";
+import { fileBaseURL } from "@/utils/urls";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
 import {
   Avatar,
@@ -14,13 +16,13 @@ import React, { useState } from "react";
 
 const getTierStyle = (tier) => {
   switch (tier) {
-    case "Platinum":
+    case BUSINESS_TIERS.PLATINUM:
       return { backgroundColor: "#0000004D", color: "#222222" };
-    case "Gold":
+    case BUSINESS_TIERS.GOLD:
       return { backgroundColor: "#FFD23340", color: "#FFC700" };
-    case "Silver":
+    case BUSINESS_TIERS.SILVER:
       return { backgroundColor: "#ECECEC", color: "#898989" };
-    case "Bronze":
+    case BUSINESS_TIERS.BRONZE:
       return { backgroundColor: "#BE8E5E40", color: "#86684A" };
     default:
       return {};
@@ -91,7 +93,7 @@ const CrmTableRow = ({
               }}
             />
             <Avatar
-              src={avatar}
+              src={`${fileBaseURL}${avatar}`}
               alt={name}
               sx={{
                 width: 32,
@@ -119,6 +121,7 @@ const CrmTableRow = ({
               textAlign: "center",
               fontSize: "13px",
               fontWeight: 500,
+              textTransform: "capitalize",
               ...getTierStyle(tier),
             }}
           >

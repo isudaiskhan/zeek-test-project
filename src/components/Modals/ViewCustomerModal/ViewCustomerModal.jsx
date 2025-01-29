@@ -11,18 +11,20 @@ import React from "react";
 import Grid from "@mui/material/Grid2";
 import Image from "next/image";
 import { Close } from "@mui/icons-material";
+import { fileBaseURL } from "@/utils/urls";
+import { BUSINESS_TIERS } from "@/enums/tiers";
 
 const subParaSX = { fontSize: "20px", fontWeight: 400, color: "#838383" };
 
 const getTierStyle = (tier) => {
   switch (tier) {
-    case "Platinum":
+    case BUSINESS_TIERS.PLATINUM:
       return { backgroundColor: "#0000004D", color: "#222222" };
-    case "Gold":
+    case BUSINESS_TIERS.GOLD:
       return { backgroundColor: "#FFD23340", color: "#FFC700" };
-    case "Silver":
+    case BUSINESS_TIERS.SILVER:
       return { backgroundColor: "#ECECEC", color: "#898989" };
-    case "Bronze":
+    case BUSINESS_TIERS.BRONZE:
       return { backgroundColor: "#BE8E5E40", color: "#86684A" };
     default:
       return {};
@@ -65,12 +67,13 @@ const ViewCustomerModal = ({
               <div className="flex flex-row gap-6 justify-start items-center">
                 <div className="flex justify-center rounded-full">
                   <Image
-                    src={avatar}
+                    src={`${fileBaseURL}${avatar}`}
                     alt={name}
                     width={100}
                     height={100}
                     layout="responsive"
                     className="w-[150px] h-[150px] rounded-full"
+                    loader={({ src }) => src}
                   />
                 </div>
                 <div className="flex flex-col justify-center gap-2">
@@ -103,6 +106,7 @@ const ViewCustomerModal = ({
                         fontSize: "20px",
                         fontWeight: 700,
                         color: "#222222",
+                        textTransform: "capitalize",
                       }}
                     >
                       {tier}
