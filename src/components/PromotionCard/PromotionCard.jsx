@@ -38,7 +38,10 @@ const PromotionCard = ({
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
         borderRadius: "8px",
         padding: "24px",
-        // width: "444px",
+        minHeight: "580px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <div className="flex justify-end items-end mb-2">

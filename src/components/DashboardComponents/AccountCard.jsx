@@ -13,7 +13,7 @@ const AccountCard = () => {
         >
           Account
         </Typography>
-        <div className="flex justify-end">
+        <div className="flex justify-end xl:mt-0 lg:mt-3">
           <Image
             src="/images/logo.svg"
             alt="Custom Icon"

@@ -171,7 +171,7 @@ const SalesRevenueCard = () => {
         </div>
 
         {/* Daily Sales Section */}
-        <div className="lg:w-[270px]">
+        <div className="xl:w-[270px] lg:w-[200px]">
           <div className="flex justify-between items-start">
             <Typography
               variant="subtitle2"

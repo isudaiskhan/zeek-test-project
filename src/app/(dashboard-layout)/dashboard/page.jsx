@@ -10,7 +10,7 @@ import AccountCard from "@/components/DashboardComponents/AccountCard";
 const Dashboard = () => {
   return (
     <div className="p-4">
-      <div className="flex flex-col flex-wrap lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         <SalesRevenueCard />
         <AccountCard />
       </div>

@@ -197,7 +197,7 @@ const Promotions = () => {
       <Box className="flex flex-col items-center justify-center gap-1 py-5">
         <div className="w-[90%]">
           {activeTab === "offers" && (
-            <Grid container spacing={4}>
+            <Grid container spacing={4} alignItems="stretch">
               {offers.map((offer) => (
                 <Grid item size={{ xs: 12, md: 4 }} key={offer.id}>
                   <PromotionCard
