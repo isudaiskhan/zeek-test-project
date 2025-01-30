@@ -9,6 +9,7 @@ const CustomButton = ({
   icon,
   startIcon,
   isLandingPage,
+  type,
 }) => {
   return (
     <Button
@@ -24,6 +25,7 @@ const CustomButton = ({
         width: isLandingPage ? "100%" : "auto",
       }}
       startIcon={startIcon}
+      type={type}
     >
       {text || icon}
     </Button>

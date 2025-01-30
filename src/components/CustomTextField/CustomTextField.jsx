@@ -1,38 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField, FormHelperText } from "@mui/material";
 
 const CustomTextField = ({
   placeholder,
-  borderRadius,
-  haveBorderRadius,
-  multiline,
+  borderRadius = "16px",
+  haveBorderRadius = true,
+  multiline = false,
   rows,
   width,
-  type,
+  type = "text",
   name,
   value,
   onChange,
-  validate,
+  error,
   errorMessage,
+  InputProps,
 }) => {
-  const [error, setError] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { value } = e.target;
-
-    if (validate && !validate(value)) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-
-    if (value === "") {
-      setError(false);
-    }
-
-    onChange(e);
-  };
-
   return (
     <div>
       <TextField
@@ -44,8 +27,9 @@ const CustomTextField = ({
         rows={multiline ? rows : undefined}
         value={value}
         name={name}
-        onChange={handleInputChange}
+        onChange={onChange}
         error={error}
+        InputProps={InputProps}
         sx={{
           borderRadius: haveBorderRadius ? borderRadius : "16px",
           width: width,

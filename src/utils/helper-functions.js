@@ -45,3 +45,11 @@ export const generateRandomHexColor = () => {
 export const cn = (...inputs) => {
   return twMerge(clsx(inputs));
 };
+
+export const transformString = (str) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
