@@ -1,6 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
-  Box,
   Button,
   FormControl,
   InputLabel,
@@ -10,21 +9,22 @@ import {
 } from "@mui/material";
 import CustomTextField from "../CustomTextField/CustomTextField";
 import SuccessDialog from "../Modals/SuccessModal";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 const EditProfile = () => {
-  const fileInputRef = useRef(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({
     country: "",
   });
 
-  const handleImageUpload = (file) => {
-    if (file) {
-      setUploadedImage(file);
-    }
+  const handleImageChangeAndUpload = (file) => {
+    setUploadedImage(file);
   };
 
+  const handleImageDelete = () => {
+    setUploadedImage(null);
+  };
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
     setSelectedOptions((prevState) => ({
@@ -34,6 +34,7 @@ const EditProfile = () => {
   };
 
   const handleSaveChangesClick = () => {
+    console.log("Base64 Image String:", uploadedImage);
     setSuccessModalOpen(true);
   };
 
@@ -105,34 +106,10 @@ const EditProfile = () => {
               Change your business logo, this will be visible to users.
             </Typography>
 
-            <div
-              className="flex justify-center items-center rounded-md p-4 cursor-pointer w-[230px] h-[210px]"
-              style={{
-                border: "1px solid #D3D3D3",
-                backgroundImage: uploadedImage
-                  ? `url(${URL.createObjectURL(uploadedImage)})`
-                  : `url("/images/checkers.png")`,
-                backgroundSize: "cover",
-              }}
-              onClick={() => fileInputRef.current.click()}
-            >
-              {!uploadedImage && (
-                <Box
-                  className="flex justify-center items-center px-6 py-2 bg-[#FFFFFF] rounded-2xl"
-                  sx={{ boxShadow: "0px 0px 10px 0px #0000004D" }}
-                >
-                  <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                    Upload Image
-                  </Typography>
-                </Box>
-              )}
-            </div>
-            <input
-              ref={fileInputRef}
-              type="file"
-              hidden
-              accept="image/*"
-              onChange={(e) => handleImageUpload(e.target.files[0])}
+            <ImageUpload
+              imageFile={uploadedImage}
+              onFileDelete={handleImageDelete}
+              onFileChange={handleImageChangeAndUpload}
             />
           </div>
 
