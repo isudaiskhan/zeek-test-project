@@ -89,8 +89,11 @@ const Employees = () => {
     <div className="p-4">
       <Box className="flex flex-wrap items-center justify-between p-4 gap-4">
         <div className="flex items-center w-full sm:w-auto">
-          <Typography variant="h5" fontWeight="bold" fontSize="40px">
+          <Typography variant="h4" className="!font-bold !text-4xl">
             Employees
+            <span className="text-[#B3B3B3] text-4xl ml-3 font-bold">
+              {data?.totalCount ? data?.totalCount : 0}
+            </span>
           </Typography>
         </div>
         <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto justify-end">
@@ -192,7 +195,7 @@ const Employees = () => {
                   name={item?.fullName}
                   email={item?.email}
                   branch={item?.branch?.name}
-                  role={item?.role}
+                  role={item?.role?.name}
                   id={item?._id}
                   onSelect={handleRowSelect}
                   isSelected={selectedRows.includes(item?._id)}

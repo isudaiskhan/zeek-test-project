@@ -1,6 +1,7 @@
 import Promise from "promise";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { uploadFile } from "@/services/file";
 
 export const getImageBase64URL = async (file) => {
   if (!file) return null;
@@ -52,4 +53,11 @@ export const transformString = (str) => {
     .toLowerCase()
     .replace(/_/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+export const uploadFileFunc = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return await uploadFile(formData);
 };

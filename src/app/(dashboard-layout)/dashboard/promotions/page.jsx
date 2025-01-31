@@ -9,82 +9,12 @@ import Grid from "@mui/material/Grid2";
 import PromotionCard from "@/components/PromotionCard/PromotionCard";
 import OfferModal from "@/components/Modals/OfferModal/OfferModal";
 import RewardModal from "@/components/Modals/RewardModal/RewardModal";
+import { useGetPromotions } from "@/services/promotions";
+import Spinner from "@/components/Spinner/Spinner";
 
 const tabs = [
   { label: "Offers", value: "offers" },
   { label: "Rewards", value: "rewards" },
-];
-
-const offers = [
-  {
-    id: 1,
-    heading: "Purchase a Latte and get a free pastry",
-    image: "/images/latte.png",
-    points: "N/A",
-    coinType: "N/A",
-    expiry: "Jan 31, 2025",
-    branch: "All",
-    offerType: "Repeating Offer",
-    createdAt: "Created 2024/11/10 8:14",
-  },
-  {
-    id: 2,
-    heading: "50% off all pastries",
-    image: "/images/pastries.png",
-    points: "N/A",
-    coinType: "N/A",
-    expiry: "Jan 31, 2025",
-    branch: "All",
-    offerType: "Repeating Offer",
-    createdAt: "Created 2024/11/10 8:14",
-  },
-  {
-    id: 3,
-    heading: "25% off a dozen assorted donuts",
-    image: "/images/donuts.png",
-    points: "N/A",
-    coinType: "N/A",
-    expiry: "Jan 31, 2025",
-    branch: "All",
-    offerType: "Repeating Offer",
-    createdAt: "Created 2024/11/10 8:14",
-  },
-];
-
-const rewards = [
-  {
-    id: 1,
-    heading: "Hot/Iced Latte",
-    image: "/images/latte.png",
-    points: "50",
-    coinType: "Sato Points",
-    expiry: "Jan 31, 2025",
-    branch: "All",
-    offerType: "Uses: 3",
-    createdAt: "Created 2024/11/10 8:14",
-  },
-  {
-    id: 2,
-    heading: "Half a dozen cinnamon rolls",
-    image: "/images/pastries.png",
-    points: "100",
-    coinType: "Zeek Points",
-    expiry: "Jan 31, 2025",
-    branch: "All",
-    offerType: "Uses: 2",
-    createdAt: "Created 2024/11/10 8:14",
-  },
-  {
-    id: 3,
-    heading: "A dozen assorted donuts",
-    image: "/images/donuts.png",
-    points: "100",
-    coinType: "Sato Points",
-    expiry: "Jan 31, 2025",
-    branch: "All",
-    offerType: "Uses: 1",
-    createdAt: "Created 2024/11/10 8:14",
-  },
 ];
 
 const Promotions = () => {
@@ -92,6 +22,8 @@ const Promotions = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openOfferModal, setOpenOfferModal] = useState(false);
   const [openRewardModal, setOpenRewardModal] = useState(false);
+
+  const { data, isLoading, isError } = useGetPromotions();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -123,12 +55,19 @@ const Promotions = () => {
     setOpenRewardModal(false);
   };
 
+  if (isError) {
+    return <div>Error Loading Promotions....</div>;
+  }
+
   return (
     <div className="p-4">
       <Box className="flex flex-wrap items-center justify-between p-4 gap-4">
         <div className="flex items-center w-full sm:w-auto">
-          <Typography variant="h5" fontWeight="bold" fontSize="40px">
+          <Typography variant="h4" className="!font-bold !text-4xl">
             Promotions
+            <span className="text-[#B3B3B3] text-4xl ml-3 font-bold">
+              {data?.totalCount ? data?.totalCount : 0}
+            </span>
           </Typography>
         </div>
 
@@ -194,46 +133,60 @@ const Promotions = () => {
           ))}
         </div>
       </Box>
-      <Box className="flex flex-col items-center justify-center gap-1 py-5">
-        <div className="w-[90%]">
-          {activeTab === "offers" && (
-            <Grid container spacing={4} alignItems="stretch">
-              {offers.map((offer) => (
-                <Grid item size={{ xs: 12, md: 4 }} key={offer.id}>
-                  <PromotionCard
-                    heading={offer.heading}
-                    image={offer.image}
-                    points={offer.points}
-                    coinType={offer.coinType}
-                    expiry={offer.expiry}
-                    branch={offer.branch}
-                    offerType={offer.offerType}
-                    createdAt={offer.createdAt}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          )}
-          {activeTab === "rewards" && (
-            <Grid container spacing={4}>
-              {rewards.map((offer) => (
-                <Grid item size={{ xs: 12, md: 4 }} key={offer.id}>
-                  <PromotionCard
-                    heading={offer.heading}
-                    image={offer.image}
-                    points={offer.points}
-                    coinType={offer.coinType}
-                    expiry={offer.expiry}
-                    branch={offer.branch}
-                    offerType={offer.offerType}
-                    createdAt={offer.createdAt}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          )}
-        </div>
-      </Box>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Box className="flex flex-col items-center justify-center gap-1 py-5">
+          <div className="w-[90%]">
+            {activeTab === "offers" && (
+              <Grid container spacing={4} alignItems="stretch">
+                {data?.data
+                  ?.filter((offer) => offer?.promotionType === "offer")
+                  .map((offer) => (
+                    <Grid size={{ xs: 12, md: 4 }} key={offer?._id}>
+                      <PromotionCard
+                        heading={offer?.name}
+                        id={offer?._id}
+                        image={offer?.image}
+                        points={offer?.coinCost}
+                        coinType={offer?.coinType}
+                        expiry={offer?.expiryDate}
+                        branch={offer?.branches?.map((b) => b.name).join(", ")}
+                        offerType={offer?.promotionType}
+                        createdAt={offer?.createdAt}
+                        maxLimitUse={offer?.maxLimitUse}
+                        promotionType={offer?.promotionType}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
+            )}
+            {activeTab === "rewards" && (
+              <Grid container spacing={4}>
+                {data?.data
+                  ?.filter((reward) => reward?.promotionType === "reward")
+                  .map((reward) => (
+                    <Grid size={{ xs: 12, md: 4 }} key={reward._id}>
+                      <PromotionCard
+                        heading={reward?.name}
+                        id={reward?._id}
+                        image={reward?.image}
+                        points={reward?.coinCost}
+                        coinType={reward?.coinType}
+                        expiry={reward?.expiry}
+                        branch={reward?.branches?.map((b) => b.name).join(", ")}
+                        offerType={reward?.offerType}
+                        createdAt={reward?.createdAt}
+                        maxLimitUse={reward?.maxLimitUse}
+                        promotionType={reward?.promotionType}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
+            )}
+          </div>
+        </Box>
+      )}
 
       {openOfferModal && (
         <OfferModal open={openOfferModal} onClose={handleCloseOfferModal} />

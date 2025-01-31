@@ -29,8 +29,11 @@ import { EmployeeSchema } from "@/utils/yup-schemas";
 import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
 import { addEmployee } from "@/services/employees";
 import { EMPLOYMENT_TYPE } from "@/enums/employment-type";
-import { getImageBase64URL, transformString } from "@/utils/helper-functions";
-import { uploadFile } from "@/services/file";
+import {
+  getImageBase64URL,
+  transformString,
+  uploadFileFunc,
+} from "@/utils/helper-functions";
 
 const subHeadingSX = { fontWeight: 400, fontSize: "14px" };
 
@@ -46,6 +49,7 @@ const EmployeeModal = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [filePreview, setFilePreview] = React.useState("");
+  const [selectedFile, setSelectedFile] = React.useState(null);
   const fileInputRef = React.useRef(null);
 
   const { invalidateQuery } = useInvalidateQuery();
@@ -86,9 +90,15 @@ const EmployeeModal = ({ open, onClose }) => {
   const formik = useFormik({
     initialValues: initialEmployeeValues,
     validationSchema: EmployeeSchema,
-    onSubmit: (values, { resetForm, setSubmitting }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
+      let imageKey = "";
+      if (selectedFile) {
+        const response = await uploadFileFunc(selectedFile);
+        imageKey = response?.key;
+      }
       const formattedValues = {
         ...values,
+        profileImage: imageKey,
         hireDate: values.hireDate
           ? dayjs(values.hireDate).format("YYYY-MM-DD")
           : null,
@@ -121,15 +131,8 @@ const EmployeeModal = ({ open, onClose }) => {
     if (file) {
       const base64URL = await getImageBase64URL(file);
       setFilePreview(base64URL);
-
-      const formData = new FormData();
-      formData.append("file", file);
-      try {
-        const key = await uploadFile(formData);
-        formik.setFieldValue("profileImage", key?.key);
-      } catch (error) {
-        console.error("File upload failed");
-      }
+      setSelectedFile(file);
+      formik.setFieldValue("profileImage", file.name);
     }
   };
 

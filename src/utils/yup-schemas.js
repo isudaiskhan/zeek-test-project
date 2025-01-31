@@ -52,3 +52,37 @@ export const EmployeeSchema = object().shape({
     .oneOf([ref("temporaryPassword")], "Passwords must match")
     .required("Confirm password is required"),
 });
+
+export const PromotionOfferSchema = object().shape({
+  name: string().required("Name is required"),
+  description: string().required("Description is required"),
+  expiryDate: date().required("Expiry date is required"),
+
+  branches: array()
+    .of(string().required("Invalid branch ID")) // Validate each item in the array
+    .min(1, "At least one branch is required"), // Require at least one selected branch
+  repeatsOn: array()
+    .of(string().required("Invalid repeat day"))
+    .min(1, "At least one repeat day is required"),
+  image: string().required("Image is required"),
+  // maxLimitUse: string().required("Max limit use is required"),
+});
+
+export const PromotionRewardSchema = object().shape({
+  name: string().required("Name is required"),
+  description: string().required("Description is required"),
+  expiryDate: date().required("Expiry date is required"),
+
+  branches: array()
+    .of(string().required("Invalid branch ID")) // Validate each item in the array
+    .min(1, "At least one branch is required"), // Require at least one selected branch
+  // repeatsOn: array()
+  //   .of(string().required("Invalid repeat day"))
+  //   .min(1, "At least one repeat day is required"),
+  image: string().required("Image is required"),
+  // maxLimitUse: string().required("Max limit use is required"),
+  coinCost: string().required("Coin cost is required"),
+  segments: array()
+    .of(string().required("Invalid segment ID")) // Validate each item in the array
+    .min(1, "At least one segment is required"), // Require at least one selected segment
+});
