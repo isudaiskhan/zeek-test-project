@@ -46,12 +46,12 @@ const Reviews = () => {
   const [replyActive, setReplyActive] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [tag, setTag] = React.useState(null);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
     setPage(value);
   };
 
-  const { data, isLoading, isError } = useGetAllReviews(page + 1, 3, tag);
+  const { data, isLoading, isError } = useGetAllReviews(page, 3, tag);
 
   const handleReplyClick = (id) => {
     setReplyActive((prevId) => (prevId === id ? null : id));
@@ -69,7 +69,8 @@ const Reviews = () => {
 
   const handleTagClick = (tag) => {
     setTag(tag);
-    setPage(0);
+    setPage(1);
+    setAnchorEl(null);
   };
 
   if (isError) {
