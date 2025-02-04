@@ -15,13 +15,14 @@ const CustomTextField = ({
   error,
   errorMessage,
   InputProps,
+  size = "small",
 }) => {
   return (
-    <div>
+    <>
       <TextField
         variant="outlined"
         placeholder={placeholder}
-        size="small"
+        size={size}
         multiline={multiline}
         type={type}
         rows={multiline ? rows : undefined}
@@ -40,7 +41,7 @@ const CustomTextField = ({
         }}
       />
       {error && <FormHelperText error>{errorMessage}</FormHelperText>}
-    </div>
+    </>
   );
 };
 

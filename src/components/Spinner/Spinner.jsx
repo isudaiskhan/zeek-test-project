@@ -1,7 +1,4 @@
-import { HalfCircleSpinner } from "react-epic-spinners";
-import colorVariables from "@/styles/colors.module.scss";
-
-const primaryColor = colorVariables.secondary;
+import { CircularProgress } from "@mui/material";
 
 const Spinner = ({
   size = 40,
@@ -10,7 +7,7 @@ const Spinner = ({
 }) => {
   return (
     <div className="flex flex-col items-center justify-center my-4">
-      <HalfCircleSpinner color={primaryColor} size={size} />
+      <CircularProgress size={size} color="secondary" />
       {showText && (
         <p className="text-xl text-primary-light dark:text-primary-dark">
           {customText}

@@ -86,3 +86,13 @@ export const PromotionRewardSchema = object().shape({
     .of(string().required("Invalid segment ID")) // Validate each item in the array
     .min(1, "At least one segment is required"), // Require at least one selected segment
 });
+
+export const NotificationSchema = object().shape({
+  title: string().required("Required"),
+  segment: string().required("Required"),
+  message: string().required("Required"),
+});
+
+export const SegmentSchema = object().shape({
+  title: string().required("Required"),
+});

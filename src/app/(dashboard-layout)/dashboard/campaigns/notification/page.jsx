@@ -1,16 +1,51 @@
 "use client";
 import React, { useState } from "react";
 import NotificationRow from "@/components/NotificationComponents/NotificationRow";
-import NotificationModal from "@/components/Modals/Notifications/CreateNotification";
 import { Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { notificationsData } from "@/utils/dummy-data";
 import SendNotification from "@/components/Modals/SendNotification/SendNotification";
+import { useGetAllNotifications } from "@/services/notifications";
+import Spinner from "@/components/Spinner/Spinner";
+import { NOTIFICATION_STATUS } from "@/enums/status";
 
 const Notifications = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [openPublishModal, setOpenPublishModal] = useState(false);
-  const [openDraftModal, setOpenDraftModal] = useState(false);
+
+  // Active Notifications
+  const {
+    data: activeData,
+    isLoading: activeLoading,
+    isError: activeError,
+    fetchNextPage: fetchNextActive,
+    hasNextPage: hasNextActive,
+  } = useGetAllNotifications(3, NOTIFICATION_STATUS.ACTIVE);
+  const activeNotifications =
+    activeData?.pages?.flatMap((page) => page.data) || [];
+
+  // Inactive Notifications
+  const {
+    data: inActiveData,
+    isLoading: inActiveLoading,
+    isError: inActiveError,
+    fetchNextPage: fetchNextInactive,
+    hasNextPage: hasNextInactive,
+  } = useGetAllNotifications(3, NOTIFICATION_STATUS.IN_ACTIVE);
+  const inActiveNotifications =
+    inActiveData?.pages?.flatMap((page) => page.data) || [];
+
+  // Draft Notifications
+  const {
+    data: draftData,
+    isLoading: draftLoading,
+    isError: draftError,
+    fetchNextPage: fetchNextDraft,
+    hasNextPage: hasNextDraft,
+  } = useGetAllNotifications(3, NOTIFICATION_STATUS.DRAFT);
+  const draftNotifications =
+    draftData?.pages?.flatMap((page) => page.data) || [];
+
+  const isError = activeError || draftError || inActiveError;
+  const isLoading = activeLoading || draftLoading || inActiveLoading;
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -20,21 +55,18 @@ const Notifications = () => {
     setOpenModal(false);
   };
 
-  const handleOpenPublishModal = () => {
-    setOpenPublishModal(true);
-  };
-
-  const handleClosePublishModal = () => {
-    setOpenPublishModal(false);
-  };
-
-  const handleOpenDraftModal = () => {
-    setOpenDraftModal(true);
-  };
-
-  const handleCloseDraftModal = () => {
-    setOpenDraftModal(false);
-  };
+  if (isError) {
+    return (
+      <div className="flex flex-col justify-center py-8 items-center p-6">
+        <Typography
+          variant="h5"
+          className="text-black !text-4xl !font-sans !self-start !font-bold"
+        >
+          Something went wrong
+        </Typography>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-center py-8 items-center p-6">
@@ -55,24 +87,33 @@ const Notifications = () => {
         </IconButton>
       </div>
 
-      <NotificationRow
-        label="Active"
-        count={3}
-        cardData={notificationsData.slice(0, 3)}
-        status="active"
-      />
-      <NotificationRow
-        label="Inactive"
-        count={3}
-        cardData={notificationsData.slice(3, 6)}
-        status="inactive"
-      />
-      <NotificationRow
-        label="Draft"
-        count={3}
-        cardData={notificationsData.slice(6, 9)}
-        status="draft"
-      />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <NotificationRow
+            label="Active"
+            cardData={activeNotifications}
+            isActive
+            fetchNextActive={fetchNextActive}
+            hasNextActive={hasNextActive}
+          />
+          <NotificationRow
+            label="Inactive"
+            cardData={inActiveNotifications}
+            isInactive
+            fetchNextInactive={fetchNextInactive}
+            hasNextInactive={hasNextInactive}
+          />
+          <NotificationRow
+            label="Draft"
+            cardData={draftNotifications}
+            isDraft
+            fetchNextDraft={fetchNextDraft}
+            hasNextDraft={hasNextDraft}
+          />
+        </>
+      )}
 
       {openModal && (
         <SendNotification open={openModal} onClose={handleCloseModal} />

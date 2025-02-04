@@ -25,7 +25,7 @@ import { OFFER_TYPES, PROMOTION_COIN_TYPES } from "@/enums/promotion";
 import dayjs from "dayjs";
 import { useGetBranches } from "@/services/branch";
 import { PromotionRewardSchema } from "@/utils/yup-schemas";
-import { useGetSegments } from "@/services/segments";
+import { useGetAllSegments } from "@/services/segments";
 import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
 import { addPromotion } from "@/services/promotions";
 
@@ -63,8 +63,9 @@ const RewardModal = ({ open, onClose }) => {
   const { invalidateQuery } = useInvalidateQuery();
   const { submitHandler } = useSubmitHandler();
 
-  const { data } = useGetBranches(1, 1000);
-  const { data: segments } = useGetSegments(1, 1000);
+  const { data } = useGetBranches(1, 15);
+
+  const { data: segments } = useGetAllSegments(1, 15);
 
   const handleCoinTypeClick = (coin) => {
     setActiveCoinType(coin);

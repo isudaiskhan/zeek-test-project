@@ -1,41 +1,62 @@
 "use client";
-import { Box, Modal, Typography, Button, TextField } from "@mui/material";
+import { Box, Modal, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
 import SuccessModal from "../SuccessModal";
+import CustomTextField from "@/components/CustomTextField/CustomTextField";
+import { useFormik } from "formik";
+import { BUSINESS_TIERS } from "@/enums/tiers";
+import { transformString } from "@/utils/helper-functions";
+import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
+import { addSegments } from "@/services/segments";
+import { timeSinceLastVisit, visitFrequency } from "@/enums/segments";
+import { SegmentSchema } from "@/utils/yup-schemas";
+
+const tiersOptions = Object.entries(BUSINESS_TIERS).map(([key, value]) => ({
+  label: transformString(key),
+  value,
+}));
 
 const CreateSegment = ({ open, onClose }) => {
-  const [modalState, setModalState] = useState({
-    create: false,
-    publish: false,
-    draft: false,
-  });
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
-  const handleCloseModal = () => {
-    setModalState({
-      create: false,
-      publish: false,
-      draft: false,
-    });
-    onClose();
-  };
+  const { submitHandler } = useSubmitHandler();
+  const { invalidateQuery } = useInvalidateQuery();
 
-  const handleCreateClick = () => {
+  const handleOpenSuccessModal = () => {
     setSuccessModalOpen(true);
   };
 
   const handleCloseSuccessModal = () => {
     setSuccessModalOpen(false);
-    handleCloseModal();
   };
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      tier: "", // bronze, silver, gold, platinum
+      timeLastVisit: "", // 7, 14, 30, 60, 90
+      visitFrequency: "", // 2,3,5,7
+    },
+    validationSchema: SegmentSchema,
+    onSubmit: (values, { resetForm, setSubmitting }) => {
+      submitHandler({
+        successMsg: "Segment has been created successfully",
+        onSubmit: async () => {
+          await addSegments(values);
+          invalidateQuery(["get-segments"]);
+          handleOpenSuccessModal();
+          resetForm();
+        },
+        onFinally: () => {
+          setSubmitting(false);
+        },
+      });
+    },
+  });
 
   return (
     <>
-      <Modal
-        open={open}
-        onClose={handleCloseModal}
-        className="!backdrop-blur-sm"
-      >
+      <Modal open={open} onClose={onClose} className="!backdrop-blur-sm">
         <Box className="w-full md:w-1/2 bg-white rounded-md shadow-md p-8 mx-auto my-20">
           <Typography
             variant="h5"
@@ -43,18 +64,20 @@ const CreateSegment = ({ open, onClose }) => {
           >
             Create Segment
           </Typography>
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <Typography
               variant="subtitle1"
               className="!font-bold !font-sans !mt-10 !text-2xl !text-black !mb-2"
             >
               Title
             </Typography>
-            <TextField
-              label="Name"
-              id="outlined-size-small"
-              size="small"
-              className="!mb-4  !bg-[#F4F4F4]"
+            <CustomTextField
+              placeholder="Name"
+              name="title"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              errorMessage={formik.errors.title}
             />
             <Typography
               variant="subtitle1"
@@ -66,13 +89,27 @@ const CreateSegment = ({ open, onClose }) => {
               Tiers
             </Typography>
             <div className="mb-4 flex gap-2 flex-wrap">
-              {["Bronze", "Silver", "Gold", "Platinum"].map((tier) => (
+              {tiersOptions.map((tier, index) => (
                 <Button
-                  key={tier}
+                  key={index}
                   variant="outlined"
-                  className="capitalize !border !rounded-lg !px-6 !py-2 !shadow !shadow-[#00000040] !font-sans !text-sm !text-[#5B5B5B] !border-solid !bg-[#FFFFFF] !border-[#EDEDED]"
+                  className={`capitalize !border !rounded-lg !px-6 !py-2 !shadow !shadow-[#00000040] !font-sans ${
+                    formik.values.tier === tier.value
+                      ? "!text-[#FF5B00]"
+                      : "!text-[#5B5B5B]"
+                  } !text-sm  !border-solid ${
+                    formik.values.tier === tier.value
+                      ? "!bg-[#FFECE1]"
+                      : "!bg-[#FFFFFF]"
+                  }  !border-[#EDEDED]`}
+                  onClick={() =>
+                    formik.setFieldValue(
+                      "tier",
+                      formik.values.tier === tier.value ? "" : tier.value
+                    )
+                  }
                 >
-                  {tier}
+                  {tier.label}
                 </Button>
               ))}
             </div>
@@ -80,43 +117,67 @@ const CreateSegment = ({ open, onClose }) => {
               Time since last visit
             </Typography>
             <div className="mb-4 flex gap-2 flex-wrap">
-              {["7 days", "14 days", "30 days", "60 days", "90 days"].map(
-                (time) => (
-                  <Button
-                    key={time}
-                    variant="outlined"
-                    className="capitalize !border !rounded-lg !px-6 !py-2 !shadow !shadow-[#00000040] !font-sans !text-sm !text-[#5B5B5B] !border-solid !bg-[#FFFFFF] !border-[#EDEDED]"
-                  >
-                    {time}
-                  </Button>
-                )
-              )}
+              {timeSinceLastVisit.map((time, index) => (
+                <Button
+                  key={index}
+                  variant="outlined"
+                  onClick={() => {
+                    formik.setFieldValue(
+                      "timeLastVisit",
+                      formik.values.timeLastVisit === time.value
+                        ? ""
+                        : time.value
+                    );
+                  }}
+                  className={`capitalize !border !rounded-lg !px-6 !py-2 !shadow !shadow-[#00000040] !font-sans !text-sm ${
+                    formik.values.timeLastVisit === time.value
+                      ? "!text-[#FF5B00]"
+                      : "!text-[#5B5B5B]"
+                  } !border-solid ${
+                    formik.values.timeLastVisit === time.value
+                      ? "!bg-[#FFECE1]"
+                      : "!bg-[#FFFFFF]"
+                  } !border-[#EDEDED]`}
+                >
+                  {time?.label}
+                </Button>
+              ))}
             </div>
             <div className="flex flex-col space-y-4">
               <Typography className="!font-sans !text-sm !text-[#A1A1A1] !mt-7">
                 Frequency of visits per month
               </Typography>
               <div className="flex md:flex-row flex-col gap-4">
-                {[
-                  "2x Frequency",
-                  "3x Frequency",
-                  "5x Frequency",
-                  "7x Frequency",
-                ].map((item, index) => (
+                {visitFrequency.map((item, index) => (
                   <Box
-                    className="bg-white rounded-xl py-2 px-5 cursor-pointer"
+                    className={`${
+                      formik.values.visitFrequency === item.value
+                        ? "!bg-[#FFECE1]"
+                        : "!bg-[#FFFFFF] "
+                    } rounded-xl py-2 px-5 cursor-pointer`}
                     sx={{ boxShadow: "0px 0px 6px 0px #00000040" }}
                     key={index}
+                    onClick={() => {
+                      formik.setFieldValue(
+                        "visitFrequency",
+                        formik.values.visitFrequency === item.value
+                          ? ""
+                          : item.value
+                      );
+                    }}
                   >
                     <Typography
                       sx={{
-                        color: "#5B5B5B",
+                        color:
+                          formik.values.visitFrequency === item.value
+                            ? "#FF5B00"
+                            : "#5B5B5B",
                         textAlign: "center",
                         fontSize: "15px",
                         fontWeight: 400,
                       }}
                     >
-                      {item}
+                      {item.label}
                     </Typography>
                   </Box>
                 ))}
@@ -124,13 +185,13 @@ const CreateSegment = ({ open, onClose }) => {
             </div>
             <div className="flex justify-end mt-6">
               <Button
-                onClick={handleCloseModal}
+                onClick={onClose}
                 className="!mr-4 !bg-[#F4F4F4] !px-8 !py-2 !text-black !text-sm !font-sans !rounded-md"
               >
                 Cancel
               </Button>
               <Button
-                onClick={handleCreateClick}
+                type="submit"
                 className="!bg-[#FFECE1] !px-8 !py-2 !text-black !text-sm !font-sans !rounded-md"
               >
                 Create
@@ -143,7 +204,6 @@ const CreateSegment = ({ open, onClose }) => {
       <SuccessModal
         open={successModalOpen}
         onClose={handleCloseSuccessModal}
-        imageSrc="/images/approved.svg"
         message="Your segment has been created successfully!"
         buttonText="Continue"
       />
