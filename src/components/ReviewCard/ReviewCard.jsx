@@ -5,6 +5,8 @@ import Image from "next/image";
 // import { FaStar } from "react-icons/fa";
 import { FaRegThumbsUp } from "react-icons/fa";
 import CustomButton from "../Custom/CustomButton/CustomButton";
+import { fileBaseURL } from "@/utils/urls";
+import dayjs from "dayjs";
 
 const boxSX = {
   display: "flex",
@@ -33,16 +35,17 @@ const ReviewCard = ({
   id,
   replyActive,
   handleReplyClick,
+  tags,
 }) => {
   return (
     <>
       <Box className="p-4" key={id}>
         <Grid container spacing={2}>
-          <Grid item size={{ xs: 12, md: 4 }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Box className="flex flex-row justify-center items-center gap-4">
               <Image
-                src={avatar}
-                alt={name}
+                src={`${fileBaseURL}${avatar}` || "/images/review.png"}
+                alt={name || "Avatar"}
                 width={100}
                 height={100}
                 style={{ borderRadius: "10%" }}
@@ -56,29 +59,29 @@ const ReviewCard = ({
                     mb: 2,
                   }}
                 >
-                  {name}
+                  {name || "N/A"}
                 </Typography>
                 <Typography
                   sx={{ color: "#929292", fontSize: "14px", fontWeight: 700 }}
                 >
-                  CLV: {clv}
+                  CLV: {clv || "N/A"}
                 </Typography>
                 <Typography
                   sx={{ color: "#929292", fontSize: "14px", fontWeight: 700 }}
                 >
-                  Total Reviews: {totalReviews}
+                  Total Reviews: {totalReviews || "N/A"}
                 </Typography>
               </div>
             </Box>
           </Grid>
-          <Grid item size={{ xs: 12, md: 7 }}>
+          <Grid size={{ xs: 12, md: 7 }}>
             <Box className="flex flex-col justify-start items-start">
               <div className="flex flex-row gap-4 items-start justify-start">
                 <Rating name={name} value={rating} readOnly />
                 <Typography
                   sx={{ fontWeight: 400, fontSize: "14px", color: "#929292" }}
                 >
-                  {date}
+                  {dayjs(date).format("DD/MM/YYYY") || "N/A"}
                 </Typography>
               </div>
             </Box>
@@ -100,9 +103,13 @@ const ReviewCard = ({
                     fontWeight: 700,
                     fontSize: "14px",
                     color: "#929292",
+                    textTransform: "capitalize",
                   }}
                 >
-                  Tags:
+                  Tags:{" "}
+                  {Array.isArray(tags)
+                    ? tags.map((tag) => tag).join(", ")
+                    : tags}
                 </Typography>
               </Box>
               <Box className="flex flex-wrap justify-between items-center py-2 w-full">

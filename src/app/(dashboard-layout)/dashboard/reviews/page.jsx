@@ -1,10 +1,22 @@
 "use client";
-import { Box, Chip, Divider, Rating, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Divider,
+  Menu,
+  MenuItem,
+  Pagination,
+  Rating,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { FaBell } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import ReviewCard from "@/components/ReviewCard/ReviewCard";
+import { useGetAllReviews } from "@/services/reviews";
+import Spinner from "@/components/Spinner/Spinner";
+import { REVIEW_TYPES } from "@/enums/reviews";
 
 const boxSX = {
   display: "flex",
@@ -14,6 +26,7 @@ const boxSX = {
   borderRadius: "10px",
   backgroundColor: "#FFFFFF",
   padding: "8px 16px",
+  cursor: "pointer",
 };
 
 const typographySX = {
@@ -22,52 +35,6 @@ const typographySX = {
   fontSize: "14px",
 };
 
-const reviewDataArray = [
-  {
-    id: 1,
-    name: "Sarah Lee",
-    avatar: "/images/review.png",
-    clv: "$200",
-    totalReviews: 4,
-    rating: 4,
-    date: "24-11-2024",
-    reviewText:
-      "Great spot for a coffee break! The atmosphere is cozy and welcoming, perfect for catching up with friends or getting some work done. The coffee is excellent, and the pastries are fresh and delicious. My only feedback is that the service was a bit slow during peak hours, but the staff was friendly and accommodating. Overall, a lovely experience—I’ll definitely be back!",
-  },
-  {
-    id: 2,
-    name: "John Doe",
-    avatar: "/images/review.png",
-    clv: "$150",
-    totalReviews: 6,
-    rating: 5,
-    date: "15-11-2024",
-    reviewText:
-      "Absolutely love this place! The ambiance is fantastic, and the food quality is top-notch. The staff is incredibly polite and helpful. Highly recommend the cappuccino!",
-  },
-  {
-    id: 3,
-    name: "Emily Clark",
-    avatar: "/images/review.png",
-    clv: "$300",
-    totalReviews: 10,
-    rating: 3,
-    date: "10-11-2024",
-    reviewText:
-      "Nice café, but the seating was limited. The drinks were good, but the desserts were just okay. Service could use some improvement.",
-  },
-  {
-    id: 4,
-    name: "Michael Smith",
-    avatar: "/images/review.png",
-    clv: "$250",
-    totalReviews: 8,
-    rating: 4,
-    date: "05-11-2024",
-    reviewText:
-      "Good experience overall. The lattes are excellent, but I found the prices a bit high. Worth visiting for a relaxing afternoon.",
-  },
-];
 const ratingData = [
   { stars: 5, count: 331, color: "#28EA84" },
   { stars: 4, count: 132, color: "#B881FF" },
@@ -77,12 +44,41 @@ const ratingData = [
 ];
 const Reviews = () => {
   const [replyActive, setReplyActive] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [tag, setTag] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  const { data, isLoading, isError } = useGetAllReviews(page + 1, 3, tag);
 
   const handleReplyClick = (id) => {
     setReplyActive((prevId) => (prevId === id ? null : id));
   };
 
   const totalReviews = ratingData.reduce((acc, item) => acc + item.count, 0);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleTagClick = (tag) => {
+    setTag(tag);
+    setPage(0);
+  };
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Something went wrong</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
@@ -93,13 +89,44 @@ const Reviews = () => {
           </Typography>
         </div>
         <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto justify-end">
-          <Box sx={boxSX}>
+          <Box sx={boxSX} onClick={handleMenuOpen}>
             <Typography sx={typographySX}>All Reviews</Typography>
+            {/* <IconButton > */}
             <KeyboardArrowDownIcon
               sx={{ color: "#000000" }}
               fontSize="medium"
             />
+            {/* </IconButton> */}
           </Box>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleCloseMenu}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+            sx={{
+              "& .MuiMenu-list": {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              },
+            }}
+          >
+            <MenuItem
+              sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+              onClick={() => handleTagClick(REVIEW_TYPES.PUBLIC)}
+            >
+              Public Reviews
+            </MenuItem>
+            <MenuItem
+              sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+              onClick={() => handleTagClick(REVIEW_TYPES.PRIVATE)}
+            >
+              Private Reviews
+            </MenuItem>
+          </Menu>
           <Box sx={boxSX}>
             <Typography sx={typographySX}>Nov 2023 - Nov 2024</Typography>
             <KeyboardArrowDownIcon
@@ -119,6 +146,12 @@ const Reviews = () => {
       <Box className="flex flex-row justify-evenly items-center gap-4 w-full p-10">
         {/* Growth Section */}
         <Box className="flex flex-col items-center space-x-4">
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 400, fontSize: "20px", color: "#000000" }}
+          >
+            Total Reviews
+          </Typography>
           <div className="flex flex-row items-center space-x-2">
             <Typography
               variant="h4"
@@ -127,7 +160,7 @@ const Reviews = () => {
                 fontSize: "40px",
               }}
             >
-              554
+              {data?.totalReviews}
             </Typography>
 
             <Chip
@@ -174,9 +207,13 @@ const Reviews = () => {
                 fontSize: "40px",
               }}
             >
-              4.4
+              {data?.averageRating}
             </Typography>
-            <Rating name="Average Rating" value={4} readOnly />
+            <Rating
+              name="Average Rating"
+              value={data?.averageRating ?? 0}
+              readOnly
+            />
           </Box>
           <Typography variant="body2" sx={{ color: "#AAAAAA" }}>
             Average rating over the last year
@@ -216,23 +253,38 @@ const Reviews = () => {
       <Box className="w-full px-10">
         <Divider />
       </Box>
-      <Box className="w-full px-10 py-5">
-        {reviewDataArray.map((item) => (
-          <ReviewCard
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            clv={item.clv}
-            totalReviews={item.totalReviews}
-            rating={item.rating}
-            date={item.date}
-            reviewText={item.reviewText}
-            avatar={item.avatar}
-            replyActive={replyActive}
-            handleReplyClick={handleReplyClick}
-          />
-        ))}
-      </Box>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Box className="w-full px-10 py-5">
+          {data?.data?.map((item) => (
+            <ReviewCard
+              key={item?._id}
+              id={item?._id}
+              name={item?.user?.name}
+              clv={item?.clv}
+              totalReviews={item?.totalReviews}
+              rating={item?.rating}
+              date={item?.createdAt}
+              reviewText={item?.comment}
+              avatar={item?.user?.image}
+              tags={item?.tags}
+              replyActive={replyActive}
+              handleReplyClick={handleReplyClick}
+            />
+          ))}
+        </Box>
+      )}
+      <div className="flex flex-row justify-center items-center py-4">
+        <Pagination
+          count={data?.totalPages}
+          page={page}
+          onChange={handleChange}
+          variant="outlined"
+          shape="rounded"
+          color="secondary"
+        />
+      </div>
     </div>
   );
 };
