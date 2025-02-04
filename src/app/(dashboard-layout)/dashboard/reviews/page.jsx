@@ -9,7 +9,7 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { FaBell } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -35,18 +35,21 @@ const typographySX = {
   fontSize: "14px",
 };
 
-const ratingData = [
-  { stars: 5, count: 331, color: "#28EA84" },
-  { stars: 4, count: 132, color: "#B881FF" },
-  { stars: 3, count: 69, color: "#FFD233" },
-  { stars: 2, count: 17, color: "#8FE8FF" },
-  { stars: 1, count: 5, color: "#FF7B31" },
-];
+const colors = {
+  5: "#28EA84",
+  4: "#B881FF",
+  3: "#FFD233",
+  2: "#8FE8FF",
+  1: "#FF7B31",
+};
+
 const Reviews = () => {
   const [replyActive, setReplyActive] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [tag, setTag] = React.useState(null);
   const [page, setPage] = React.useState(1);
+  const [ratingData, setRatingData] = React.useState([]);
+  const [totalReviews, setTotalReviews] = React.useState(0);
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -57,7 +60,23 @@ const Reviews = () => {
     setReplyActive((prevId) => (prevId === id ? null : id));
   };
 
-  const totalReviews = ratingData.reduce((acc, item) => acc + item.count, 0);
+  useEffect(() => {
+    if (!data?.ratingGroup) return;
+
+    const defaultRatings = [5, 4, 3, 2, 1].map((stars) => ({
+      stars,
+      count: 0,
+      color: colors[stars],
+    }));
+
+    const updatedRatings = defaultRatings.map((item) => {
+      const match = data.ratingGroup.find((r) => r.stars === item.stars);
+      return match ? { ...item, count: match.count } : item;
+    });
+
+    setRatingData(updatedRatings);
+    setTotalReviews(updatedRatings.reduce((acc, item) => acc + item.count, 0));
+  }, [data]);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
