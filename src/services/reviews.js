@@ -11,6 +11,12 @@ export const getAllReviews = async (page, limit, tag) => {
   });
 };
 
+
+export const addCommentReply = async (data) => {
+  return await axios.post("/business-comment", data);
+};
+
+
 export const useGetAllReviews = (page, limit, tag) => {
   return useQuery({
     queryKey: ["reviews", page, limit, tag],

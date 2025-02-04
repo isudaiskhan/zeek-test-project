@@ -8,6 +8,11 @@ import CustomButton from "../Custom/CustomButton/CustomButton";
 import { fileBaseURL } from "@/utils/urls";
 import dayjs from "dayjs";
 
+import { useFormik } from "formik";
+import { useSubmitHandler } from "@/utils/hooks";
+import { addCommentReply } from "@/services/reviews";
+
+
 const boxSX = {
   display: "flex",
   alignItems: "center",
@@ -37,6 +42,27 @@ const ReviewCard = ({
   handleReplyClick,
   tags,
 }) => {
+  const { submitHandler } = useSubmitHandler();
+
+  const formik = useFormik({
+    initialValues: {
+      replyTo: id,
+      comment: "",
+    },
+    onSubmit: (values, { resetForm, setSubmitting }) => {
+      submitHandler({
+        successMsg: "Reply to Review has been sent successfully!",
+        onSubmit: async () => {
+          await addCommentReply(values);
+          resetForm();
+        },
+        onFinally: () => {
+          setSubmitting(false);
+        },
+      });
+    },
+  });
+
   return (
     <>
       <Box className="p-4" key={id}>
@@ -129,27 +155,33 @@ const ReviewCard = ({
                 </div>
               </Box>
               {replyActive === id && (
-                <div className="flex flex-col justify-end items-end gap-4 my-4 p-2 w-full">
-                  <TextField
-                    variant="outlined"
-                    placeholder="Type reply here..."
-                    multiline
-                    rows={3}
-                    sx={{
-                      borderRadius: "10px", // For rounded corners
-                      backgroundColor: "#FFFFFF",
-                      width: "100%",
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: "10px",
-                      },
-                    }}
-                  />
-                  <CustomButton
-                    text="Reply to Review"
-                    bgColor="#FFECE1"
-                    textColor="#FF762A"
-                  />
-                </div>
+                <form onSubmit={formik.handleSubmit}>
+                  <div className="flex flex-col justify-end items-end gap-4 my-4 p-2 w-full">
+                    <TextField
+                      variant="outlined"
+                      placeholder="Type reply here..."
+                      name="comment"
+                      value={formik.values.comment}
+                      onChange={formik.handleChange}
+                      multiline
+                      rows={3}
+                      sx={{
+                        borderRadius: "10px", // For rounded corners
+                        backgroundColor: "#FFFFFF",
+                        width: "100%",
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: "10px",
+                        },
+                      }}
+                    />
+                    <CustomButton
+                      text="Reply to Review"
+                      bgColor="#FFECE1"
+                      textColor="#FF762A"
+                      type="submit"
+                    />
+                  </div>
+                </form>
               )}
             </Box>
           </Grid>
