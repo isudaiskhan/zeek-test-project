@@ -3,7 +3,7 @@ import { Button, Box, Typography, Card } from "@mui/material";
 import Image from "next/image";
 import { FaRegEdit } from "react-icons/fa";
 
-const ProfileBusinessName = ({ name, type, location, onEdit }) => {
+const ProfileBusinessName = ({ name, type, city, country, onEdit }) => {
   return (
     <Box>
       <div className="flex justify-between items-center px-5">
@@ -48,7 +48,7 @@ const ProfileBusinessName = ({ name, type, location, onEdit }) => {
             variant="body2"
             className="text-[#ACACAC] !font-sans !text-[12px]"
           >
-            {location}
+            {city}, {country}
           </Typography>
         </Box>
       </Card>

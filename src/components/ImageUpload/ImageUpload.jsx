@@ -1,15 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, Box, Typography } from "@mui/material";
+import { IconButton, Box, Typography, FormHelperText } from "@mui/material";
 import { getImageBase64URL } from "@/utils/helper-functions";
 
-const ImageUpload = ({ onFileChange, onFileDelete, imageFile }) => {
+const ImageUpload = ({
+  onFileChange,
+  onFileDelete,
+  imageFile,
+  error,
+  errorMessage,
+}) => {
   const fileInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState("/images/checkers.png");
 
   useEffect(() => {
     if (imageFile) {
       setPreview(imageFile);
+    } else {
+      setImagePreview("/images/checkers.png");
     }
   }, [imageFile]);
 
@@ -71,6 +79,7 @@ const ImageUpload = ({ onFileChange, onFileDelete, imageFile }) => {
           </IconButton>
         )}
       </div>
+      {error && <FormHelperText error>{errorMessage}</FormHelperText>}
       <input
         ref={fileInputRef}
         type="file"

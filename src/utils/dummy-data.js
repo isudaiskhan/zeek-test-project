@@ -154,24 +154,6 @@ export const tagStyles = {
   "Frequency x3": "bg-[#FFDAC5] text-[#696969]",
   "Frequency x5": "bg-[#FFDAC5] text-[#696969]",
 };
-export const businessData = {
-  businessName: "SATO Café and Lounge",
-  businessType: "Business",
-  location: "Dubai, UAE",
-  ownerFirstName: "Darius",
-  ownerLastName: "White",
-  ownerTitle: "Business Owner",
-  ownerLocation: "Dubai, UAE",
-  ownerEmail: "Dariuswhite@satocafé.com",
-  ownerPhone: "+971 55 123 4567",
-  ownerRole: "Owner",
-  country: "United Arab Emirates",
-  city: "Dubai",
-  street: "Jumerirah Beach Road",
-  builidingNo: "23",
-  postalCode: "12345",
-  floor: "N/A",
-};
 
 export const manageSessions = [
   {

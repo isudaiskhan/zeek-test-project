@@ -13,6 +13,7 @@ const CustomTextField = ({
   value,
   onChange,
   error,
+  disabled,
   errorMessage,
   InputProps,
   size = "small",
@@ -30,6 +31,7 @@ const CustomTextField = ({
         name={name}
         onChange={onChange}
         error={error}
+        disabled={disabled}
         InputProps={InputProps}
         sx={{
           borderRadius: haveBorderRadius ? borderRadius : "16px",

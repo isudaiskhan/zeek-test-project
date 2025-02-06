@@ -3,12 +3,15 @@ import ProfileBusinessName from "@/components/BusinessProfile/ProfileBusinessNam
 import ProfileInformation from "@/components/BusinessProfile/ProfileInformation";
 import ProfileBusinessAddress from "@/components/BusinessProfile/ProfileBusinessAddress";
 import EditProfile from "./EditProfile";
-import { businessData } from "@/utils/dummy-data";
 
 const ProfileContent = ({
   businessName,
+  firstName,
+  lastName,
+  email,
+  phone,
+  address,
   businessType,
-  location,
   activeTab,
   setActiveTab,
 }) => {
@@ -21,26 +24,28 @@ const ProfileContent = ({
       <ProfileBusinessName
         name={businessName}
         type={businessType}
-        location={location}
+        city={address?.city}
+        country={address?.country}
         onEdit={() => setActiveTab("editprofile")}
       />
       <ProfileInformation
-        firstName={businessData.ownerFirstName}
-        lastName={businessData.ownerLastName}
-        title={businessData.ownerTitle}
-        location={businessData.ownerLocation}
-        email={businessData.ownerEmail}
-        phone={businessData.ownerPhone}
-        role={businessData.ownerRole}
+        firstName={firstName}
+        lastName={lastName}
+        title={"Business Owner"}
+        city={address?.city}
+        country={address?.country}
+        email={email}
+        phone={phone}
+        role={"Owner"}
       />
 
       <ProfileBusinessAddress
-        country={businessData.country}
-        city={businessData.city}
-        street={businessData.street}
-        buildingNo={businessData.builidingNo}
-        postalCode={businessData.postalCode}
-        floor={businessData.floor}
+        country={address?.country}
+        city={address?.city}
+        street={address?.street}
+        buildingNo={address?.building}
+        postalCode={address?.postalCode}
+        floor={address?.floor}
       />
     </div>
   );

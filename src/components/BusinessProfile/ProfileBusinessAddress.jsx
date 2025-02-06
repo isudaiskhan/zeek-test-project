@@ -75,7 +75,7 @@ const ProfileBusinessAddress = ({
               Postal Code
             </Typography>
             <Typography className="!text-[#000000] !text-[15px] !font-sans">
-              {postalCode}
+              {postalCode || "----"}
             </Typography>
           </div>
 
@@ -87,7 +87,7 @@ const ProfileBusinessAddress = ({
               Floor (Optional)
             </Typography>
             <Typography className="!text-[#000000] !text-[15px] !font-sans">
-              {floor}
+              {floor || "N/A"}
             </Typography>
           </div>
         </div>

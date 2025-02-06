@@ -61,7 +61,7 @@ const Login = () => {
         dispatch(setAuthUser(reduxState));
         router.push("/");
       },
-      onFinally: () => {
+      onError: () => {
         setSubmitting(false);
       },
     });
@@ -132,6 +132,7 @@ const Login = () => {
                           type="submit"
                           fullWidth
                           variant="contained"
+                          loading={isSubmitting}
                           endIcon={<LoginIcon />}
                           disabled={isSubmitting}
                           color="secondary"

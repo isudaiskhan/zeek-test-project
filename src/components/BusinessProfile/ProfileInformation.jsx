@@ -5,7 +5,8 @@ import Image from "next/image";
 const ProfileInformation = ({
   name,
   title,
-  location,
+  city,
+  country,
   email,
   phone,
   role,
@@ -39,7 +40,7 @@ const ProfileInformation = ({
               variant="body2"
               className="text-[#ACACAC] !font-sans !text-[12px]"
             >
-              {location}
+              {city}, {country}
             </Typography>
           </div>
         </div>
@@ -57,7 +58,7 @@ const ProfileInformation = ({
             >
               <span className="!text-[#A7A7A7] !text-[14px]">First Name</span>
             </Typography>
-            <Typography variant="body2">{firstName}</Typography>
+            <Typography variant="body2">{firstName || "N/A"}</Typography>
           </div>
           <div>
             <Typography
@@ -66,7 +67,7 @@ const ProfileInformation = ({
             >
               <span className="!text-[#A7A7A7] !text-[14px]">Last Name</span>
             </Typography>
-            <Typography variant="body2">{lastName}</Typography>
+            <Typography variant="body2">{lastName || "N/A"}</Typography>
           </div>
           <div>
             <Typography
