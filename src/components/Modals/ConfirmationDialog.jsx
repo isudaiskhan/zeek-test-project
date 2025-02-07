@@ -1,9 +1,11 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Typography,
 } from "@mui/material";
 
 import Spinner from "components/Spinner/Spinner";
@@ -50,30 +52,56 @@ const ConfirmationDialog = ({
     <Dialog
       open={true}
       onClose={closeDialog}
-      aria-labelledby="confirmation-dialog"
       fullWidth
+      aria-labelledby="confirmation-dialog"
+      sx={{
+        "& .MuiDialog-paper": {
+          borderRadius: "20px",
+        },
+      }}
     >
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogContent></DialogContent>
-          <DialogActions>
-            <Button onClick={closeDialog} color="secondary">
+      <DialogContent>
+        <Box className="flex flex-col justify-center items-center gap-4 p-8">
+          <Typography
+            sx={{
+              fontSize: "32px",
+              fontWeight: "400",
+              lineHeight: "38.19px",
+              textAlign: "center",
+            }}
+          >
+            {title}
+          </Typography>
+          <div className="!w-full flex flex-col gap-6 mt-16">
+            <Button
+              sx={{
+                borderRadius: "10px",
+                backgroundColor: "#F4F4F4",
+                color: "#787878",
+                padding: "12px",
+                fontSize: "24px",
+                fontWeight: 400,
+              }}
+              onClick={closeDialog}
+            >
               Cancel
             </Button>
             <Button
+              sx={{
+                borderRadius: "10px",
+                backgroundColor: "#F4F4F4",
+                color: "#FF3F3F",
+                padding: "12px",
+                fontSize: "24px",
+                fontWeight: 400,
+              }}
               onClick={onConfirm}
-              color="warning"
-              disableElevation
-              variant="contained"
             >
               {confirmationBtnText}
             </Button>
-          </DialogActions>
-        </>
-      )}
+          </div>
+        </Box>
+      </DialogContent>
     </Dialog>
   );
 };
