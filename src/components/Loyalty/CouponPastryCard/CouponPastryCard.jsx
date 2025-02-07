@@ -1,9 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
+import { CARD_STATUSES } from "@/enums/cards";
+import { fileBaseURL } from "@/utils/urls";
 import { MoreHoriz } from "@mui/icons-material";
-import { Box, Card, Typography } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  Card,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import dayjs from "dayjs";
+import React, { useState } from "react";
 
-const CouponPastryCard = ({ background }) => {
+const CouponPastryCard = ({
+  expiry,
+  status,
+  logoImage,
+  cardNumber,
+  colors,
+  type,
+  createdAt,
+  onClick,
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
   return (
     <Card
       sx={{
@@ -22,12 +49,49 @@ const CouponPastryCard = ({ background }) => {
       }}
     >
       <div className="flex justify-end items-end mb-2">
-        <MoreHoriz />
+        <IconButton onClick={handleMenuOpen}>
+          <MoreHoriz />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleCloseMenu}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+          sx={{
+            "& .MuiMenu-list": {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            },
+          }}
+        >
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+            onClick={onClick}
+          >
+            Update
+          </MenuItem>
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+          >
+            Deactivate
+          </MenuItem>
+          <MenuItem
+            sx={{ fontSize: "14px", fontWeight: 700, color: "#000000" }}
+          >
+            Download QR Code
+          </MenuItem>
+          <MenuItem sx={{ color: "#FF5B00" }}>Delete</MenuItem>
+        </Menu>
       </div>
       <Box
         className={`h-[200px] flex flex-col p-4 py-2 justify-center rounded-xl shadow-lg`}
         sx={{
-          background: background,
+          backgroundColor: colors?.[0],
+          backgroundImage: `linear-gradient(to left bottom, ${colors?.[0]},${colors?.[1]}, ${colors?.[2]})`,
         }}
       >
         <div className="flex flex-row justify-between items-center">
@@ -42,7 +106,7 @@ const CouponPastryCard = ({ background }) => {
             ZEEK.
           </Typography>
           <img
-            src="/images/sato.png"
+            src={`${fileBaseURL}${logoImage}`}
             alt="Custom Icon"
             width="128px"
             height="58px"
@@ -68,7 +132,7 @@ const CouponPastryCard = ({ background }) => {
                 lineHeight: "17px",
               }}
             >
-              Expires 11/30/24
+              Expires {dayjs(expiry).format("DD/MM/YYYY")}
             </Typography>
           </div>
           <div className="">
@@ -93,9 +157,10 @@ const CouponPastryCard = ({ background }) => {
               fontSize: "12px",
               fontWeight: 700,
               textAlign: "center",
+              textTransform: "capitalize",
             }}
           >
-            Coupon
+            {type}
           </Typography>
         </Box>
       </div>
@@ -118,7 +183,8 @@ const CouponPastryCard = ({ background }) => {
             fontWeight: 700,
           }}
         >
-          Live
+          <span className="bg-[#73D3A1] rounded-full w-2 h-2 inline-block mr-2"></span>{" "}
+          {status === CARD_STATUSES.ACTIVE ? "Live" : "Inactive"}
         </Typography>
         <Typography
           sx={{
@@ -127,7 +193,7 @@ const CouponPastryCard = ({ background }) => {
             fontWeight: 400,
           }}
         >
-          Created 2024/11/10 8:14
+          Created {dayjs(createdAt).format("DD/MM/YYYY hh:mm")}
         </Typography>
       </div>
     </Card>

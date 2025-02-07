@@ -5,7 +5,10 @@ import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import CouponCard from "@/components/Loyalty/CouponCard/CouponCard";
 import CouponPastryCard from "@/components/Loyalty/CouponPastryCard/CouponPastryCard";
 import LoyaltyCard from "@/components/Loyalty/LoyaltyCard/LoyaltyCard";
+import Spinner from "@/components/Spinner/Spinner";
 import CustomTab from "@/components/Studio/CustomTab/CustomTab";
+import { CARD_STATUSES, CARD_TYPES } from "@/enums/cards";
+import { useGetAllCardsData } from "@/services/loyalty";
 import { Add } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -21,11 +24,19 @@ const tabs = [
 const Loyalty = () => {
   const [activeTab, setActiveTab] = useState("live");
 
+  const { data, isLoading, isError } = useGetAllCardsData(1, 10);
+
+  console.log(data, "cards");
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
   const router = useRouter();
+
+  if (isError) {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <div className="p-4">
@@ -45,121 +56,158 @@ const Loyalty = () => {
           />
         </div>
       </Box>
-      {/* <Box className="flex flex-col items-center justify-center gap-1 py-5">
-        <div className="w-[80%] flex flex-row gap-2 items-center justify-center bg-white p-2 rounded-md shadow-md">
-          <Box
-            onClick={() => handleTabClick("live")}
-            className={`w-1/3 h-8 justify-center items-center font-semibold px-16 py-2 rounded-md transition duration-200 cursor-pointer ${
-              activeTab === "live"
-                ? "bg-orange-100 text-gray-800 hover:bg-orange-200"
-                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-            }`}
-          >
-            <Typography
-              sx={{
-                textAlign: "center",
-                color: "#696969",
-                fontWeight: 700,
-                fontSize: "14px",
-              }}
-            >
-              Live Cards
-            </Typography>
-          </Box>
-          <Box
-            onClick={() => handleTabClick("inactive")}
-            className={`w-1/3 h-8 justify-center items-center font-semibold px-6 py-2 rounded-md mx-2 transition duration-200 cursor-pointer ${
-              activeTab === "inactive"
-                ? "bg-orange-100 text-gray-800 hover:bg-orange-200"
-                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-            }`}
-          >
-            <Typography
-              sx={{
-                textAlign: "center",
-                color: "#696969",
-                fontWeight: 700,
-                fontSize: "14px",
-              }}
-            >
-              Inactive Cards
-            </Typography>
-          </Box>
-          <Box
-            onClick={() => handleTabClick("draft")}
-            className={`w-1/3 h-8 justify-center items-center font-semibold px-6 py-2 rounded-md transition duration-200 cursor-pointer ${
-              activeTab === "draft"
-                ? "bg-orange-100 text-gray-800 hover:bg-orange-200"
-                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-            }`}
-          >
-            <Typography
-              sx={{
-                textAlign: "center",
-                color: "#696969",
-                fontWeight: 700,
-                fontSize: "14px",
-              }}
-            >
-              Draft Cards
-            </Typography>
-          </Box>
-        </div>
-      </Box> */}
       <CustomTab
         tabs={tabs}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
-      <Box className="flex flex-col items-center justify-center gap-1 py-5">
-        <div className="w-[80%]">
-          {activeTab === "live" && (
-            <div>
-              <Grid container spacing={2}>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <LoyaltyCard
-                    background="/images/loyaltyCard.png"
-                    onClick={() => router.push("/studio/update-card-loyalty")}
-                  />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Box className="flex flex-col items-center justify-center gap-1 py-5">
+          <div className="w-[80%]">
+            {activeTab === "live" && (
+              <>
+                <Grid container spacing={2}>
+                  {data?.data
+                    ?.filter((card) => card?.status === CARD_STATUSES.ACTIVE)
+                    .map((card) => (
+                      <Grid size={{ xs: 12, md: 4 }} key={card._id}>
+                        {card?.type === CARD_TYPES.LOYALTY ? (
+                          <LoyaltyCard
+                            expiry={card?.validUntil}
+                            createdAt={card?.createdAt}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                            onClick={() =>
+                              router.push("/studio/update-card-loyalty")
+                            }
+                          />
+                        ) : card?.type === CARD_TYPES.COUPON ? (
+                          <CouponCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            createdAt={card?.createdAt}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : card?.type === CARD_TYPES.STAMP ? (
+                          <CouponPastryCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            createdAt={card?.createdAt}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : null}
+                      </Grid>
+                    ))}
                 </Grid>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <CouponCard background="#48617D" />
+              </>
+            )}
+            {activeTab === "inactive" && (
+              <>
+                <Grid container spacing={2}>
+                  {data?.data
+                    ?.filter((card) => card?.status === CARD_STATUSES.INACTIVE)
+                    .map((card) => (
+                      <Grid size={{ xs: 12, md: 4 }} key={card?._id}>
+                        {card?.type === CARD_TYPES.LOYALTY ? (
+                          <LoyaltyCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : card?.type === CARD_TYPES.COUPON ? (
+                          <CouponCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            createdAt={card?.createdAt}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : card?.type === CARD_TYPES.STAMP ? (
+                          <CouponPastryCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            createdAt={card?.createdAt}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : null}
+                      </Grid>
+                    ))}
                 </Grid>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <CouponPastryCard background="#99C8FF" />
+              </>
+            )}
+            {activeTab === "draft" && (
+              <>
+                <Grid container spacing={2}>
+                  {data?.data
+                    ?.filter((card) => card?.status === CARD_STATUSES.DRAFT)
+                    .map((card) => (
+                      <Grid size={{ xs: 12, md: 4 }} key={card?._id}>
+                        {card?.type === CARD_TYPES.LOYALTY ? (
+                          <LoyaltyCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : card?.type === CARD_TYPES.COUPON ? (
+                          <CouponCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            createdAt={card?.createdAt}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : card?.type === CARD_TYPES.STAMP ? (
+                          <CouponPastryCard
+                            expiry={card?.validUntil}
+                            status={card?.status}
+                            logoImage={card?.logoImage}
+                            createdAt={card?.createdAt}
+                            heroImage={card?.heroImage}
+                            cardNumber={card?.cardNumber}
+                            colors={card?.colors}
+                            type={card?.type}
+                          />
+                        ) : null}
+                      </Grid>
+                    ))}
                 </Grid>
-              </Grid>
-            </div>
-          )}
-          {activeTab === "inactive" && (
-            <div>
-              <Grid container spacing={2}>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <LoyaltyCard
-                    background="/images/inactiveLoyalty.png"
-                    isInActive
-                  />
-                </Grid>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <CouponCard background="#A36B9D" isInActive />
-                </Grid>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <CouponPastryCard background="#FED7FF" isInActive />
-                </Grid>
-              </Grid>
-            </div>
-          )}
-          {activeTab === "draft" && (
-            <div>
-              <Grid container spacing={2}>
-                <Grid item size={{ xs: 12, md: 4 }}>
-                  <CouponPastryCard background="#B49783" isInActive />
-                </Grid>
-              </Grid>
-            </div>
-          )}
-        </div>
-      </Box>
+              </>
+            )}
+          </div>
+        </Box>
+      )}
     </div>
   );
 };

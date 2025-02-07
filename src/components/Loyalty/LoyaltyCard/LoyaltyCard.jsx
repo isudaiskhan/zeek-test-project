@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import { CARD_STATUSES } from "@/enums/cards";
+import { fileBaseURL } from "@/utils/urls";
 import { MoreHoriz } from "@mui/icons-material";
 import {
   Box,
@@ -8,9 +10,19 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 
-const LoyaltyCard = ({ background, onClick }) => {
+const LoyaltyCard = ({
+  onClick,
+  expiry,
+  status,
+  logoImage,
+  createdAt,
+  cardNumber,
+  colors,
+  type,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,13 +39,6 @@ const LoyaltyCard = ({ background, onClick }) => {
         borderRadius: "8px",
         padding: "24px",
         cursor: "pointer",
-        // transition: "transform 0.3s ease-in-out",
-        // "&:hover": {
-        //   transform: "scale(1.05)",
-        // },
-        // "&:active": {
-        //   transform: "scale(0.95)",
-        // },
       }}
     >
       <div className="flex justify-end items-end mb-2">
@@ -78,9 +83,8 @@ const LoyaltyCard = ({ background, onClick }) => {
       <div
         className="flex flex-col p-4 py-2 justify-center rounded-xl shadow-lg h-[200px]"
         style={{
-          backgroundImage: `url(${background})`,
-          backgroundSize: "cover",
-          objectFit: "contain",
+          backgroundColor: colors?.[0],
+          backgroundImage: `linear-gradient(to left bottom, ${colors?.[0]},${colors?.[1]}, ${colors?.[2]})`,
         }}
       >
         <div className="flex justify-start items-start">
@@ -97,8 +101,8 @@ const LoyaltyCard = ({ background, onClick }) => {
         </div>
         <div className="flex justify-end items-end">
           <img
-            src="/images/sato.png"
-            alt="Custom Icon"
+            src={`${fileBaseURL}${logoImage}`}
+            alt="logo"
             width="128px"
             height="58px"
           />
@@ -120,7 +124,7 @@ const LoyaltyCard = ({ background, onClick }) => {
               fontWeight: 600,
             }}
           >
-            HL28GR098K2
+            {cardNumber}
           </Typography>
         </div>
       </div>
@@ -141,9 +145,10 @@ const LoyaltyCard = ({ background, onClick }) => {
               fontSize: "12px",
               fontWeight: 700,
               textAlign: "center",
+              textTransform: "capitalize",
             }}
           >
-            Loyalty
+            {type}
           </Typography>
         </Box>
       </div>
@@ -166,7 +171,8 @@ const LoyaltyCard = ({ background, onClick }) => {
             fontWeight: 700,
           }}
         >
-          Live
+          <span className="bg-[#73D3A1] rounded-full w-2 h-2 inline-block mr-2"></span>{" "}
+          {status === CARD_STATUSES.ACTIVE ? "Live" : "Inactive"}
         </Typography>
         <Typography
           sx={{
@@ -175,7 +181,7 @@ const LoyaltyCard = ({ background, onClick }) => {
             fontWeight: 400,
           }}
         >
-          Created 2024/11/10 8:14
+          Created {dayjs(createdAt).format("DD/MM/YYYY hh:mm")}
         </Typography>
       </div>
     </Card>

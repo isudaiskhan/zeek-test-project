@@ -18,10 +18,15 @@ import ErrorFallback from "components/ErrorFallback/ErrorFallback";
 import DashboardLayoutWrapper from "../../components/LayoutWrappers/Dashboard/LayoutWrapper";
 import styles from "./styles.module.scss";
 import { DRAWER_WIDTH } from "../../theme/drawer";
-import { useToggleState } from "@/utils/hooks";
+import { useReduxUser, useToggleState } from "@/utils/hooks";
+import MissingFieldAlert from "@/components/MissingFieldAlert/MissingFieldAlert";
+import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }) => {
   const { theme } = useTheme();
+  const user = useReduxUser();
+
+  const router = useRouter();
 
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
@@ -54,6 +59,26 @@ const DashboardLayout = ({ children }) => {
     }
   };
 
+  const handleNavigate = (field) => {
+    let route = "/dashboard/business-profile"; // Default base route
+
+    switch (field.toLowerCase()) {
+      case "profile":
+        route = "/dashboard/business-profile/profile";
+        break;
+      case "menu":
+        route = "/dashboard/business-profile/menu";
+        break;
+      case "point":
+        route = "/dashboard/business-profile/points-management";
+        break;
+      default:
+        route = "/dashboard/business-profile";
+    }
+
+    router.push(`${route}`);
+  };
+
   return (
     <DashboardLayoutWrapper>
       {isSmallScreen && !tempDrawer && (
@@ -64,6 +89,14 @@ const DashboardLayout = ({ children }) => {
         >
           {tempDrawer ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
+      )}
+      {!user?.isBusinessProfileCompleted && (
+        <div className="flex justify-center items-center bg-[#f6f6f6]">
+          <MissingFieldAlert
+            missingFields={user?.missingFields}
+            handleNavigate={handleNavigate}
+          />
+        </div>
       )}
       <Drawer
         open={permDrawer}
