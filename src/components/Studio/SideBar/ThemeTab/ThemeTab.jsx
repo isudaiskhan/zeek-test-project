@@ -21,6 +21,10 @@ const ThemeTab = ({
   imagePreview,
   handleImageChange,
   handleRemoveImage,
+  handleLogoImageChange,
+  logoImagePreview,
+  handleLockScreenIconChange,
+  lockScreenIconPreview,
 }) => {
   return (
     <>
@@ -99,9 +103,8 @@ const ThemeTab = ({
             </Typography>
 
             <UploadImage
-              onClick={(e) =>
-                e.currentTarget.querySelector('input[type="file"]').click()
-              }
+              onImageChange={handleLockScreenIconChange}
+              imagePreview={lockScreenIconPreview}
             />
           </Box>
           <Divider sx={{ width: "100%", mt: 4 }} />
@@ -127,9 +130,8 @@ const ThemeTab = ({
             </Typography>
 
             <UploadImage
-              onClick={(e) =>
-                e.currentTarget.querySelector('input[type="file"]').click()
-              }
+              onImageChange={handleLogoImageChange}
+              imagePreview={logoImagePreview}
             />
           </Box>
           <Divider sx={{ width: "100%", mt: 4 }} />
@@ -186,9 +188,6 @@ const ThemeTab = ({
             <div className="flex flex-row gap-4">
               <UploadImage
                 isHero
-                // onClick={(e) =>
-                //   e.currentTarget.querySelector('input[type="file"]').click()
-                // }
                 onImageChange={handleImageChange}
                 imagePreview={imagePreview}
               />

@@ -30,6 +30,18 @@ const SideBar = ({
   imagePreview,
   handleImageChange,
   handleRemoveImage,
+  handleBarcodeContentChange,
+  barcodeContent,
+  handleSecurityAnimationChange,
+  securityAnimationSwitch,
+  handleRotatingBarcodeChange,
+  rotatingBarcodeSwitch,
+  handleLogoImageChange,
+  logoImagePreview,
+  handleLockScreenIconChange,
+  lockScreenIconPreview,
+  handleShowBarCodeChange,
+  showBarCodeSwitch,
 }) => {
   return (
     <Box
@@ -83,6 +95,10 @@ const SideBar = ({
           imagePreview={imagePreview}
           handleImageChange={handleImageChange}
           handleRemoveImage={handleRemoveImage}
+          handleLogoImageChange={handleLogoImageChange}
+          logoImagePreview={logoImagePreview}
+          handleLockScreenIconChange={handleLockScreenIconChange}
+          lockScreenIconPreview={lockScreenIconPreview}
         />
       )}
       {value === 1 && <ItemsTab />}
@@ -94,6 +110,14 @@ const SideBar = ({
           barcodeValue={barcodeValue}
           QRCODEDATA={QRCODEDATA}
           handleCodeSelect={handleCodeSelect}
+          handleBarcodeContentChange={handleBarcodeContentChange}
+          barcodeContent={barcodeContent}
+          handleSecurityAnimationChange={handleSecurityAnimationChange}
+          securityAnimationSwitch={securityAnimationSwitch}
+          handleRotatingBarcodeChange={handleRotatingBarcodeChange}
+          rotatingBarcodeSwitch={rotatingBarcodeSwitch}
+          handleShowBarCodeChange={handleShowBarCodeChange}
+          showBarCodeSwitch={showBarCodeSwitch}
         />
       )}
     </Box>

@@ -12,22 +12,18 @@ import React from "react";
 import CustomBarCode from "../../CustomBarCode/CustomBarCode";
 import { BARCODE_TYPES } from "@/enums/barcode";
 
-const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
-  const [barcodeChecked, setBarcodeChecked] = React.useState(true);
-  const [securityChecked, setSecurityChecked] = React.useState(true);
-  const [rotationChecked, setRotationChecked] = React.useState(true);
-
-  const handleBarcodeChange = (event) => {
-    setBarcodeChecked(event.target.checked);
-  };
-
-  const handleSecurityChange = (event) => {
-    setSecurityChecked(event.target.checked);
-  };
-
-  const handleRotationChange = (event) => {
-    setRotationChecked(event.target.checked);
-  };
+const BarCodeTab = ({
+  handleCodeSelect,
+  selectedCode,
+  handleBarcodeContentChange,
+  barcodeContent,
+  handleSecurityAnimationChange,
+  securityAnimationSwitch,
+  handleRotatingBarcodeChange,
+  rotatingBarcodeSwitch,
+  handleShowBarCodeChange,
+  showBarCodeSwitch,
+}) => {
   return (
     <div>
       <Box className="flex justify-start items-center px-5 py-2">
@@ -50,8 +46,8 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={barcodeChecked}
-                  onChange={handleBarcodeChange}
+                  checked={showBarCodeSwitch}
+                  onChange={handleShowBarCodeChange}
                   inputProps={{ "aria-label": "controlled" }}
                 />
               }
@@ -67,12 +63,12 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
                 : "bg-[#EAEAEA]"
             } p-4 cursor-pointer`}
             onClick={() =>
-              handleCodeSelect(BARCODE_TYPES.QRCODE, "https://example2.com")
+              handleCodeSelect(BARCODE_TYPES.QRCODE, barcodeContent)
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
               <CustomBarCode
-                value="https://example2.com"
+                value={barcodeContent || "https://zeek.com"}
                 size={80}
                 title="My QR Code"
                 type={BARCODE_TYPES.QRCODE}
@@ -89,12 +85,12 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
                 : "bg-[#EAEAEA]"
             } p-4 cursor-pointer`}
             onClick={() =>
-              handleCodeSelect(BARCODE_TYPES.AZTEC, "https://example.com")
+              handleCodeSelect(BARCODE_TYPES.AZTEC, barcodeContent)
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
               <CustomBarCode
-                value="https://example.com"
+                value={barcodeContent || "https://zeek.com"}
                 size={80}
                 title="My QR Code"
                 type={BARCODE_TYPES.AZTEC}
@@ -113,12 +109,12 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
                 : "bg-[#EAEAEA]"
             } px-1 py-1 cursor-pointer`}
             onClick={() =>
-              handleCodeSelect(BARCODE_TYPES.CODE128, "https://example3.com")
+              handleCodeSelect(BARCODE_TYPES.CODE128, barcodeContent)
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
               <CustomBarCode
-                value="https://example3.com"
+                value={barcodeContent || "https://zeek.com"}
                 width={0.4}
                 height={20}
                 title="My Barcode"
@@ -137,12 +133,12 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
                 : "bg-[#EAEAEA]"
             } px-0 py-1 cursor-pointer`}
             onClick={() =>
-              handleCodeSelect(BARCODE_TYPES.PDF147, "https://example45.com")
+              handleCodeSelect(BARCODE_TYPES.PDF147, barcodeContent)
             }
           >
             <Box className="flex flex-col justify-center items-center gap-2">
               <CustomBarCode
-                value="https://example45.com"
+                value={barcodeContent || "https://zeek.com"}
                 width={0.4}
                 height={20}
                 title="My Barcode"
@@ -161,7 +157,14 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
           <Typography sx={{ fontWeight: 400, fontSize: "11px" }}>
             Encoded Barcode Content
           </Typography>
-          <TextField variant="outlined" rows={2} fullWidth className="w-full" />
+          <TextField
+            variant="outlined"
+            rows={2}
+            fullWidth
+            className="w-full"
+            onChange={handleBarcodeContentChange}
+            value={barcodeContent}
+          />
         </div>
         <div className="flex flex-col w-full mt-5">
           <Typography sx={{ fontWeight: 400, fontSize: "11px" }}>
@@ -180,8 +183,8 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={securityChecked}
-                  onChange={handleSecurityChange}
+                  checked={securityAnimationSwitch}
+                  onChange={handleSecurityAnimationChange}
                   inputProps={{ "aria-label": "controlled" }}
                 />
               }
@@ -190,8 +193,8 @@ const BarCodeTab = ({ handleCodeSelect, selectedCode }) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={rotationChecked}
-                  onChange={handleRotationChange}
+                  checked={rotatingBarcodeSwitch}
+                  onChange={handleRotatingBarcodeChange}
                   inputProps={{ "aria-label": "controlled" }}
                 />
               }

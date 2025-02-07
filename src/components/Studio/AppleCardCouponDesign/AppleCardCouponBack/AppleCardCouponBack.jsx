@@ -1,7 +1,20 @@
-import { Box, Card, Divider, Switch, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  Divider,
+  FormControlLabel,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
-const AppleCardCouponBack = ({ isOverview }) => {
+const AppleCardCouponBack = ({
+  isOverview,
+  handleAutomaticUpdateChange,
+  automaticUpdateSwitch,
+  handleAllowNotificationsChange,
+  allowNotificationsSwitch,
+}) => {
   const TypoSX = {
     fontWeight: 400,
     fontSize: isOverview ? "10px" : "16px",
@@ -21,12 +34,29 @@ const AppleCardCouponBack = ({ isOverview }) => {
         >
           <div className="flex flex-row gap-4 justify-between items-center">
             <Typography sx={TypoSX}>Automatic Updates</Typography>
-            <Switch size={isOverview ? "small" : "medium"} />
+            <FormControlLabel
+              control={
+                <Switch
+                  size={isOverview ? "small" : "medium"}
+                  onChange={handleAutomaticUpdateChange}
+                  checked={automaticUpdateSwitch}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              }
+            />
           </div>
           <Divider sx={{ width: "100%", my: 1 }} />
           <div className="flex flex-row gap-4 justify-between items-center">
             <Typography sx={TypoSX}>Allow Notifications</Typography>
-            <Switch size={isOverview ? "small" : "medium"} />
+            <FormControlLabel
+              control={
+                <Switch
+                  size={isOverview ? "small" : "medium"}
+                  checked={allowNotificationsSwitch}
+                  onChange={handleAllowNotificationsChange}
+                />
+              }
+            />
           </div>
         </Box>
         <Box

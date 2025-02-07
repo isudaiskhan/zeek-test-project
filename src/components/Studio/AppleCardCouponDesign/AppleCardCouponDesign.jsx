@@ -9,6 +9,10 @@ const AppleCardCouponDesign = ({
   thirdColor,
   selectedCode,
   imagePreview,
+  handleAutomaticUpdateChange,
+  automaticUpdateSwitch,
+  handleAllowNotificationsChange,
+  allowNotificationsSwitch,
 }) => {
   return (
     <>
@@ -20,7 +24,12 @@ const AppleCardCouponDesign = ({
           selectedCode={selectedCode}
           imagePreview={imagePreview}
         />
-        <AppleCardCouponBack />
+        <AppleCardCouponBack
+          handleAutomaticUpdateChange={handleAutomaticUpdateChange}
+          automaticUpdateSwitch={automaticUpdateSwitch}
+          handleAllowNotificationsChange={handleAllowNotificationsChange}
+          allowNotificationsSwitch={allowNotificationsSwitch}
+        />
       </Box>
     </>
   );

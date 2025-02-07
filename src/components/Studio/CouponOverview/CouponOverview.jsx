@@ -12,6 +12,10 @@ const CouponOverview = ({
   secondColor,
   thirdColor,
   selectedCode,
+  handleAutomaticUpdateChange,
+  automaticUpdateSwitch,
+  handleAllowNotificationsChange,
+  allowNotificationsSwitch,
 }) => {
   return (
     <Box className="px-4 py-8" sx={{ width: "80vw" }}>
@@ -27,7 +31,13 @@ const CouponOverview = ({
             isOverview
             selectedCode={selectedCode}
           />
-          <AppleCardCouponBack isOverview />
+          <AppleCardCouponBack
+            isOverview
+            handleAutomaticUpdateChange={handleAutomaticUpdateChange}
+            automaticUpdateSwitch={automaticUpdateSwitch}
+            handleAllowNotificationsChange={handleAllowNotificationsChange}
+            allowNotificationsSwitch={allowNotificationsSwitch}
+          />
         </div>
         <div className="flex flex-col justify-center items-center gap-6">
           <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
