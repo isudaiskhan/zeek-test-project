@@ -101,9 +101,9 @@ const CardComponent = ({ id, title, status, messages, releaseTimes, tier }) => {
     <>
       <Card
         key={id}
-        className={`!w-[375px] !h-[309px] border-b-4 border-0 border-solid rounded-md shadow-md hover:shadow-lg transition-all ${borderColor}`}
+        className={` border-b-4 border-0 border-solid rounded-md shadow-md hover:shadow-lg transition-all flex flex-col ${borderColor}`}
       >
-        <CardContent>
+        <CardContent className="flex flex-col h-full justify-between">
           <div className="flex justify-between items-center mb-2">
             <Typography
               variant="h5"

@@ -27,7 +27,7 @@ const NotificationRow = ({
         <span className="text-[#B3B3B3] ml-3">{cardData?.length}</span>
       </Typography>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-10 w-full">
+      <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-6 w-full">
         {cardData?.map((item) => (
           <CardComponent
             key={item?._id}
