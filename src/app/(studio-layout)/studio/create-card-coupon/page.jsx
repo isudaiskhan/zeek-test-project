@@ -15,83 +15,127 @@ import { BARCODE_TYPES } from "@/enums/barcode";
 import { getImageBase64URL, uploadFileFunc } from "@/utils/helper-functions";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
+import { CARD_ACTION_CASES } from "@/enums/loyalty-actions";
+
+const initialState = {
+  firstColor: "#48617D",
+  secondColor: "#48617D",
+  thirdColor: "#48617D",
+  selectedCode: { type: BARCODE_TYPES.QRCODE, value: "https://zeek.com" },
+  imagePreview: null,
+  barcodeContent: "",
+  securityAnimationSwitch: false,
+  rotatingBarcodeSwitch: false,
+  automaticUpdateSwitch: false,
+  allowNotificationsSwitch: false,
+  showBarCodeSwitch: true,
+  logoImagePreview: "",
+  selectedLogoImage: null,
+  selectedHeroImage: null,
+  lockScreenIconPreview: "",
+  selectedLockScreenIcon: null,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case CARD_ACTION_CASES.SET_FIRST_COLOR:
+      return { ...state, firstColor: action.payload };
+    case CARD_ACTION_CASES.SET_SECOND_COLOR:
+      return { ...state, secondColor: action.payload };
+    case CARD_ACTION_CASES.SET_THIRD_COLOR:
+      return { ...state, thirdColor: action.payload };
+    case CARD_ACTION_CASES.SET_SELECTED_CODE:
+      return { ...state, selectedCode: action.payload };
+    case CARD_ACTION_CASES.SET_IMAGE_PREVIEW:
+      return { ...state, imagePreview: action.payload };
+    case CARD_ACTION_CASES.SET_BARCODE_CONTENT:
+      return { ...state, barcodeContent: action.payload };
+    case CARD_ACTION_CASES.SET_SECURITY_ANIMATION_SWITCH:
+      return { ...state, securityAnimationSwitch: action.payload };
+    case CARD_ACTION_CASES.SET_ROTATING_BARCODE_SWITCH:
+      return { ...state, rotatingBarcodeSwitch: action.payload };
+    case CARD_ACTION_CASES.SET_AUTOMATIC_UPDATE_SWITCH:
+      return { ...state, automaticUpdateSwitch: action.payload };
+    case CARD_ACTION_CASES.SET_ALLOW_NOTIFICATIONS_SWITCH:
+      return { ...state, allowNotificationsSwitch: action.payload };
+    case CARD_ACTION_CASES.SET_SHOW_BAR_CODE_SWITCH:
+      return { ...state, showBarCodeSwitch: action.payload };
+    case CARD_ACTION_CASES.SET_LOGO_IMAGE_PREVIEW:
+      return { ...state, logoImagePreview: action.payload };
+    case CARD_ACTION_CASES.SET_SELECTED_LOGO_IMAGE:
+      return { ...state, selectedLogoImage: action.payload };
+    case CARD_ACTION_CASES.SET_SELECTED_HERO_IMAGE:
+      return { ...state, selectedHeroImage: action.payload };
+    case CARD_ACTION_CASES.SET_LOCK_SCREEN_ICON_PREVIEW:
+      return { ...state, lockScreenIconPreview: action.payload };
+    case CARD_ACTION_CASES.SET_SELECTED_LOCK_SCREEN_ICON:
+      return { ...state, selectedLockScreenIcon: action.payload };
+    default:
+      return state;
+  }
+};
 
 const CouponCard = () => {
   const [value, setValue] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [firstColor, setFirstColor] = React.useState("#48617D");
-  const [secondColor, setSecondColor] = React.useState("#48617D");
-  const [thirdColor, setThirdColor] = React.useState("#48617D");
-  const [selectedCode, setSelectedCode] = React.useState({
-    type: BARCODE_TYPES.QRCODE,
-    value: "https://zeek.com",
-  });
-  const [imagePreview, setImagePreview] = React.useState(null);
-  const [barcodeContent, setBarcodeContent] = React.useState("");
-  const [securityAnimationSwitch, setSecurityAnimationSwitch] =
-    React.useState(false);
-  const [rotatingBarcodeSwitch, setRotatingBarcodeSwitch] =
-    React.useState(false);
-  const [automaticUpdateSwitch, setAutomaticUpdateSwitch] =
-    React.useState(false);
-  const [allowNotificationsSwitch, setAllowNotificationsSwitch] =
-    React.useState(false);
-  const [showBarCodeSwitch, setShowBarCodeSwitch] = React.useState(true);
-  const [logoImagePreview, setLogoImagePreview] = React.useState("");
-  const [selectedLogoImage, setSelectedLogoImage] = React.useState(null);
-  const [selectedHeroImage, setSelectedHeroImage] = React.useState(null);
-  const [lockScreenIconPreview, setLockScreenIconPreview] = React.useState("");
-  const [selectedLockScreenIcon, setSelectedLockScreenIcon] =
-    React.useState(null);
+
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const router = useRouter();
 
   const handleImageChange = async (file) => {
     if (file) {
       const base64URL = await getImageBase64URL(file);
-      setImagePreview(base64URL);
-      setSelectedHeroImage(file);
+      dispatch({ type: "SET_IMAGE_PREVIEW", payload: base64URL });
+      dispatch({ type: "SET_SELECTED_HERO_IMAGE", payload: file });
     }
   };
 
   const handleLogoImageChange = async (file) => {
     if (file) {
       const base64URL = await getImageBase64URL(file);
-      setLogoImagePreview(base64URL);
-      setSelectedLogoImage(file);
+      dispatch({ type: "SET_LOGO_IMAGE_PREVIEW", payload: base64URL });
+      dispatch({ type: "SET_SELECTED_LOGO_IMAGE", payload: file });
     }
   };
 
   const handleLockScreenIconChange = async (file) => {
     if (file) {
       const base64URL = await getImageBase64URL(file);
-      setLockScreenIconPreview(base64URL);
-      setSelectedLockScreenIcon(file);
+      dispatch({ type: "SET_LOCK_SCREEN_ICON_PREVIEW", payload: base64URL });
+      dispatch({ type: "SET_SELECTED_LOCK_SCREEN_ICON", payload: file });
     }
   };
 
   const handleRemoveImage = () => {
-    setImagePreview(null);
+    dispatch({ type: "SET_IMAGE_PREVIEW", payload: null });
   };
 
   const handleCodeSelect = (codeType, codeValue) => {
-    setSelectedCode({ type: codeType, value: codeValue });
+    dispatch({
+      type: "SET_SELECTED_CODE",
+      payload: { type: codeType, value: codeValue },
+    });
   };
 
   const handleFirstColorChange = (event, value) => {
-    setFirstColor(event.target.value, value);
+    dispatch({ type: "SET_FIRST_COLOR", payload: event.target.value, value });
   };
 
   const handleSecondColorChange = (event, value) => {
-    setSecondColor(event.target.value, value);
+    dispatch({ type: "SET_SECOND_COLOR", payload: event.target.value, value });
   };
 
   const handleThirdColorChange = (event, value) => {
-    setThirdColor(event.target.value, value);
+    dispatch({ type: "SET_THIRD_COLOR", payload: event.target.value, value });
   };
 
   const handleBarcodeContentChange = (event, value) => {
-    setBarcodeContent(event.target.value, value);
+    dispatch({
+      type: "SET_BARCODE_CONTENT",
+      payload: event.target.value,
+      value,
+    });
   };
 
   const handleChange = (event, newValue) => {
@@ -99,22 +143,37 @@ const CouponCard = () => {
   };
 
   const handleSecurityAnimationChange = (event) => {
-    setSecurityAnimationSwitch(event.target.checked);
+    dispatch({
+      type: "SET_SECURITY_ANIMATION_SWITCH",
+      payload: event.target.checked,
+    });
   };
 
   const handleRotatingBarcodeChange = (event) => {
-    setRotatingBarcodeSwitch(event.target.checked);
+    dispatch({
+      type: "SET_ROTATING_BARCODE_SWITCH",
+      payload: event.target.checked,
+    });
   };
 
   const handleAutomaticUpdateChange = (event) => {
-    setAutomaticUpdateSwitch(event.target.checked);
+    dispatch({
+      type: "SET_AUTOMATIC_UPDATE_SWITCH",
+      payload: event.target.checked,
+    });
   };
   const handleAllowNotificationsChange = (event) => {
-    setAllowNotificationsSwitch(event.target.checked);
+    dispatch({
+      type: "SET_ALLOW_NOTIFICATIONS_SWITCH",
+      payload: event.target.checked,
+    });
   };
 
   const handleShowBarCodeChange = (event) => {
-    setShowBarCodeSwitch(event.target.checked);
+    dispatch({
+      type: "SET_SHOW_BAR_CODE_SWITCH",
+      payload: event.target.checked,
+    });
   };
 
   const formik = useFormik({
@@ -142,31 +201,31 @@ const CouponCard = () => {
     },
     onSubmit: async (values) => {
       let logoImageKey = "";
-      if (selectedLogoImage) {
-        const response = await uploadFileFunc(selectedLogoImage);
+      if (state.selectedLogoImage) {
+        const response = await uploadFileFunc(state.selectedLogoImage);
         logoImageKey = response?.key;
       }
 
       let heroImageKey = "";
-      if (selectedHeroImage) {
-        const response = await uploadFileFunc(selectedHeroImage);
+      if (state.selectedHeroImage) {
+        const response = await uploadFileFunc(state.selectedHeroImage);
         heroImageKey = response?.key;
       }
 
       let lockScreenIconKey = "";
-      if (selectedLockScreenIcon) {
-        const response = await uploadFileFunc(selectedLockScreenIcon);
+      if (state.selectedLockScreenIcon) {
+        const response = await uploadFileFunc(state.selectedLockScreenIcon);
         lockScreenIconKey = response?.key;
       }
 
       const formattedValues = {
         ...values,
-        colors: [firstColor, secondColor, thirdColor],
-        barcodeContent: selectedCode.value,
-        securityAnimation: securityAnimationSwitch,
-        rotatingBarcode: rotatingBarcodeSwitch,
-        automaticUpdates: automaticUpdateSwitch,
-        allowNotifications: allowNotificationsSwitch,
+        colors: [state.firstColor, state.secondColor, state.thirdColor],
+        barcodeContent: state.selectedCode.value,
+        securityAnimation: state.securityAnimationSwitch,
+        rotatingBarcode: state.rotatingBarcodeSwitch,
+        automaticUpdates: state.automaticUpdateSwitch,
+        allowNotifications: state.allowNotificationsSwitch,
         logoImage: logoImageKey,
         heroImage: heroImageKey,
         lockScreenIcon: lockScreenIconKey,
@@ -220,30 +279,30 @@ const CouponCard = () => {
                   formValues={formik.values}
                   value={value}
                   handleChange={handleChange}
-                  firstColor={firstColor}
-                  secondColor={secondColor}
-                  thirdColor={thirdColor}
+                  firstColor={state.firstColor}
+                  secondColor={state.secondColor}
+                  thirdColor={state.thirdColor}
                   handleFirstColorChange={handleFirstColorChange}
                   handleSecondColorChange={handleSecondColorChange}
                   handleThirdColorChange={handleThirdColorChange}
                   currentPage={currentPage}
-                  selectedCode={selectedCode}
+                  selectedCode={state.selectedCode}
                   handleCodeSelect={handleCodeSelect}
-                  imagePreview={imagePreview}
+                  imagePreview={state.imagePreview}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}
                   handleBarcodeContentChange={handleBarcodeContentChange}
-                  barcodeContent={barcodeContent}
+                  barcodeContent={state.barcodeContent}
                   handleSecurityAnimationChange={handleSecurityAnimationChange}
-                  securityAnimationSwitch={securityAnimationSwitch}
+                  securityAnimationSwitch={state.securityAnimationSwitch}
                   handleRotatingBarcodeChange={handleRotatingBarcodeChange}
-                  rotatingBarcodeSwitch={rotatingBarcodeSwitch}
+                  rotatingBarcodeSwitch={state.rotatingBarcodeSwitch}
                   handleLogoImageChange={handleLogoImageChange}
-                  logoImagePreview={logoImagePreview}
+                  logoImagePreview={state.logoImagePreview}
                   handleLockScreenIconChange={handleLockScreenIconChange}
-                  lockScreenIconPreview={lockScreenIconPreview}
+                  lockScreenIconPreview={state.lockScreenIconPreview}
                   handleShowBarCodeChange={handleShowBarCodeChange}
-                  showBarCodeSwitch={showBarCodeSwitch}
+                  showBarCodeSwitch={state.showBarCodeSwitch}
                 />
               </Grid>
             )}
@@ -265,49 +324,49 @@ const CouponCard = () => {
                   </Box>
                   {currentPage === 1 && (
                     <AppleCardCouponDesign
-                      firstColor={firstColor}
-                      secondColor={secondColor}
-                      thirdColor={thirdColor}
-                      selectedCode={selectedCode}
-                      imagePreview={imagePreview}
+                      firstColor={state.firstColor}
+                      secondColor={state.secondColor}
+                      thirdColor={state.thirdColor}
+                      selectedCode={state.selectedCode}
+                      imagePreview={state.imagePreview}
                       handleAutomaticUpdateChange={handleAutomaticUpdateChange}
-                      automaticUpdateSwitch={automaticUpdateSwitch}
+                      automaticUpdateSwitch={state.automaticUpdateSwitch}
                       handleAllowNotificationsChange={
                         handleAllowNotificationsChange
                       }
-                      allowNotificationsSwitch={allowNotificationsSwitch}
+                      allowNotificationsSwitch={state.allowNotificationsSwitch}
                     />
                   )}
                   {currentPage === 2 && (
                     <GoogleCardCouponDesign
-                      firstColor={firstColor}
-                      secondColor={secondColor}
-                      thirdColor={thirdColor}
-                      selectedCode={selectedCode}
-                      imagePreview={imagePreview}
+                      firstColor={state.firstColor}
+                      secondColor={state.secondColor}
+                      thirdColor={state.thirdColor}
+                      selectedCode={state.selectedCode}
+                      imagePreview={state.imagePreview}
                     />
                   )}
                   {currentPage === 3 && (
                     <ZeekCardCouponDesign
-                      firstColor={firstColor}
-                      secondColor={secondColor}
-                      thirdColor={thirdColor}
-                      selectedCode={selectedCode}
-                      imagePreview={imagePreview}
+                      firstColor={state.firstColor}
+                      secondColor={state.secondColor}
+                      thirdColor={state.thirdColor}
+                      selectedCode={state.selectedCode}
+                      imagePreview={state.imagePreview}
                     />
                   )}
                   {currentPage === 4 && (
                     <CouponOverview
-                      firstColor={firstColor}
-                      secondColor={secondColor}
-                      thirdColor={thirdColor}
-                      selectedCode={selectedCode}
+                      firstColor={state.firstColor}
+                      secondColor={state.secondColor}
+                      thirdColor={state.thirdColor}
+                      selectedCode={state.selectedCode}
                       handleAutomaticUpdateChange={handleAutomaticUpdateChange}
-                      automaticUpdateSwitch={automaticUpdateSwitch}
+                      automaticUpdateSwitch={state.automaticUpdateSwitch}
                       handleAllowNotificationsChange={
                         handleAllowNotificationsChange
                       }
-                      allowNotificationsSwitch={allowNotificationsSwitch}
+                      allowNotificationsSwitch={state.allowNotificationsSwitch}
                     />
                   )}
 
