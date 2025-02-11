@@ -202,3 +202,64 @@ export const subscriptionBillingData = {
   cardType: "Mastercard",
   cardEnding: "0000",
 };
+
+export const promotionData = [
+  {
+    id: 1,
+    chipLabel: "Top 3 items",
+    chipColor: "#016932",
+    chipBgColor: "#8BE6B6",
+    promotions: [
+      {
+        id: 1,
+        offer: "Offer 30% off a pastry with every Matcha Latte purchased",
+        timeframe: "6 - 8 PM, Saturday",
+        details: [
+          "Matcha lovers have been visiting between 6-8 pm on Saturdays.",
+          "Applying this promotion during this period can drive increased foot traffic and allow upsell.",
+        ],
+      },
+      {
+        id: 2,
+        offer: "Bundle a small pastry with an Iced Caramel Macchiato",
+        timeframe: "Nov 7-13, 2024",
+        details: [
+          "Get a complimentary small pastry when you purchase an Iced Caramel Macchiato during the promotion period.",
+        ],
+      },
+      {
+        id: 3,
+        offer: "Provide a 15% discount on Avocado Toast with a drink order",
+        timeframe: "Saturday - Sunday",
+        details: [
+          "Enjoy a 15% discount on our delicious Avocado Toast when you pair it with any drink over the weekend.",
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    chipLabel: "Bottom 2 items",
+    chipColor: "#B81F00",
+    chipBgColor: "#FFB2B2",
+    promotions: [
+      {
+        id: 4,
+        offer: "buy-one-get-one-free offer on Herbal Tea",
+        timeframe: "2 - 4 PM, Daily",
+        details: [
+          "Matcha lovers have been visiting between 6-8 pm on Saturdays.",
+          "Applying this promotion during this period can drive increased foot traffic and allow upsell.",
+        ],
+      },
+      {
+        id: 5,
+        offer: "Bundle a small pastry with an Iced Caramel Macchiato",
+        timeframe: "Nov 7-13, 2024",
+        details: [
+          "Get a complimentary small pastry when you purchase an Iced Caramel Macchiato during the promotion period.",
+        ],
+      },
+    ],
+  },
+];
