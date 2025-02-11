@@ -133,3 +133,54 @@ export const RulesSchema = object({
     .positive("Points per review must be a positive number")
     .required("Points per review is required"),
 });
+
+export const TiersSchema = object({
+  bronze: object({
+    pointMultiplier: number()
+      .positive("Point multiplier must be a positive number")
+      .required("Point multiplier is required"),
+    minThreshold: number()
+      .min(0, "Minimum threshold must be at least 0")
+      .required("Minimum threshold is required"),
+    maxThreshold: number()
+      .moreThan(0, "Maximum threshold must be greater than 0")
+      .required("Maximum threshold is required"),
+  }),
+  silver: object({
+    pointMultiplier: number()
+      .positive("Point multiplier must be a positive number")
+      .required("Point multiplier is required"),
+    minThreshold: number()
+      .moreThan(0, "Minimum threshold must be greater than 0")
+      .required("Minimum threshold is required"),
+    maxThreshold: number()
+      .moreThan(100, "Maximum threshold must be greater than 100")
+      .required("Maximum threshold is required"),
+  }),
+  gold: object({
+    pointMultiplier: number()
+      .positive("Point multiplier must be a positive number")
+      .required("Point multiplier is required"),
+    minThreshold: number()
+      .moreThan(100, "Minimum threshold must be greater than 100")
+      .required("Minimum threshold is required"),
+    maxThreshold: number()
+      .moreThan(200, "Maximum threshold must be greater than 200")
+      .required("Maximum threshold is required"),
+  }),
+  platinum: object({
+    pointMultiplier: number()
+      .positive("Point multiplier must be a positive number")
+      .required("Point multiplier is required"),
+    minThreshold: number()
+      .moreThan(200, "Minimum threshold must be greater than 200")
+      .required("Minimum threshold is required"),
+    maxThreshold: number()
+      .moreThan(300, "Maximum threshold must be greater than 300")
+      .required("Maximum threshold is required"),
+  }),
+});
+
+export const BusinessRoleSchema = object({
+  name: string().required("Name is required"),
+});

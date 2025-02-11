@@ -19,7 +19,7 @@ const CustomTextField = ({
   size = "small",
 }) => {
   return (
-    <>
+    <div className="flex flex-col">
       <TextField
         variant="outlined"
         placeholder={placeholder}
@@ -43,7 +43,7 @@ const CustomTextField = ({
         }}
       />
       {error && <FormHelperText error>{errorMessage}</FormHelperText>}
-    </>
+    </div>
   );
 };
 

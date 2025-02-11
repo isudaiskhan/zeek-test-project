@@ -38,7 +38,7 @@ const MenuItem = ({ menuItemsData, handleTabClick }) => {
             <Grid container spacing={4}>
               {menuItemsData.map((item, index) => (
                 <>
-                  <Grid item size={{ md: 12, lg: 5 }} key={index}>
+                  <Grid size={{ md: 12, lg: 5 }} key={index}>
                     <div className="flex flex-row gap-4">
                       <div className="w-[100px] h-[100px] rounded-xl">
                         <Image

@@ -1,29 +1,33 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Typography,
-  IconButton,
-  Tabs,
-  Tab,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Spinner from "@/components/Spinner/Spinner";
+import { useGetRoles } from "@/services/business-profile/roles-permissions";
 import AddIcon from "@mui/icons-material/Add";
+import {
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import AdminPanelPermissions from "./AdminPanelPermissions";
+import ChoosePermissionsArea from "./ChoosePermissionsArea";
 import CreateNewRole from "./CreateNewRole";
 import PartnerAppPermissions from "./PartnerAppPermissions";
-import AdminPanelPermissions from "./AdminPanelPermissions";
 import RenderRoles from "./RenderRoles";
-import { ROLES } from "@/enums/business-profile";
 
 const RolesAndPermissions = () => {
-  const [activeTab, setActiveTab] = useState("adminpanel");
+  const [activeTab, setActiveTab] = useState("admin_panel");
   const [adminPanelRole, setAdminPanelRole] = useState("");
   const [partnerAppRole, setPartnerAppRole] = useState("");
   const [showCreateNewRole, setShowCreateNewRole] = useState(false);
 
   const handleTabChange = (event, newValue) => setActiveTab(newValue);
+
+  // react query
+  const { data: businessRoles, isLoading, isError, error } = useGetRoles();
 
   const handleAdminPanelRoleChange = (event) => {
     setAdminPanelRole(event.target.value);
@@ -36,6 +40,14 @@ const RolesAndPermissions = () => {
   const toggleCreateNewRole = () => {
     setShowCreateNewRole(!showCreateNewRole);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <div className="p-8 mx-auto">
@@ -67,106 +79,79 @@ const RolesAndPermissions = () => {
               All Created Roles
             </Typography>
             <div className="flex flex-wrap gap-6">
-              {Object.values(ROLES).map((role, index) => (
-                <RenderRoles key={index} role={role} />
+              {businessRoles?.data?.map((role) => (
+                <RenderRoles key={role?._id} role={role?.name} id={role?._id} />
               ))}
             </div>
           </div>
-
-          <div className="mt-12">
-            <Typography
-              variant="subtitle1"
-              className="!mb-2 font-inter !text-lg"
-            >
-              Choose Permission Area
-            </Typography>
-            <Typography
-              variant="body2"
-              className="text-[#838383] !text-sm !font-inter"
-            >
-              Choose where you would like to make permission changes.
-            </Typography>
-            <Tabs
-              value={activeTab}
-              onChange={handleTabChange}
-              textColor="inherit"
-              indicatorColor="none"
-              className="!mt-5"
-              sx={{
-                "& .MuiTab-root": {
-                  border: "1px solid #E7E7E7",
-                  backgroundColor: "#F9F9F9",
-                },
-                "& .Mui-selected": {
-                  color: "#E65300",
-                  backgroundColor: "#FFECE1",
-                },
-              }}
-            >
-              <Tab
-                className="!capitalize !font-inter"
-                label="Admin Panel"
-                value="adminpanel"
+          {businessRoles?.data?.length > 0 ? (
+            <div className="mt-12">
+              <ChoosePermissionsArea
+                activeTab={activeTab}
+                handleTabChange={handleTabChange}
               />
-              <Tab
-                className="!capitalize !font-inter"
-                label="Partner App"
-                value="partnerapp"
-              />
-            </Tabs>
-
-            {activeTab === "adminpanel" && (
-              <div className="mt-12">
-                <Typography variant="subtitle1" className="!mb-2 !text-lg">
-                  Edit role permissions
-                </Typography>
-                <Typography
-                  variant="body2"
-                  className="text-[#838383] !mb-4 !text-sm !font-inter"
-                >
-                  Select role to edit permissions:
-                </Typography>
-                <FormControl fullWidth variant="outlined" className="mt-4">
-                  <InputLabel>Select...</InputLabel>
-                  <Select
-                    value={adminPanelRole}
-                    onChange={handleAdminPanelRoleChange}
-                    label="Select role..."
-                    className="max-w-80"
+              {activeTab === "admin_panel" && (
+                <div className="mt-12">
+                  <Typography variant="subtitle1" className="!mb-2 !text-lg">
+                    Edit role permissions
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    className="text-[#838383] !mb-4 !text-sm !font-inter"
                   >
-                    <MenuItem value="Manager">Manager</MenuItem>
-                  </Select>
-                </FormControl>
-                {adminPanelRole === "Manager" && <AdminPanelPermissions />}
-              </div>
-            )}
+                    Select role to edit permissions:
+                  </Typography>
+                  <FormControl fullWidth variant="outlined" className="mt-4">
+                    <InputLabel>Select...</InputLabel>
+                    <Select
+                      value={adminPanelRole}
+                      onChange={handleAdminPanelRoleChange}
+                      label="Select role..."
+                      className="max-w-80"
+                    >
+                      <MenuItem value="Manager">Manager</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {adminPanelRole === "Manager" && <AdminPanelPermissions />}
+                </div>
+              )}
 
-            {activeTab === "partnerapp" && (
-              <div className="mt-8">
-                <Typography variant="subtitle1" className="!mb-2 !text-lg">
-                  Edit role permissions
-                </Typography>
-                <Typography
-                  variant="body2"
-                  className="text-[#838383] !mb-4 !text-sm !font-inter"
-                >
-                  Select role to edit permissions:
-                </Typography>
-                <FormControl fullWidth variant="outlined" className="mt-4">
-                  <InputLabel>Select...</InputLabel>
-                  <Select
-                    value={partnerAppRole}
-                    onChange={handlePartnerAppRoleChange}
-                    label="Select role..."
-                    className="max-w-80"
+              {activeTab === "partner_app" && (
+                <div className="mt-8">
+                  <Typography variant="subtitle1" className="!mb-2 !text-lg">
+                    Edit role permissions
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    className="text-[#838383] !mb-4 !text-sm !font-inter"
                   >
-                    <MenuItem value="Manager">Manager</MenuItem>
-                  </Select>
-                </FormControl>
-                {partnerAppRole === "Manager" && <PartnerAppPermissions />}
-              </div>
-            )}
-          </div>
+                    Select role to edit permissions:
+                  </Typography>
+                  <FormControl fullWidth variant="outlined" className="mt-4">
+                    <InputLabel>Select...</InputLabel>
+                    <Select
+                      value={partnerAppRole}
+                      onChange={handlePartnerAppRoleChange}
+                      label="Select role..."
+                      className="max-w-80"
+                    >
+                      <MenuItem value="Manager">Manager</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {partnerAppRole === "Manager" && <PartnerAppPermissions />}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div>
+              <Typography
+                variant="body2"
+                className="text-[#838383] !font-inter"
+              >
+                No Roles Found!
+              </Typography>
+            </div>
+          )}
         </>
       )}
     </div>

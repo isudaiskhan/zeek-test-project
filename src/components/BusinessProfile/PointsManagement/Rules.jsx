@@ -472,7 +472,7 @@ const Rules = () => {
             color="primary"
             loading={formik.isSubmitting}
             className={`!px-10 !py-2 rounded-full !bg-[#FFEEE4] ${
-              !formik.isSubmitting && "!text-[#E65300] "
+              !formik.isSubmitting && "!text-[#E65300]"
             } transition duration-200`}
           >
             Save Changes
