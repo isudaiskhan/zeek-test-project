@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Dialog, DialogContent, Typography } from "@mui/material";
 
 import Spinner from "components/Spinner/Spinner";
 
@@ -17,7 +9,6 @@ const ConfirmationDialog = ({
   setService,
   setServiceName,
   onConfirm,
-  confirmationBtnColor = "primary",
   isLoading,
   loading,
 }) => {
@@ -82,6 +73,7 @@ const ConfirmationDialog = ({
                 fontSize: "24px",
                 fontWeight: 400,
               }}
+              disabled={loading}
               onClick={closeDialog}
             >
               Cancel
@@ -96,6 +88,7 @@ const ConfirmationDialog = ({
                 fontWeight: 400,
               }}
               onClick={onConfirm}
+              loading={loading}
             >
               {confirmationBtnText}
             </Button>

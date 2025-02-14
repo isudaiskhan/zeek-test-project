@@ -13,10 +13,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import ClearSharpIcon from "@mui/icons-material/ClearSharp";
 import Image from "next/image";
 import { getImageBase64URL } from "@/utils/helper-functions";
+import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
+import { addMediaGallery } from "@/services/business-profile/media";
 
 const MediaGalleryModal = ({ open, onClose, message, buttonText }) => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const { submitHandler, submitLoading } = useSubmitHandler();
+  const { invalidateQuery } = useInvalidateQuery();
 
   const handleFileSelection = async (e) => {
     const files = Array.from(e.target.files);
@@ -51,12 +56,33 @@ const MediaGalleryModal = ({ open, onClose, message, buttonText }) => {
     setSelectedFiles(updatedFiles);
   };
 
-  console.log(selectedFiles, "working");
+  const handleCloseModal = () => {
+    onClose();
+    setSelectedFiles([]);
+    setImagePreviews([]);
+  };
+
+  const handleUploadMedia = () => {
+    submitHandler({
+      successMsg: "Media uploaded successfully",
+      onSubmit: async () => {
+        const uploadPromises = selectedFiles.map(async (file) => {
+          const formData = new FormData();
+          formData.append("image", file); // Only one key per request
+          return await addMediaGallery(formData);
+        });
+        // Wait for all uploads to complete
+        await Promise.all(uploadPromises);
+        invalidateQuery(["get-media"]);
+        handleCloseModal();
+      },
+    });
+  };
 
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleCloseModal}
       fullWidth
       maxWidth="md"
       className="backdrop-blur-sm"
@@ -76,7 +102,7 @@ const MediaGalleryModal = ({ open, onClose, message, buttonText }) => {
       }}
     >
       <IconButton
-        onClick={onClose}
+        onClick={handleCloseModal}
         className="!text-white !absolute !top-3 !left-5"
       >
         <CloseIcon className="!text-4xl" />
@@ -136,26 +162,38 @@ const MediaGalleryModal = ({ open, onClose, message, buttonText }) => {
           </div>
         )}
         <div className="flex justify-center">
-          <Button
-            component="label"
-            className="!mt-6 !bg-[#FFFFFF80] !text-black !font-inter !py-2 !px-16 !rounded-lg !text-base "
-          >
-            {buttonText}
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              hidden
-              onChange={handleFileSelection}
-            />
-            <Image
-              src="/images/upload.svg"
-              className="!ml-5"
-              alt="upload-icon"
-              width={25}
-              height={25}
-            />
-          </Button>
+          {selectedFiles.length > 0 ? (
+            <Button
+              component="label"
+              className="!mt-6 !bg-[#FFFFFF80] !text-black !font-inter !py-2 !px-16 !rounded-lg !text-base"
+              onClick={handleUploadMedia}
+              endIcon={<FileUploadOutlinedIcon />}
+              disabled={submitLoading}
+            >
+              {submitLoading ? "Uploading..." : "Upload Media"}
+            </Button>
+          ) : (
+            <Button
+              component="label"
+              className="!mt-6 !bg-[#FFFFFF80] !text-black !font-inter !py-2 !px-16 !rounded-lg !text-base"
+            >
+              {buttonText}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                hidden
+                onChange={handleFileSelection}
+              />
+              <Image
+                src="/images/upload.svg"
+                className="!ml-5"
+                alt="upload-icon"
+                width={25}
+                height={25}
+              />
+            </Button>
+          )}
         </div>
       </div>
     </Dialog>

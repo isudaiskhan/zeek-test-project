@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const getMediaGallery = async (page, limit) => {
@@ -10,10 +10,26 @@ const getMediaGallery = async (page, limit) => {
   });
 };
 
-export const useGetMediaGallery = (page = 1, limit = 10) => {
-  return useQuery({
-    queryKey: ["get-media", page, limit],
-    queryFn: () => getMediaGallery(page, limit),
+export const addMediaGallery = async (formData) => {
+  return await axios.post("/business-media", formData);
+};
+
+export const deleteMediaGallery = async (id) => {
+  return await axios.delete(`/business-media`, {
+    params: {
+      businessMedia: id,
+    },
+  });
+};
+
+export const useGetMediaGallery = (limit = 9) => {
+  return useInfiniteQuery({
+    queryKey: ["get-media", limit],
+    queryFn: ({ pageParam = 1 }) => getMediaGallery(pageParam, limit),
+    getNextPageParam: (lastPage, allPages) => {
+      const currentPage = allPages?.length;
+      return currentPage < lastPage?.totalPages ? currentPage + 1 : undefined;
+    },
     refetchOnWindowFocus: false,
   });
 };

@@ -178,18 +178,6 @@ export const manageSessions = [
   },
 ];
 
-export const images = [
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-  "/images/media-gallery.svg",
-];
-
 export const subscriptionBillingData = {
   planName: "Basic plan",
   description:

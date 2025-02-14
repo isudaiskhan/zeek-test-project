@@ -31,8 +31,8 @@ export const useGetMenuItems = (limit = 10) => {
     queryKey: ["get-segments", limit],
     queryFn: ({ pageParam = 1 }) => getMenuItems(pageParam, limit),
     getNextPageParam: (lastPage, allPages) => {
-      const currentPage = allPages.length;
-      return currentPage < lastPage.totalPages ? currentPage + 1 : undefined;
+      const currentPage = allPages?.length;
+      return currentPage < lastPage?.totalPages ? currentPage + 1 : undefined;
     },
     refetchOnWindowFocus: false,
   });
