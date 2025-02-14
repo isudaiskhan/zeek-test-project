@@ -10,6 +10,7 @@ const CustomButton = ({
   startIcon,
   isLandingPage,
   type,
+  loading,
 }) => {
   return (
     <Button
@@ -26,6 +27,7 @@ const CustomButton = ({
       }}
       startIcon={startIcon}
       type={type}
+      loading={loading}
     >
       {text || icon}
     </Button>

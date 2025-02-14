@@ -184,3 +184,13 @@ export const TiersSchema = object({
 export const BusinessRoleSchema = object({
   name: string().required("Name is required"),
 });
+
+export const MenuItemSchema = object({
+  name: string().required("Name is required"),
+  description: string().required("Description is required"),
+  price: number()
+    .typeError("Price must be a number")
+    .positive("Price must be a positive number")
+    .required("Price is required"),
+  image: string().required("Image is required"),
+});

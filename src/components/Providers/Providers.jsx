@@ -43,6 +43,10 @@ const Providers = ({ children }) => {
     // token
     const tokenFromLocalStorage = localStorage.getItem("token");
     if (tokenFromLocalStorage) {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${tokenFromLocalStorage}`;
+
       setToken(tokenFromLocalStorage);
     }
   }, []);

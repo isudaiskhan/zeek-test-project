@@ -28,7 +28,11 @@ const ImageUpload = ({
   };
 
   const setPreview = async (file) => {
-    setImagePreview(await getImageBase64URL(file));
+    if (typeof file === "object") {
+      setImagePreview(await getImageBase64URL(file));
+    } else {
+      setImagePreview(file);
+    }
   };
 
   const handleRemove = () => {

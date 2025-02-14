@@ -1,10 +1,18 @@
-import { TbEdit } from "react-icons/tb";
+import CustomButton from "@/components/Custom/CustomButton/CustomButton";
+import { fileBaseURL } from "@/utils/urls";
 import { Divider, Typography } from "@mui/material";
-import React from "react";
-import Image from "next/image";
 import Grid from "@mui/material/Grid2";
+import Image from "next/image";
+import React from "react";
+import { TbEdit } from "react-icons/tb";
 
-const MenuItem = ({ menuItemsData, handleTabClick }) => {
+const MenuItem = ({
+  menuItemsData,
+  handleTabClick,
+  hasNextPage,
+  fetchNextPage,
+  isFetchingNextPage,
+}) => {
   return (
     <>
       <Typography sx={{ fontSize: "24px", fontWeight: 400 }}>Menu</Typography>
@@ -36,22 +44,22 @@ const MenuItem = ({ menuItemsData, handleTabClick }) => {
           </div>
           <div className="p-4 mt-4">
             <Grid container spacing={4}>
-              {menuItemsData.map((item, index) => (
-                <>
-                  <Grid size={{ md: 12, lg: 5 }} key={index}>
+              {menuItemsData?.map((item, index) => (
+                <React.Fragment key={item?._id}>
+                  <Grid size={{ md: 12, lg: 5 }}>
                     <div className="flex flex-row gap-4">
                       <div className="w-[100px] h-[100px] rounded-xl">
                         <Image
-                          src={item?.image}
+                          src={`${fileBaseURL}${item?.image}`}
                           width={100}
                           height={100}
-                          alt={item?.title}
+                          alt={item?.name}
                           className="!w-[100px] !h-[100px] !rounded-xl"
                         />
                       </div>
                       <div className="flex flex-col gap-5">
                         <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                          {item?.title}
+                          {item?.name}
                         </Typography>
                         <Typography
                           sx={{
@@ -69,9 +77,20 @@ const MenuItem = ({ menuItemsData, handleTabClick }) => {
                   {index % 2 === 0 && (
                     <Divider orientation="vertical" flexItem sx={{ mx: 4 }} />
                   )}
-                </>
+                </React.Fragment>
               ))}
             </Grid>
+          </div>
+          <div className="flex items-center justify-center py-2">
+            {hasNextPage && (
+              <CustomButton
+                loading={isFetchingNextPage}
+                text="Load More"
+                bgColor="#FFECE1"
+                textColor="#FF5B00"
+                onClick={fetchNextPage}
+              />
+            )}
           </div>
         </div>
       </div>
