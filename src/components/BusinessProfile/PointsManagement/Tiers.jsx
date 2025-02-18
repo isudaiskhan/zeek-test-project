@@ -256,21 +256,23 @@ const Tiers = () => {
           <Typography className="text-[#838383] !mb-5 !text-sm !font-inter">
             Set the bronze tier point multiplier
           </Typography>
-          <CustomTextField
-            placeholder="1"
-            name="bronze.pointMultiplier"
-            value={formik.values.bronze.pointMultiplier}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.bronze?.pointMultiplier &&
-              Boolean(formik.errors.bronze?.pointMultiplier)
-            }
-            errorMessage={formik.errors.bronze?.pointMultiplier}
-            haveBorderRadius
-            borderRadius="10px"
-            type="number"
-            className="mt-2"
-          />
+          <div className="max-w-[15rem]">
+            <CustomTextField
+              placeholder="1"
+              name="bronze.pointMultiplier"
+              value={formik.values.bronze.pointMultiplier}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.bronze?.pointMultiplier &&
+                Boolean(formik.errors.bronze?.pointMultiplier)
+              }
+              errorMessage={formik.errors.bronze?.pointMultiplier}
+              haveBorderRadius
+              borderRadius="10px"
+              type="number"
+              className="mt-2"
+            />
+          </div>
         </div>
 
         <div className="px-5">
@@ -280,21 +282,23 @@ const Tiers = () => {
           <Typography className="text-[#838383] !mb-5 !text-sm !font-inter">
             Set the silver tier point multiplier
           </Typography>
-          <CustomTextField
-            placeholder="1.3"
-            name="silver.pointMultiplier"
-            value={formik.values.silver.pointMultiplier}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.silver?.pointMultiplier &&
-              Boolean(formik.errors.silver?.pointMultiplier)
-            }
-            errorMessage={formik.errors.silver?.pointMultiplier}
-            haveBorderRadius
-            borderRadius="10px"
-            type="number"
-            className="mt-2"
-          />
+          <div className="max-w-[15rem]">
+            <CustomTextField
+              placeholder="1.3"
+              name="silver.pointMultiplier"
+              value={formik.values.silver.pointMultiplier}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.silver?.pointMultiplier &&
+                Boolean(formik.errors.silver?.pointMultiplier)
+              }
+              errorMessage={formik.errors.silver?.pointMultiplier}
+              haveBorderRadius
+              borderRadius="10px"
+              type="number"
+              className="mt-2"
+            />
+          </div>
         </div>
 
         <div className="px-5">
@@ -304,21 +308,23 @@ const Tiers = () => {
           <Typography className="text-[#838383] !mb-5 !text-sm !font-inter">
             Set the gold tier point multiplier
           </Typography>
-          <CustomTextField
-            placeholder="1.6"
-            name="gold.pointMultiplier"
-            value={formik.values.gold.pointMultiplier}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.gold?.pointMultiplier &&
-              Boolean(formik.errors.gold?.pointMultiplier)
-            }
-            errorMessage={formik.errors.gold?.pointMultiplier}
-            haveBorderRadius
-            borderRadius="10px"
-            type="number"
-            className="mt-2"
-          />
+          <div className="max-w-[15rem]">
+            <CustomTextField
+              placeholder="1.6"
+              name="gold.pointMultiplier"
+              value={formik.values.gold.pointMultiplier}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.gold?.pointMultiplier &&
+                Boolean(formik.errors.gold?.pointMultiplier)
+              }
+              errorMessage={formik.errors.gold?.pointMultiplier}
+              haveBorderRadius
+              borderRadius="10px"
+              type="number"
+              className="mt-2"
+            />
+          </div>
         </div>
 
         <div className="px-5">
@@ -328,21 +334,23 @@ const Tiers = () => {
           <Typography className="text-[#838383] !mb-5 !text-sm !font-inter">
             Set the platinum tier point multiplier
           </Typography>
-          <CustomTextField
-            placeholder="2"
-            name="platinum.pointMultiplier"
-            value={formik.values.platinum.pointMultiplier}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.platinum?.pointMultiplier &&
-              Boolean(formik.errors.platinum?.pointMultiplier)
-            }
-            errorMessage={formik.errors.platinum?.pointMultiplier}
-            haveBorderRadius
-            borderRadius="10px"
-            type="number"
-            className="mt-2"
-          />
+          <div className="max-w-[15rem]">
+            <CustomTextField
+              placeholder="2"
+              name="platinum.pointMultiplier"
+              value={formik.values.platinum.pointMultiplier}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.platinum?.pointMultiplier &&
+                Boolean(formik.errors.platinum?.pointMultiplier)
+              }
+              errorMessage={formik.errors.platinum?.pointMultiplier}
+              haveBorderRadius
+              borderRadius="10px"
+              type="number"
+              className="mt-2"
+            />
+          </div>
         </div>
 
         <Box className="flex justify-center mt-6">

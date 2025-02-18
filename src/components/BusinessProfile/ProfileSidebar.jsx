@@ -29,7 +29,18 @@ const ProfileSidebar = ({ activeMenu, handleSelect }) => {
   };
 
   return (
-    <Box className="!h-full overflow-y-auto max-h-screen !border-0 !border-solid !border-[#E7E7E7] !border-r-2 !p-4">
+    <Box
+      sx={{
+        "&::-webkit-scrollbar": { width: "8px", height: "8px" },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#FFDAC5",
+          borderRadius: "8px",
+        },
+        "&::-webkit-scrollbar-thumb:hover": { backgroundColor: "#555" },
+        "&::-webkit-scrollbar-track": { backgroundColor: "#f4f4f4" },
+      }}
+      className="!h-full overflow-y-auto max-h-screen !border-0 !border-solid !border-[#E7E7E7] !border-r-2 !p-4"
+    >
       <List component="div" disablePadding>
         {businessProfileRoutes.map((subRoute, index) => {
           const isActive = currentActiveMenu === subRoute.name;

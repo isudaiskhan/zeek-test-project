@@ -89,22 +89,23 @@ const AnalyticsSettings = () => {
             >
               Targeted sales number per day, values in AED.
             </Typography>
-
-            <CustomTextField
-              fullWidth
-              name="dailySalesTarget"
-              value={inputs.dailySalesTarget}
-              onChange={handleInputChange}
-              variant="outlined"
-              size="small"
-              placeholder="ie. 500, 1000, 1500"
-              className="!mt-4 !rounded-full !border-[#E7E7E7] !border-solid"
-              type="number"
-              validate={validatePositiveNumber}
-              errorMessage="Please enter a positive number"
-              haveBorderRadius
-              borderRadius="10px"
-            />
+            <div className="max-w-[15rem]">
+              <CustomTextField
+                fullWidth
+                name="dailySalesTarget"
+                value={inputs.dailySalesTarget}
+                onChange={handleInputChange}
+                variant="outlined"
+                size="small"
+                placeholder="ie. 500, 1000, 1500"
+                className="!mt-4 !rounded-full !border-[#E7E7E7] !border-solid"
+                type="number"
+                validate={validatePositiveNumber}
+                errorMessage="Please enter a positive number"
+                haveBorderRadius
+                borderRadius="10px"
+              />
+            </div>
 
             <div className="mt-5">
               <Typography className="!font-inter !text-[#838383] !text-sm !mb-1 !mt-5">
@@ -140,21 +141,23 @@ const AnalyticsSettings = () => {
             >
               Goal for how often customers should visit per month.
             </Typography>
-            <CustomTextField
-              fullWidth
-              name="averageVisitFrequency"
-              value={inputs.averageVisitFrequency}
-              onChange={handleInputChange}
-              variant="outlined"
-              size="small"
-              placeholder="ie. 2, 5, 7"
-              className="!mt-4 !rounded-full !border-[#E7E7E7] !border-solid"
-              type="number"
-              validate={validatePositiveNumber}
-              errorMessage="Please enter a positive number"
-              haveBorderRadius
-              borderRadius="10px"
-            />
+            <div className="max-w-[15rem]">
+              <CustomTextField
+                fullWidth
+                name="averageVisitFrequency"
+                value={inputs.averageVisitFrequency}
+                onChange={handleInputChange}
+                variant="outlined"
+                size="small"
+                placeholder="ie. 2, 5, 7"
+                className="!mt-4 !rounded-full !border-[#E7E7E7] !border-solid"
+                type="number"
+                validate={validatePositiveNumber}
+                errorMessage="Please enter a positive number"
+                haveBorderRadius
+                borderRadius="10px"
+              />
+            </div>
           </div>
         </div>
 
@@ -179,21 +182,23 @@ const AnalyticsSettings = () => {
               Set alerts for when sales fall below a certain number, Values in
               AED.
             </Typography>
-            <CustomTextField
-              fullWidth
-              name="alertThreshold"
-              value={inputs.alertThreshold}
-              onChange={handleInputChange}
-              variant="outlined"
-              size="small"
-              placeholder="ie. 250, 500, 750"
-              className="!mt-4 !rounded-full !border-[#E7E7E7] !border-solid"
-              type="number"
-              validate={validatePositiveNumber}
-              errorMessage="Please enter a positive number"
-              haveBorderRadius
-              borderRadius="10px"
-            />
+            <div className="max-w-[15rem]">
+              <CustomTextField
+                fullWidth
+                name="alertThreshold"
+                value={inputs.alertThreshold}
+                onChange={handleInputChange}
+                variant="outlined"
+                size="small"
+                placeholder="ie. 250, 500, 750"
+                className="!mt-4 !rounded-full !border-[#E7E7E7] !border-solid"
+                type="number"
+                validate={validatePositiveNumber}
+                errorMessage="Please enter a positive number"
+                haveBorderRadius
+                borderRadius="10px"
+              />
+            </div>
           </div>
         </div>
       </div>

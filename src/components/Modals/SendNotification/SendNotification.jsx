@@ -134,7 +134,6 @@ const SendNotification = ({ open, onClose }) => {
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
               errorMessage={formik.touched.title && formik.errors.title}
-              width="50%"
               size="large"
             />
           </Box>

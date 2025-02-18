@@ -106,7 +106,7 @@ const Rules = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Set how many points customers earn per AED spent.
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 1, 2, 5, 10"
                 name="pointsPerAmount"
@@ -135,7 +135,7 @@ const Rules = () => {
               Maximum points a customer can earn in a single transaction, if
               none leave blank.
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 100, 200, 500"
                 name="pointsCapPerTransaction"
@@ -164,7 +164,7 @@ const Rules = () => {
               Define a spending minimum to earn points. (e.g., minimum AED 10
               purchase to earn points).
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 10, 20, 50"
                 name="minSpendForPoints"
@@ -202,7 +202,7 @@ const Rules = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               How many points equal AED 1.
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 10, 20, 50, 100"
                 name="redemptionPointValue"
@@ -230,7 +230,7 @@ const Rules = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Minimum Points required to redeem any reward.
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 0, 10, 20, 50"
                 name="minPointsForRedemption"
@@ -285,23 +285,25 @@ const Rules = () => {
             How many months of inactivity will expire points? if &apos;No is
             selected above,leave blank.
           </Typography>
-          <CustomTextField
-            placeholder="ie. 10, 20, 50, 100"
-            name="monthsForExpiry"
-            value={formik.values.monthsForExpiry}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.monthsForExpiry &&
-              Boolean(formik.errors.monthsForExpiry)
-            }
-            errorMessage={
-              formik.touched.monthsForExpiry && formik.errors.monthsForExpiry
-            }
-            haveBorderRadius
-            borderRadius="10px"
-            type="number"
-            disabled={!activeTab}
-          />
+          <div className="max-w-[15rem]">
+            <CustomTextField
+              placeholder="ie. 10, 20, 50, 100"
+              name="monthsForExpiry"
+              value={formik.values.monthsForExpiry}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.monthsForExpiry &&
+                Boolean(formik.errors.monthsForExpiry)
+              }
+              errorMessage={
+                formik.touched.monthsForExpiry && formik.errors.monthsForExpiry
+              }
+              haveBorderRadius
+              borderRadius="10px"
+              type="number"
+              disabled={!activeTab}
+            />
+          </div>
         </div>
 
         <div className="!mt-10">
@@ -342,7 +344,7 @@ const Rules = () => {
               Name your points(e.g., &apos;Zeek Points&apos;, &apos;Coffee
               Coins&apos;).
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. Zeek Points"
                 name="pointName"
@@ -377,7 +379,7 @@ const Rules = () => {
               Points given to customers when they first join the loyalty
               program.
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 10, 20, 50, 100"
                 name="pointsForSignUp"
@@ -413,7 +415,7 @@ const Rules = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Reward points for leaving reviews.
             </Typography>
-            <div className="mt-6">
+            <div className="mt-6 max-w-[15rem]">
               <CustomTextField
                 placeholder="ie. 1, 5, 10, 20"
                 name="pointsPerReview"
@@ -444,7 +446,7 @@ const Rules = () => {
               <Typography className="!text-[#838383] !text-sm !font-inter">
                 automatically assign bonus points on a customer&apos;s birthday.
               </Typography>
-              <div className="mt-6">
+              <div className="mt-6 max-w-[15rem]">
                 <CustomTextField
                   placeholder="ie. 10, 20, 50, 100"
                   name="birthdayPoints"

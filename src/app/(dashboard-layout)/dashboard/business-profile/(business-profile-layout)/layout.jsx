@@ -21,7 +21,15 @@ const BusinessProfileLayout = ({ children, onMenuChange }) => {
       <Paper className="!rounded-2xl !shadow-lg !shadow-gray-300">
         <div className="links-box flex flex-col md:flex-row gap-4 p-4">
           <ProfileSidebar activeMenu={activeMenu} handleSelect={handleSelect} />
-          <div className="flex-1 overflow-y-auto max-h-screen">{children}</div>
+          <div
+            className="flex-1 overflow-y-auto max-h-screen"
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "#FFDAC5 #f4f4f4",
+            }}
+          >
+            {children}
+          </div>
         </div>
       </Paper>
     </>

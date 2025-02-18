@@ -84,7 +84,7 @@ const EditProfile = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Change your business name, this will be visible to users.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="Sato"
                 name="businessname"
@@ -132,7 +132,7 @@ const EditProfile = () => {
               Change your business owner name, this will not be visible to
               users.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="Darius"
                 name="firstname"
@@ -151,7 +151,7 @@ const EditProfile = () => {
               Change your business owner name, this will not be visible to
               users.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="White"
                 name="lastname"
@@ -170,13 +170,12 @@ const EditProfile = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Change your business email, this will not be visible to users.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="Dariuswhite@satocafé.com"
                 name="email"
                 haveBorderRadius
                 borderRadius="10px"
-                width="45%"
               />
             </div>
 
@@ -191,7 +190,7 @@ const EditProfile = () => {
               Change your business phone number, this will not be visible to
               users.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="+971 55 123 4567"
                 name="phonenumber"
@@ -228,7 +227,7 @@ const EditProfile = () => {
                   label="Select role..."
                   value={selectedOptions.country}
                   onChange={(event) => handleSelectChange(event)}
-                  className="!font-inter max-w-60 !rounded-lg bg-[#F9F9F9]"
+                  className="!font-inter max-w-[15rem] !rounded-lg bg-[#F9F9F9]"
                 >
                   <MenuItem value="option1">Option 1</MenuItem>
                   <MenuItem value="option2">Option 2</MenuItem>
@@ -245,7 +244,7 @@ const EditProfile = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Change the city your bussiness is located.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="Dubai"
                 name="city/state"
@@ -264,7 +263,7 @@ const EditProfile = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Change the street your bussiness is located.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="Jumeirah Beach Road"
                 name="street"
@@ -283,7 +282,7 @@ const EditProfile = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Change the building number your bussiness is located in.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="23"
                 name="buildingnumber"
@@ -302,7 +301,7 @@ const EditProfile = () => {
             <Typography className="!text-[#838383] !text-sm !font-inter">
               Change the floor your bussiness is located in.
             </Typography>
-            <div className="mt-6 mb-7">
+            <div className="mt-6 mb-7 max-w-[15rem]">
               <CustomTextField
                 placeholder="N/A"
                 name="floornumber"

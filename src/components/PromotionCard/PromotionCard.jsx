@@ -67,14 +67,13 @@ const PromotionCard = ({
     <>
       <Card
         sx={{
-          direction: "column",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-          borderRadius: "8px",
-          padding: "24px",
-          minHeight: "580px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          height: "100%",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+          borderRadius: "8px",
+          padding: "24px",
         }}
       >
         <div className="flex justify-end items-end mb-2">
@@ -133,7 +132,7 @@ const PromotionCard = ({
             height={228}
             loader={() => `${fileBaseURL}${image}`}
             layout="responsive"
-            className="rounded-xl"
+            className="rounded-xl min-h-56 max-h-56 object-cover"
           />
         </div>
         <div className="flex flex-col flex-start items-start gap-2 mb-2">
