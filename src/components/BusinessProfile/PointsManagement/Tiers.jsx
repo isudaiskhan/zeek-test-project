@@ -11,7 +11,7 @@ import { updateTiers } from "@/services/business-profile/points-management";
 const initialValues = {
   bronze: {
     pointMultiplier: "",
-    minThreshold: "",
+    minThreshold: 0,
     maxThreshold: "",
   },
   silver: {
@@ -78,7 +78,8 @@ const Tiers = () => {
               <CustomTextField
                 placeholder="0"
                 name="bronze.minThreshold"
-                value={formik.values.bronze.minThreshold}
+                value={formik.values.bronze.minThreshold || 0}
+                disabled={true}
                 onChange={formik.handleChange}
                 error={
                   formik.touched.bronze?.minThreshold &&

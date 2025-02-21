@@ -1,4 +1,5 @@
 import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
+import { CARD_TYPES_OPTIONS } from "@/enums/cards";
 import { Box, Chip, Divider, Typography } from "@mui/material";
 import React from "react";
 
@@ -30,6 +31,7 @@ const CardTypes = ({ activeCardType, handleCardTypeClick, cardTypes }) => {
                 fontWeight: 400,
                 fontSize: "16px",
                 color: activeCardType === card.value ? "#FFFFFF" : "#000000",
+                textTransform: "capitalize",
               }}
             >
               {card.label}
@@ -44,7 +46,7 @@ const CardTypes = ({ activeCardType, handleCardTypeClick, cardTypes }) => {
                 // card.label === "Coupons" ? "#F0F3FF" : "#FFEBDF",
                 color: card.textColor,
                 border:
-                  card.label === "Coupons"
+                  card.label === CARD_TYPES_OPTIONS.COUPONS
                     ? "1px solid #768CEA"
                     : "1px solid #FF5B00",
               }}

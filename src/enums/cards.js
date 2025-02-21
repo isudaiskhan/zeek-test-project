@@ -8,3 +8,23 @@ export const CARD_STATUSES = {
   INACTIVE: "inactive",
   DRAFT: "draft",
 };
+
+export const CARD_OPTIONS = {
+  CARD_TYPES: "card_types",
+  SETTINGS: "settings",
+  DESIGN: "design",
+  INFORMATION: "information",
+};
+
+export const CARD_TYPES_OPTIONS = {
+  POINTS: "points",
+  STAMPS: "stamps",
+  COUPONS: "coupons",
+};
+
+export const ICON_TABS_OPTIONS = {
+  APPLE: "apple",
+  ANDROID: "android",
+  ZEEK: "zeek",
+  NOTIFICATION: "notification",
+};
