@@ -1,165 +1,164 @@
 "use client";
 
-import CustomButton from "@/components/Custom/CustomButton/CustomButton";
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Container,
+  Divider,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
+import Grid from "@mui/material/Grid2";
+import { PiCoin } from "react-icons/pi";
+import { RiCoupon2Line } from "react-icons/ri";
+import StudioHeader from "@/components/StudioComponents/StudioHeader/StudioHeader";
+import CardTypes from "@/components/StudioComponents/CardTypes/CardTypes";
+import Image from "next/image";
+import { LiaAndroid } from "react-icons/lia";
+import { LiaApple } from "react-icons/lia";
+import { PiNotification } from "react-icons/pi";
+
+const tabs = [
+  {
+    label: "Card Type",
+    value: "cardType",
+  },
+  {
+    label: "Settings",
+    value: "settings",
+  },
+  {
+    label: "Design",
+    value: "design",
+  },
+  {
+    label: "Information",
+    value: "information",
+  },
+];
+
+const icons = [
+  {
+    icon: (props) => <LiaApple {...props} />,
+    value: "apple",
+  },
+  {
+    icon: (props) => <LiaAndroid {...props} />,
+    value: "android",
+  },
+  {
+    icon: (props) => <PiNotification {...props} />,
+    value: "notification",
+  },
+];
 
 const AddCard = () => {
-  const [activeTab, setActiveTab] = useState("loyalty");
+  const [activeTab, setActiveTab] = useState("cardType");
+  const [activeCardType, setActiveCardType] = useState("points");
+  const [iconTabs, setIconTabs] = useState("apple");
 
-  const router = useRouter();
+  const cardTypes = [
+    {
+      label: "Points",
+      value: "points",
+      icon: (props) => <PiCoin {...props} />,
+      buttonText: "High Retention",
+      bgColor: activeCardType === "points" ? "#FF5B00" : "#FFEBDF",
+      textColor: activeCardType === "points" ? "#FFFFFF" : "#FF5B00",
+    },
+    {
+      label: "Stamps",
+      value: "stamps",
+      icon: (props) => <PiCoin {...props} />,
+      buttonText: "High Retention",
+      bgColor: activeCardType === "stamps" ? "#FF5B00" : "#FFEBDF",
+      textColor: activeCardType === "stamps" ? "#FFFFFF" : "#FF5B00",
+    },
+    {
+      label: "Coupons",
+      value: "coupons",
+      icon: (props) => <RiCoupon2Line {...props} />,
+      buttonText: "Best for acquisition",
+      bgColor: activeCardType === "coupons" ? "#768CEA" : "#F0F3FF",
+      textColor: activeCardType === "coupons" ? "#FFFFFF" : "#768CEA",
+    },
+  ];
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const handleCardTypeClick = (cardType) => {
+    setActiveCardType(cardType);
+  };
+
+  const handleIconTabClick = (iconTab) => {
+    setIconTabs(iconTab);
+  };
+
   return (
-    <Container maxWidth="xl">
-      <Box className="p-2">
-        <Box className="flex justify-start items-start">
-          <CustomButton
-            text="All Cards"
-            textColor="black"
-            bgColor="#EAEAEA"
-            startIcon={<ArrowBackIosIcon fontSize="small" />}
-            onClick={() => router.push("/dashboard/loyalty")}
-          />
-        </Box>
-        <Box className="flex flex-row justify-start items-start py-10">
-          <Typography
-            sx={{ fontWeight: 510, fontSize: "40px", color: "#8E8E8E" }}
-          >
-            What kind of card would you like to create?
-          </Typography>
-        </Box>
-        <Box className="flex flex-row justify-between items-center">
-          <div className="flex flex-col gap-40 justify-center items-center">
-            <div className="flex flex-col gap-8 justify-center items-center">
-              <Box
-                className="w-[238px] h-[80px] items-center p-5 rounded-xl cursor-pointer"
-                sx={{
-                  border: "2px solid #EEEEEE",
-                  backgroundColor: activeTab === "loyalty" ? "#FFECE1" : "",
-                }}
-                onClick={() => handleTabClick("loyalty")}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: activeTab === "loyalty" ? 700 : 400,
-                    fontSize: "24px",
-                    color: activeTab === "loyalty" ? "#FF5B00" : "#000000",
-                    textAlign: "center",
-                  }}
-                >
-                  Loyalty
-                </Typography>
+    <Box>
+      <StudioHeader
+        tabs={tabs}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+
+      <Container maxWidth="xl">
+        <Grid container spacing={1}>
+          <Grid size={{ xs: 12, md: 7 }}>
+            {activeTab === "cardType" && (
+              <CardTypes
+                activeCardType={activeCardType}
+                handleCardTypeClick={handleCardTypeClick}
+                cardTypes={cardTypes}
+              />
+            )}
+            {activeTab === "settings" && <div>Settings</div>}
+            {activeTab === "design" && <div>Design</div>}
+            {activeTab === "information" && <div>Information</div>}
+          </Grid>
+          <Grid size={{ xs: 12, md: 5 }}>
+            <Box className="flex flex-row gap-10 mt-28 justify-center items-center">
+              <Image
+                src={
+                  iconTabs === "android"
+                    ? "/images/android-frame.png"
+                    : "/images/iphone-frame.png"
+                }
+                alt="card-frame"
+                height={100}
+                width={100}
+                layout="responsive"
+                className="!h-[550px] !w-[290px] object-contain"
+              />
+              <Box className="flex flex-col gap-4 justify-center items-center">
+                {icons.map((item, index) => (
+                  <Box
+                    key={index}
+                    className={`flex justify-center items-center rounded-md p-1 ${
+                      iconTabs === item.value ? "bg-[#FFECE1]" : "bg-[#EEEEEE]"
+                    } `}
+                  >
+                    <IconButton onClick={() => handleIconTabClick(item.value)}>
+                      {item.icon({
+                        size: 30,
+                        color: iconTabs === item.value ? "#FF5B00" : "#000000",
+                      })}
+                    </IconButton>
+                  </Box>
+                ))}
               </Box>
-              <Box
-                className="w-[238px] h-[80px] items-center p-5 rounded-xl cursor-pointer"
-                sx={{
-                  border: "2px solid #EEEEEE",
-                  backgroundColor: activeTab === "coupon" ? "#FFECE1" : "",
-                }}
-                onClick={() => handleTabClick("coupon")}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: activeTab === "coupon" ? 700 : 400,
-                    fontSize: "24px",
-                    color: activeTab === "coupon" ? "#FF5B00" : "#000000",
-                    textAlign: "center",
-                  }}
-                >
-                  Coupons
-                </Typography>
-              </Box>
-              <Box
-                className="w-[238px] h-[80px] items-center p-5 rounded-xl cursor-pointer"
-                sx={{
-                  border: "2px solid #EEEEEE",
-                  backgroundColor: activeTab === "stamp" ? "#FFECE1" : "",
-                }}
-                onClick={() => handleTabClick("stamp")}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: activeTab === "stamp" ? 700 : 400,
-                    fontSize: "24px",
-                    color: activeTab === "stamp" ? "#FF5B00" : "#000000",
-                    textAlign: "center",
-                  }}
-                >
-                  Stamp
-                </Typography>
-              </Box>
-            </div>
-            <Box
-              className="w-[238px] h-[80px] items-center p-5 rounded-xl cursor-pointer"
-              sx={{
-                border: "2px solid #EEEEEE",
-                backgroundColor: "#FFECE1",
-              }}
-              onClick={() =>
-                router.push(
-                  activeTab === "loyalty"
-                    ? "/studio/create-card-loyalty"
-                    : activeTab === "coupon"
-                    ? "/studio/create-card-coupon"
-                    : activeTab === "stamp"
-                    ? "/studio/create-card-stamp"
-                    : "#"
-                )
-              }
-            >
-              <Typography
-                sx={{
-                  fontWeight: 500,
-                  fontSize: "24px",
-                  color: "#000000",
-                  textAlign: "center",
-                }}
-              >
-                Create Card
-              </Typography>
             </Box>
-          </div>
-          <div className="flex justify-center items-center relative bg-red-500">
-            {activeTab === "loyalty" && (
-              <Image
-                src="/images/loyalty-phone.png"
-                alt="Loyalty"
-                loader={() => "/images/loyalty-image.png"}
-                width={600}
-                height={700}
-                className="absolute top-[-240px] right-1/2 w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] md:w-[500px] md:h-[600px] lg:w-[600px] lg:h-[700px] bg-blend-lighten"
-              />
-            )}
-            {activeTab === "coupon" && (
-              <Image
-                src="/images/coupon-phone.png"
-                alt="Coupon"
-                width={600}
-                height={700}
-                loader={() => "/images/coupon-image.png"}
-                className="absolute top-[-240px] right-1/2 w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] md:w-[500px] md:h-[600px] lg:w-[600px] lg:h-[700px] bg-blend-lighten"
-              />
-            )}
-            {activeTab === "stamp" && (
-              <Image
-                src="/images/stamp-phone.png"
-                alt="Stamp"
-                width={600}
-                height={700}
-                loader={() => "/images/stamp-image.png"}
-                className="absolute top-[-240px] right-1/2 w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] md:w-[500px] md:h-[600px] lg:w-[600px] lg:h-[700px] bg-blend-lighten"
-              />
-            )}
-          </div>
-        </Box>
-      </Box>
-    </Container>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 
