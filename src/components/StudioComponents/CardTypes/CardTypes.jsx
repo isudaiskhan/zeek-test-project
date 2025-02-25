@@ -1,4 +1,3 @@
-import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
 import { CARD_TYPES_OPTIONS } from "@/enums/cards";
 import { Box, Chip, Divider, Typography } from "@mui/material";
 import React from "react";
@@ -53,15 +52,6 @@ const CardTypes = ({ activeCardType, handleCardTypeClick, cardTypes }) => {
             />
           </Box>
         ))}
-      </Box>
-
-      <Box className="flex mt-52 justify-center items-center w-full">
-        <StudioCustomButton
-          text="Continue"
-          textColor="#FFFFFF"
-          bgColor="#333333"
-          width="100%"
-        />
       </Box>
     </Box>
   );

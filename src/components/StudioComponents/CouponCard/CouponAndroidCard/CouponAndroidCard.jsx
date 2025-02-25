@@ -2,26 +2,40 @@ import { Avatar, Box, Card, Divider, Typography } from "@mui/material";
 import React from "react";
 import Barcode from "react-barcode";
 
-const CouponAndroidCard = () => {
+const CouponAndroidCard = ({
+  cardName,
+  iconPreview,
+  centralImagePreview,
+  cardBgColor,
+  cardTextColor,
+  centerBackgroundColor,
+}) => {
   return (
     <Card
-      className="flex flex-col gap-2 bg-white rounded-md"
-      sx={{ boxShadow: "-1px 2px 20px 0px #00000040" }}
+      className="flex flex-col gap-2 rounded-md"
+      sx={{
+        boxShadow: "-1px 2px 20px 0px #00000040",
+        backgroundColor: cardBgColor,
+      }}
     >
       <Box className="flex flex-row gap-2 p-3 justify-start items-center">
         <Avatar
-          src="/images/avatar.png"
+          src={iconPreview ? iconPreview : "/images/avatar.png"}
           alt="icon"
           sx={{ width: 24, height: 24 }}
         />
-        <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-          Custom Card #1
+        <Typography
+          sx={{ fontSize: "12px", fontWeight: 500, color: cardTextColor }}
+        >
+          {cardName}
         </Typography>
       </Box>
       <Divider sx={{ width: "100%" }} />
       <Box className="flex flex-col gap-2 px-3 py-1">
         <div className="flex justify-start items-start">
-          <Typography sx={{ fontSize: "16px", fontWeight: 400 }}>
+          <Typography
+            sx={{ fontSize: "16px", fontWeight: 400, color: cardTextColor }}
+          >
             Promotion Name
           </Typography>
         </div>
@@ -31,11 +45,16 @@ const CouponAndroidCard = () => {
               fontSize: "10px",
               fontWeight: 400,
               textTransform: "uppercase",
+              color: cardTextColor,
             }}
           >
             Discount on the FIRST...
           </Typography>
-          <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>10</Typography>
+          <Typography
+            sx={{ fontSize: "12px", fontWeight: 400, color: cardTextColor }}
+          >
+            10
+          </Typography>
         </div>
         <Box
           className="flex justify-center items-center rounded-md p-2 mt-2"
@@ -50,7 +69,9 @@ const CouponAndroidCard = () => {
           />
         </Box>
         <Box className="flex justify-center items-center">
-          <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+          <Typography
+            sx={{ fontSize: "12px", fontWeight: 400, color: cardTextColor }}
+          >
             63012-816-306
           </Typography>
         </Box>
@@ -60,14 +81,19 @@ const CouponAndroidCard = () => {
         sx={{
           height: "100px",
           width: "100%",
-          backgroundColor: "#F5F5F5",
-          // backgroundImage: `url(/images/checkers.png)`,
+          backgroundColor: centerBackgroundColor,
+          backgroundImage: `${
+            centralImagePreview ? `url(${centralImagePreview})` : ""
+          }`,
           objectFit: "cover",
+          backgroundSize: "cover",
         }}
       >
-        <Typography sx={{ fontWeight: 400, fontSize: "12px" }}>
-          Background Image
-        </Typography>
+        {!centralImagePreview && (
+          <Typography sx={{ fontWeight: 400, fontSize: "12px" }}>
+            Background Image
+          </Typography>
+        )}
       </Box>
     </Card>
   );

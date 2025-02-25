@@ -4,14 +4,50 @@ import PointsAndroidCard from "./PointsAndroidCard/PointsAndroidCard";
 import PointsNotificationCard from "./PointsNotificationCard/PointsNotificationCard";
 import { ICON_TABS_OPTIONS } from "@/enums/cards";
 
-const PointsCard = ({ iconTabs }) => {
+const PointsCard = ({
+  iconTabs,
+  cardName,
+  iconPreview,
+  logoPreview,
+  centralImagePreview,
+  cardBgColor,
+  cardTextColor,
+  centerBackgroundColor,
+}) => {
   return (
     <>
-      {iconTabs === ICON_TABS_OPTIONS.APPLE && <PointsAppleCard />}
-      {iconTabs === ICON_TABS_OPTIONS.ANDROID && <PointsAndroidCard />}
-      {iconTabs === ICON_TABS_OPTIONS.ZEEK && <PointsAppleCard />}
+      {iconTabs === ICON_TABS_OPTIONS.APPLE && (
+        <PointsAppleCard
+          cardName={cardName}
+          logoPreview={logoPreview}
+          centralImagePreview={centralImagePreview}
+          cardBgColor={cardBgColor}
+          cardTextColor={cardTextColor}
+          centerBackgroundColor={centerBackgroundColor}
+        />
+      )}
+      {iconTabs === ICON_TABS_OPTIONS.ANDROID && (
+        <PointsAndroidCard
+          cardName={cardName}
+          iconPreview={iconPreview}
+          centralImagePreview={centralImagePreview}
+          cardBgColor={cardBgColor}
+          centerBackgroundColor={centerBackgroundColor}
+          cardTextColor={cardTextColor}
+        />
+      )}
+      {iconTabs === ICON_TABS_OPTIONS.ZEEK && (
+        <PointsAppleCard
+          cardName={cardName}
+          logoPreview={logoPreview}
+          centralImagePreview={centralImagePreview}
+          cardBgColor={cardBgColor}
+          cardTextColor={cardTextColor}
+          centerBackgroundColor={centerBackgroundColor}
+        />
+      )}
       {iconTabs === ICON_TABS_OPTIONS.NOTIFICATION && (
-        <PointsNotificationCard />
+        <PointsNotificationCard iconPreview={iconPreview} />
       )}
     </>
   );

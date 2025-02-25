@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 
-const StudioHeader = ({ tabs, activeTab, handleTabClick }) => {
+const StudioHeader = ({
+  cardNameHandleChange,
+  tabs,
+  activeTab,
+  handleTabClick,
+  cardName,
+}) => {
   const router = useRouter();
   return (
     <>
@@ -44,6 +50,8 @@ const StudioHeader = ({ tabs, activeTab, handleTabClick }) => {
               InputProps={{
                 sx: { padding: "3px" },
               }}
+              onChange={cardNameHandleChange}
+              value={cardName}
             />
           </Box>
           {tabs.map((tab, index) => (
