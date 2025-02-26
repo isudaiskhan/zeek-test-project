@@ -176,6 +176,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         pointsPeriod: { ...state.pointsPeriod, ...action.payload },
+      };
     case LOYALTY_CARD_ACTIONS.SET_CARD_DESCRIPTION:
       return { ...state, cardDescription: action.payload };
     case LOYALTY_CARD_ACTIONS.SET_COMPANY_NAME:
@@ -408,6 +409,9 @@ const AddCard = () => {
   const handleExpirationPeriodChange = (field, value) => {
     dispatch({
       type: LOYALTY_CARD_ACTIONS.SET_EXPIRATION_PERIOD,
+      payload: { [field]: value },
+    });
+  };
 
   const handleCardDescriptionChange = (event, value) => {
     dispatch({
