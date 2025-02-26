@@ -7,7 +7,7 @@ const CustomTextField = ({
   haveBorderRadius = true,
   multiline = false,
   rows,
-  width,
+  width = "40%",
   type = "text",
   name,
   value,

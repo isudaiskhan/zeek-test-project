@@ -89,7 +89,6 @@ export const useSubmitHandler = () => {
         id: toastID,
       });
       onError(error);
-      throw error;
     } finally {
       setSubmitLoading(false);
       onFinally();

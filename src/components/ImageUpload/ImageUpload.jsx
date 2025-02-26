@@ -40,6 +40,13 @@ const ImageUpload = ({
     onFileDelete();
   };
 
+  const handleUploadClick = (event) => {
+    event.stopPropagation(); // Prevents event bubbling issues
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <>
       <div className="relative w-[230px] h-[210px]">
@@ -51,7 +58,7 @@ const ImageUpload = ({
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
           }}
-          onClick={() => fileInputRef.current.click()}
+          onClick={handleUploadClick}
         >
           {!imageFile ? (
             <Box

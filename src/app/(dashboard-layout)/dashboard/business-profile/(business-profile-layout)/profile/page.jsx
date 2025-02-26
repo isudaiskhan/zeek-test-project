@@ -24,9 +24,10 @@ const ProfilePage = () => {
       <ProfileContent
         businessName={data?.businessName}
         firstName={data?.firstName}
-        lastName={data?.LastName}
+        lastName={data?.lastName}
         email={data?.email}
         phone={data?.phone}
+        profileImage={data?.profileImage}
         businessType={"Business"}
         address={data?.address}
         activeTab={activeTab}

@@ -194,3 +194,34 @@ export const MenuItemSchema = object({
     .required("Price is required"),
   image: string().required("Image is required"),
 });
+
+export const UserProfileSchema = object({
+  businessName: string().required("Business name is required"),
+  phone: string()
+    .matches(/^\+?[0-9\s-]{7,15}$/, "Invalid phone number format")
+    .required("Phone number is required"),
+  firstName: string().required("First name is required"),
+  lastName: string().required("Last name is required"),
+  email: string().email("Invalid email format").required("Email is required"),
+  profileImage: string().required("Profile image is required"),
+  address: object({
+    country: string().required("Country is required"),
+    city: string().required("City is required"),
+    street: string().required("Street is required"),
+    building: string().nullable(),
+    floor: string().nullable(),
+    postalCode: string()
+      .matches(/^\d{4,10}$/, "Invalid postal code")
+      .nullable(),
+  }),
+});
+
+export const PasswordSchema = object().shape({
+  currentPassword: string().required("Current password is required"),
+  password: string()
+    .min(6, "Password must be at least 6 characters")
+    .required("New password is required"),
+  confirmPassword: string()
+    .oneOf([ref("password")], "Passwords must match")
+    .required("Confirm password is required"),
+});

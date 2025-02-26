@@ -10,13 +10,25 @@ const ProfileContent = ({
   lastName,
   email,
   phone,
+  profileImage,
   address,
   businessType,
   activeTab,
   setActiveTab,
 }) => {
   if (activeTab === "editprofile") {
-    return <EditProfile />;
+    return (
+      <EditProfile
+        onBack={() => setActiveTab("profile")}
+        businessName={businessName}
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
+        phone={phone}
+        profileImage={profileImage}
+        address={address}
+      />
+    );
   }
 
   return (
