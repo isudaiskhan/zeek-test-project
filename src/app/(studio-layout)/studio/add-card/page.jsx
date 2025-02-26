@@ -24,6 +24,7 @@ import {
 import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
 import DesignPage from "@/components/StudioComponents/DesignPage/DesignPage";
 import { LOYALTY_CARD_ACTIONS } from "@/enums/loyalty-card-actions";
+import Settings from "@/components/StudioComponents/Settings/Settings";
 import InformationPage from "@/components/StudioComponents/InformationPage/InformationPage";
 import PointsCardDetails from "@/components/StudioComponents/PointsCardDetails/PointsCardDetails";
 
@@ -58,6 +59,14 @@ const tabOrder = [
   CARD_OPTIONS.INFORMATION,
 ];
 
+const initialFields = [
+  { type: "Text", name: "First Name", required: true, unique: false },
+  { type: "Text", name: "Last Name", required: true, unique: false },
+  { type: "Number", name: "Phone Number", required: true, unique: true },
+  { type: "Text", name: "Email", required: true, unique: false },
+  { type: "Date", name: "Date of Birth", required: true, unique: false },
+];
+
 const initialState = {
   activeTab: CARD_OPTIONS.CARD_TYPES,
   activeCardType: CARD_TYPES_OPTIONS.POINTS,
@@ -72,6 +81,22 @@ const initialState = {
   cardBgColor: "#FFFFFF",
   cardTextColor: "#000000",
   centerBackgroundColor: "#F6F6F6",
+
+  barcode: "QR Code",
+  rewardProgram: "",
+  expirationOption: "unlimited",
+  pointsLifetime: "unlimited",
+  source: "",
+  country: null,
+  fields: initialFields,
+  spendAmount: 1,
+  pointsPerSpend: 1,
+  visitsRequired: 1,
+  pointsPerVisit: 1,
+  dailyVisitLimit: false,
+  expirationDate: null,
+  expirationPeriod: { value: 1, unit: "Days" },
+  pointsPeriod: { value: 1, unit: "Days" },
   cardDescription: "",
   companyName: "COMPANY NAME",
   activeLinks: [{ type: "URL", link: "", text: "" }],
@@ -106,6 +131,51 @@ const reducer = (state, action) => {
       return { ...state, cardTextColor: action.payload };
     case LOYALTY_CARD_ACTIONS.SET_CENTER_BG_COLOR:
       return { ...state, centerBackgroundColor: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_BARCODE:
+      return { ...state, barcode: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_REWARD_PROGRAM:
+      return { ...state, rewardProgram: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_EXPIRATION_OPTION:
+      return { ...state, expirationOption: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_POINTS_LIFETIME:
+      return { ...state, pointsLifetime: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_SOURCE:
+      return { ...state, source: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_COUNTRY:
+      return { ...state, country: action.payload };
+    case LOYALTY_CARD_ACTIONS.UPDATE_FIELD: {
+      const updatedFields = state.fields.map((field, index) =>
+        index === action.payload.index
+          ? { ...field, [action.payload.key]: action.payload.value }
+          : field
+      );
+      return { ...state, fields: updatedFields };
+    }
+    case LOYALTY_CARD_ACTIONS.SET_SPEND_VALUES:
+      return {
+        ...state,
+        spendAmount: action.payload.spend,
+        pointsPerSpend: action.payload.points,
+      };
+    case LOYALTY_CARD_ACTIONS.SET_VISIT_VALUES:
+      return {
+        ...state,
+        visitsRequired: action.payload.visits,
+        pointsPerVisit: action.payload.points,
+      };
+    case LOYALTY_CARD_ACTIONS.TOGGLE_DAILY_VISIT_LIMIT:
+      return { ...state, dailyVisitLimit: !state.dailyVisitLimit };
+    case LOYALTY_CARD_ACTIONS.SET_EXPIRATION_DATE:
+      return { ...state, expirationDate: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_EXPIRATION_PERIOD:
+      return {
+        ...state,
+        expirationPeriod: { ...state.expirationPeriod, ...action.payload },
+      };
+    case LOYALTY_CARD_ACTIONS.SET_POINTS_PERIOD:
+      return {
+        ...state,
+        pointsPeriod: { ...state.pointsPeriod, ...action.payload },
     case LOYALTY_CARD_ACTIONS.SET_CARD_DESCRIPTION:
       return { ...state, cardDescription: action.payload };
     case LOYALTY_CARD_ACTIONS.SET_COMPANY_NAME:
@@ -278,6 +348,67 @@ const AddCard = () => {
     });
   };
 
+  // Barcode Type
+  const handleBarcodeChange = (value) => {
+    dispatch({ type: LOYALTY_CARD_ACTIONS.SET_BARCODE, payload: value });
+  };
+
+  // Reward Program
+  const handleRewardProgramChange = (value) => {
+    dispatch({ type: LOYALTY_CARD_ACTIONS.SET_REWARD_PROGRAM, payload: value });
+  };
+
+  // Spend Values
+  const handleSpendChange = (spend) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_SPEND_VALUES,
+      payload: { spend, points: state.pointsPerSpend },
+    });
+  };
+
+  const handlePointsPerSpendChange = (points) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_SPEND_VALUES,
+      payload: { spend: state.spendAmount, points },
+    });
+  };
+
+  // Visit Values
+  const handleVisitsRequiredChange = (visits) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_VISIT_VALUES,
+      payload: { visits, points: state.pointsPerVisit },
+    });
+  };
+
+  const handlePointsPerVisitChange = (points) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_VISIT_VALUES,
+      payload: { visits: state.visitsRequired, points },
+    });
+  };
+
+  // Daily Visit Limit
+  const handleDailyVisitLimitToggle = () => {
+    dispatch({ type: LOYALTY_CARD_ACTIONS.TOGGLE_DAILY_VISIT_LIMIT });
+  };
+
+  // Expiration Options
+  const handleExpirationOptionChange = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_EXPIRATION_OPTION,
+      payload: value,
+    });
+  };
+
+  const handleExpirationDateChange = (date) => {
+    dispatch({ type: LOYALTY_CARD_ACTIONS.SET_EXPIRATION_DATE, payload: date });
+  };
+
+  const handleExpirationPeriodChange = (field, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_EXPIRATION_PERIOD,
+
   const handleCardDescriptionChange = (event, value) => {
     dispatch({
       type: LOYALTY_CARD_ACTIONS.SET_CARD_DESCRIPTION,
@@ -326,6 +457,39 @@ const AddCard = () => {
     });
   };
 
+  // Points Lifetime
+  const handlePointsLifetimeChange = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_POINTS_LIFETIME,
+      payload: value,
+    });
+  };
+
+  const handlePointsPeriodChange = (field, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_POINTS_PERIOD,
+      payload: { [field]: value },
+    });
+  };
+
+  // Form Fields
+  const handleFieldChange = (index, key, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.UPDATE_FIELD,
+      payload: { index, key, value },
+    });
+  };
+
+  // UTM Source
+  const handleSourceChange = (value) => {
+    dispatch({ type: LOYALTY_CARD_ACTIONS.SET_SOURCE, payload: value });
+  };
+
+  // Country Selection
+  const handleCountryChange = (value) => {
+    dispatch({ type: LOYALTY_CARD_ACTIONS.SET_COUNTRY, payload: value });
+  };
+
   return (
     <Box>
       <StudioHeader
@@ -346,7 +510,27 @@ const AddCard = () => {
                 cardTypes={cardTypes}
               />
             )}
-            {state.activeTab === CARD_OPTIONS.SETTINGS && <div>Settings</div>}
+
+            {state.activeTab === CARD_OPTIONS.SETTINGS && (
+              <Settings
+                state={state}
+                onBarcodeChange={handleBarcodeChange}
+                onRewardProgramChange={handleRewardProgramChange}
+                onSpendChange={handleSpendChange}
+                onPointsPerSpendChange={handlePointsPerSpendChange}
+                onVisitsRequiredChange={handleVisitsRequiredChange}
+                onPointsPerVisitChange={handlePointsPerVisitChange}
+                onDailyVisitLimitToggle={handleDailyVisitLimitToggle}
+                onExpirationOptionChange={handleExpirationOptionChange}
+                onExpirationDateChange={handleExpirationDateChange}
+                onExpirationPeriodChange={handleExpirationPeriodChange}
+                onPointsLifetimeChange={handlePointsLifetimeChange}
+                onPointsPeriodChange={handlePointsPeriodChange}
+                onFieldChange={handleFieldChange}
+                onSourceChange={handleSourceChange}
+                onCountryChange={handleCountryChange}
+              />
+            )}
             {state.activeTab === CARD_OPTIONS.DESIGN && (
               <DesignPage
                 handleLogoChange={handleLogoChange}
