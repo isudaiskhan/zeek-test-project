@@ -13,6 +13,7 @@ const CouponCard = ({
   cardBgColor,
   cardTextColor,
   centerBackgroundColor,
+  companyName,
 }) => {
   return (
     <>
@@ -47,7 +48,10 @@ const CouponCard = ({
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.NOTIFICATION && (
-        <PointsNotificationCard iconPreview={iconPreview} />
+        <PointsNotificationCard
+          iconPreview={iconPreview}
+          companyName={companyName}
+        />
       )}
     </>
   );

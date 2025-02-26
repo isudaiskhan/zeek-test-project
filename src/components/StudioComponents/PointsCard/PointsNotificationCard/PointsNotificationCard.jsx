@@ -1,7 +1,7 @@
 import { Avatar, Card, Typography } from "@mui/material";
 import React from "react";
 
-const PointsNotificationCard = ({ iconPreview }) => {
+const PointsNotificationCard = ({ iconPreview, companyName }) => {
   return (
     <Card className="flex flex-col gap-2 !bg-[#848484] !bg-opacity-90 !rounded-xl p-2">
       <div className="flex flex-row justify-between items-center">
@@ -19,7 +19,7 @@ const PointsNotificationCard = ({ iconPreview }) => {
               color: "#FFFFFF",
             }}
           >
-            COMPANY NAME
+            {companyName}
           </Typography>
         </div>
         <Typography
