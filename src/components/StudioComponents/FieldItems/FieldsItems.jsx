@@ -9,62 +9,62 @@ import StudioCustomTextField from "../StudioCustomTextField/StudioCustomTextFiel
 
 const fieldTypes = ["Text", "Number", "Date"];
 
-const FieldItems = ({ field, index, handleChange }) => {
+const FieldItems = ({ field, index, onChange }) => {
   return (
-    <div key={index} className="flex justify-between gap-8 items-center my-5">
-      {/* Field Type */}
-      <div className="flex flex-col justify-between w-full">
-        <label className="text-[#000000] text-lg mb-3">Field Type</label>
-        <Autocomplete
-          options={fieldTypes}
-          fullWidth
-          value={field.type}
-          onChange={(event, newValue) => handleChange(index, "type", newValue)}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </div>
+    <>
+      <div key={index} className="flex justify-between gap-8 items-center my-5">
+        {/* Field Type */}
+        <div className="flex flex-col justify-between w-full">
+          <label className="text-[#000000] text-lg mb-3">Field Type</label>
+          <Autocomplete
+            options={fieldTypes}
+            fullWidth
+            value={field.type}
+            onChange={(event, newValue) => onChange(index, "type", newValue)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </div>
 
-      {/* Field Name */}
-      <div className="flex flex-col w-full">
-        <label className="text-[#000000] text-lg mb-3">Field Name</label>
-        <StudioCustomTextField
-          value={field.name}
-          onChange={(e) => handleChange(index, "name", e.target.value)}
-          fullWidth
-          variant="outlined"
-        />
-      </div>
+        {/* Field Name */}
+        <div className="flex flex-col w-full">
+          <label className="text-[#000000] text-lg mb-3">Field Name</label>
+          <StudioCustomTextField
+            value={field.name}
+            onChange={(e) => onChange(index, "name", e.target.value)}
+            fullWidth
+            variant="outlined"
+          />
+        </div>
 
-      {/* Required */}
-      <div className="flex flex-col items-center">
-        <label className="text-[#000000] text-lg mb-3">Required</label>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={field.required}
-              onChange={(e) =>
-                handleChange(index, "required", e.target.checked)
-              }
-            />
-          }
-          label=""
-        />
-      </div>
+        {/* Required */}
+        <div className="flex flex-col items-center">
+          <label className="text-[#000000] text-lg mb-3">Required</label>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.required}
+                onChange={(e) => onChange(index, "required", e.target.checked)}
+              />
+            }
+            label=""
+          />
+        </div>
 
-      {/* Unique */}
-      <div className="flex flex-col items-center">
-        <label className="text-[#000000] text-lg mb-3">Unique</label>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={field.unique}
-              onChange={(e) => handleChange(index, "unique", e.target.checked)}
-            />
-          }
-          label=""
-        />
+        {/* Unique */}
+        <div className="flex flex-col items-center">
+          <label className="text-[#000000] text-lg mb-3">Unique</label>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.unique}
+                onChange={(e) => onChange(index, "unique", e.target.checked)}
+              />
+            }
+            label=""
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -309,17 +309,21 @@ const Settings = ({
           </Box>
         </Box>
       )}
-      <Divider className="!my-8 bg-[#B8B8B8]" />
-
-      {/* Form Fields */}
-      {state.fields.map((field, index) => (
-        <FieldItems
-          key={index}
-          field={field}
-          index={index}
-          onChange={onFieldChange}
-        />
-      ))}
+      <Divider className="!my-12 bg-[#B8B8B8]" />
+      <div>
+        <Typography className="!text-2xl !font-semibold !mb-6">
+          Card issuing form
+        </Typography>
+        {/* Form Fields */}
+        {state.fields.map((field, index) => (
+          <FieldItems
+            key={index}
+            field={field}
+            index={index}
+            onChange={onFieldChange}
+          />
+        ))}
+      </div>
       <Divider className="!my-14 bg-[#B8B8B8]" />
 
       {/* UTM Section */}
