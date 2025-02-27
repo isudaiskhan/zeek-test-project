@@ -27,6 +27,7 @@ import { LOYALTY_CARD_ACTIONS } from "@/enums/loyalty-card-actions";
 import Settings from "@/components/StudioComponents/Settings/Settings";
 import InformationPage from "@/components/StudioComponents/InformationPage/InformationPage";
 import PointsCardDetails from "@/components/StudioComponents/PointsCardDetails/PointsCardDetails";
+import CouponCardDetails from "@/components/StudioComponents/CouponCardDetails/CouponCardDetails";
 
 const tabsOptions = Object.entries(CARD_OPTIONS).map(([key, value]) => ({
   label: transformString(key),
@@ -101,6 +102,7 @@ const initialState = {
   companyName: "COMPANY NAME",
   activeLinks: [{ type: "URL", link: "", text: "" }],
   issuerInformation: { companyName: "", email: "", phone: "", country: "" },
+  cardFields: [{ field: "TEXT", fieldName: "" }],
 };
 
 const reducer = (state, action) => {
@@ -188,6 +190,8 @@ const reducer = (state, action) => {
         ...state,
         issuerInformation: { ...state.issuerInformation, ...action.payload },
       };
+    case LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS:
+      return { ...state, cardFields: action.payload };
     default:
       return state;
   }
@@ -461,6 +465,31 @@ const AddCard = () => {
     });
   };
 
+  const handleCardFieldChange = (index, field, value) => {
+    const updatedFields = state.cardFields.map((link, i) =>
+      i === index ? { ...link, [field]: value } : link
+    );
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS,
+      payload: updatedFields,
+    });
+  };
+
+  const addNewField = () => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS,
+      payload: [...state.cardFields, { field: "", fieldName: "" }],
+    });
+  };
+
+  const handleRemoveField = (index) => {
+    const updatedFields = state.cardFields.filter((_, i) => i !== index);
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS,
+      payload: updatedFields,
+    });
+  };
+
   // Points Lifetime
   const handlePointsLifetimeChange = (value) => {
     dispatch({
@@ -554,6 +583,10 @@ const AddCard = () => {
                   handleCenterBackgroundColorChange
                 }
                 centerBackgroundColor={state.centerBackgroundColor}
+                handleCardFieldChange={handleCardFieldChange}
+                cardFields={state.cardFields}
+                addNewField={addNewField}
+                handleRemoveField={handleRemoveField}
               />
             )}
             {state.activeTab === CARD_OPTIONS.INFORMATION && (
@@ -612,7 +645,7 @@ const AddCard = () => {
                 />
               </div>
               {state.activeTab === CARD_OPTIONS.INFORMATION ? (
-                <div className="absolute top-[17%] left-[42.5%] -translate-x-1/2 w-[238px]">
+                <div className="absolute top-[17%] left-[42.5%] -translate-x-1/2 w-[242px]">
                   {state.activeCardType === CARD_TYPES_OPTIONS.POINTS && (
                     <PointsCardDetails
                       activeLinks={state.activeLinks}
@@ -622,6 +655,20 @@ const AddCard = () => {
                       companyName={state.companyName}
                       issuerInformation={state.issuerInformation}
                       iconPreview={state.iconPreview}
+                    />
+                  )}
+                  {state.activeCardType === CARD_TYPES_OPTIONS.COUPONS && (
+                    <CouponCardDetails
+                      activeLinks={state.activeLinks}
+                      iconTabs={state.iconTabs}
+                      centralImagePreview={state.centralImagePreview}
+                      centerBackgroundColor={state.centerBackgroundColor}
+                      companyName={state.companyName}
+                      iconPreview={state.iconPreview}
+                      cardName={state.cardName}
+                      logoPreview={state.logoPreview}
+                      cardBgColor={state.cardBgColor}
+                      cardTextColor={state.cardTextColor}
                     />
                   )}
                 </div>

@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { LINK_TYPES } from "@/enums/loyalty-card-actions";
 
-const PointsAndroidCardBack = ({
+const CouponAndroidCardBack = ({
   centerBackgroundColor,
   centralImagePreview,
   activeLinks,
@@ -73,12 +73,15 @@ const PointsAndroidCardBack = ({
               </Typography>
             )}
           </Box>
-          <Box className="flex flex-col justify-start items-start gap-4">
+          <Box className="flex flex-col justify-start items-start gap-2">
             <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
               Last Name <br /> <span className="text-[10px] ">Dico</span>
             </Typography>
             <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
               First Name <br /> <span className="text-[10px] ">Huzefa</span>
+            </Typography>
+            <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+              Phone <br /> <span className="text-[10px] ">123456789</span>
             </Typography>
             {activeLinks.map((link, index) => (
               <Box
@@ -121,4 +124,4 @@ const PointsAndroidCardBack = ({
   );
 };
 
-export default PointsAndroidCardBack;
+export default CouponAndroidCardBack;

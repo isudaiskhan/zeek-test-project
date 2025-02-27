@@ -1,7 +1,8 @@
-import { Box, Divider, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import React from "react";
 import FileUpload from "../FileUpload/FileUpload";
 import Grid from "@mui/material/Grid2";
+import CardFields from "../CardFields/CardFields";
 
 const DesignPage = ({
   handleLogoChange,
@@ -19,6 +20,10 @@ const DesignPage = ({
   cardTextColor,
   handleCenterBackgroundColorChange,
   centerBackgroundColor,
+  handleCardFieldChange,
+  cardFields,
+  addNewField,
+  handleRemoveField,
 }) => {
   return (
     <Box className="flex flex-col gap-4 p-4">
@@ -155,6 +160,33 @@ const DesignPage = ({
             </Box>
           </Grid>
         </Grid>
+      </Box>
+
+      <Divider sx={{ width: "100%", mt: 4 }} />
+      <Box className="flex flex-col justify-center mt-4">
+        <Typography
+          sx={{ fontSize: "24px", fontWeight: "600", alignItems: "start" }}
+        >
+          Card Fields
+        </Typography>
+        {cardFields.map((item, index) => (
+          <CardFields
+            key={index}
+            index={index}
+            field={item.field}
+            fieldName={item.fieldName}
+            handleCardFieldChange={handleCardFieldChange}
+            handleRemoveField={handleRemoveField}
+            cardFields={cardFields}
+          />
+        ))}
+        <Button
+          variant="contained"
+          sx={{ width: "100%", mt: 2, background: "#333" }}
+          onClick={addNewField}
+        >
+          Add field
+        </Button>
       </Box>
     </Box>
   );
