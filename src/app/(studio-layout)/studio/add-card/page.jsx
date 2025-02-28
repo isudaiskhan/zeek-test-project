@@ -23,11 +23,15 @@ import {
 } from "@/enums/cards";
 import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
 import DesignPage from "@/components/StudioComponents/DesignPage/DesignPage";
-import { LOYALTY_CARD_ACTIONS } from "@/enums/loyalty-card-actions";
+import {
+  BARCODE_TYPES,
+  LOYALTY_CARD_ACTIONS,
+} from "@/enums/loyalty-card-actions";
 import Settings from "@/components/StudioComponents/Settings/Settings";
 import InformationPage from "@/components/StudioComponents/InformationPage/InformationPage";
 import PointsCardDetails from "@/components/StudioComponents/PointsCardDetails/PointsCardDetails";
 import CouponCardDetails from "@/components/StudioComponents/CouponCardDetails/CouponCardDetails";
+import StampCards from "@/components/StudioComponents/StampCards/StampCards";
 
 const tabsOptions = Object.entries(CARD_OPTIONS).map(([key, value]) => ({
   label: transformString(key),
@@ -82,8 +86,7 @@ const initialState = {
   cardBgColor: "#FFFFFF",
   cardTextColor: "#000000",
   centerBackgroundColor: "#F6F6F6",
-
-  barcode: "QR Code",
+  barcode: BARCODE_TYPES.PDF_417,
   rewardProgram: "",
   expirationOption: "unlimited",
   pointsLifetime: "unlimited",
@@ -102,7 +105,17 @@ const initialState = {
   companyName: "COMPANY NAME",
   activeLinks: [{ type: "URL", link: "", text: "" }],
   issuerInformation: { companyName: "", email: "", phone: "", country: "" },
-  cardFields: [{ field: "TEXT", fieldName: "" }],
+  cardFields: [
+    { field: "TEXT", fieldName: "" },
+    { field: "TEXT", fieldName: "" },
+  ],
+  activeStampColor: "#1F1E1F",
+  inActiveStampColor: "#AAAAAA",
+  activeStampIcon: null,
+  inActiveStampIcon: null,
+  activeStampIconPreview: "",
+  inActiveStampIconPreview: "",
+  stampCounts: 12,
 };
 
 const reducer = (state, action) => {
@@ -191,7 +204,26 @@ const reducer = (state, action) => {
         issuerInformation: { ...state.issuerInformation, ...action.payload },
       };
     case LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS:
-      return { ...state, cardFields: action.payload };
+      const updatedFields = state.cardFields.map((cardField, index) =>
+        index === action.payload.index
+          ? { ...cardField, [action.payload.field]: action.payload.value }
+          : cardField
+      );
+      return { ...state, cardFields: updatedFields };
+    case LOYALTY_CARD_ACTIONS.SET_ACTIVE_STAMP_COLOR:
+      return { ...state, activeStampColor: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_INACTIVE_STAMP_COLOR:
+      return { ...state, inActiveStampColor: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_SELECTED_ACTIVE_STAMP_ICON:
+      return { ...state, activeStampIcon: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_SELECTED_INACTIVE_STAMP_ICON:
+      return { ...state, inActiveStampIcon: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_ACTIVE_STAMP_ICON_PREVIEW:
+      return { ...state, activeStampIconPreview: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_INACTIVE_STAMP_ICON_PREVIEW:
+      return { ...state, inActiveStampIconPreview: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_STAMP_COUNTS:
+      return { ...state, stampCounts: action.payload };
     default:
       return state;
   }
@@ -354,9 +386,14 @@ const AddCard = () => {
   };
 
   // Barcode Type
-  const handleBarcodeChange = (value) => {
-    dispatch({ type: LOYALTY_CARD_ACTIONS.SET_BARCODE, payload: value });
+  const handleBarcodeChange = (event) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_BARCODE,
+      payload: event.target.value,
+    });
   };
+
+  console.log(state.barcode, "state.barcode");
 
   // Reward Program
   const handleRewardProgramChange = (value) => {
@@ -466,27 +503,9 @@ const AddCard = () => {
   };
 
   const handleCardFieldChange = (index, field, value) => {
-    const updatedFields = state.cardFields.map((link, i) =>
-      i === index ? { ...link, [field]: value } : link
-    );
     dispatch({
       type: LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS,
-      payload: updatedFields,
-    });
-  };
-
-  const addNewField = () => {
-    dispatch({
-      type: LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS,
-      payload: [...state.cardFields, { field: "", fieldName: "" }],
-    });
-  };
-
-  const handleRemoveField = (index) => {
-    const updatedFields = state.cardFields.filter((_, i) => i !== index);
-    dispatch({
-      type: LOYALTY_CARD_ACTIONS.SET_CARD_FIELDS,
-      payload: updatedFields,
+      payload: { index, field, value },
     });
   };
 
@@ -522,6 +541,81 @@ const AddCard = () => {
   const handleCountryChange = (value) => {
     dispatch({ type: LOYALTY_CARD_ACTIONS.SET_COUNTRY, payload: value });
   };
+
+  const handleActiveStampColor = (event, color) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_ACTIVE_STAMP_COLOR,
+      payload: event.target.value,
+      color,
+    });
+  };
+
+  const handleInactiveStampColor = (event, color) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_INACTIVE_STAMP_COLOR,
+      payload: event.target.value,
+      color,
+    });
+  };
+
+  const handleActiveStampIconChange = async (file) => {
+    if (file) {
+      const base64URL = await getImageBase64URL(file);
+      dispatch({
+        type: LOYALTY_CARD_ACTIONS.SET_ACTIVE_STAMP_ICON_PREVIEW,
+        payload: base64URL,
+      });
+      dispatch({
+        type: LOYALTY_CARD_ACTIONS.SET_SELECTED_ACTIVE_STAMP_ICON,
+        payload: file,
+      });
+    }
+  };
+
+  const handleRemoveActiveStampIcon = () => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_SELECTED_ACTIVE_STAMP_ICON,
+      payload: null,
+    });
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_ACTIVE_STAMP_ICON_PREVIEW,
+      payload: null,
+    });
+  };
+
+  const handleInactiveStampIconChange = async (file) => {
+    if (file) {
+      const base64URL = await getImageBase64URL(file);
+      dispatch({
+        type: LOYALTY_CARD_ACTIONS.SET_INACTIVE_STAMP_ICON_PREVIEW,
+        payload: base64URL,
+      });
+      dispatch({
+        type: LOYALTY_CARD_ACTIONS.SET_SELECTED_INACTIVE_STAMP_ICON,
+        payload: file,
+      });
+    }
+  };
+
+  const handleRemoveInactiveStampIcon = () => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_SELECTED_INACTIVE_STAMP_ICON,
+      payload: null,
+    });
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_INACTIVE_STAMP_ICON_PREVIEW,
+      payload: null,
+    });
+  };
+
+  const handleStampCounts = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_STAMP_COUNTS,
+      payload: value,
+    });
+  };
+
+  console.log(state.stampCounts, "stampCounts");
 
   return (
     <Box>
@@ -585,8 +679,19 @@ const AddCard = () => {
                 centerBackgroundColor={state.centerBackgroundColor}
                 handleCardFieldChange={handleCardFieldChange}
                 cardFields={state.cardFields}
-                addNewField={addNewField}
-                handleRemoveField={handleRemoveField}
+                activeCardType={state.activeCardType}
+                handleActiveStampColor={handleActiveStampColor}
+                activeStampColor={state.activeStampColor}
+                handleInactiveStampColor={handleInactiveStampColor}
+                inActiveStampColor={state.inActiveStampColor}
+                activeStampIconPreview={state.activeStampIconPreview}
+                handleActiveStampIconChange={handleActiveStampIconChange}
+                inActiveStampIconPreview={state.inActiveStampIconPreview}
+                handleInactiveStampIconChange={handleInactiveStampIconChange}
+                handleRemoveActiveStampIcon={handleRemoveActiveStampIcon}
+                handleRemoveInactiveStampIcon={handleRemoveInactiveStampIcon}
+                handleStampCounts={handleStampCounts}
+                stampCounts={state.stampCounts}
               />
             )}
             {state.activeTab === CARD_OPTIONS.INFORMATION && (
@@ -685,6 +790,7 @@ const AddCard = () => {
                       cardTextColor={state.cardTextColor}
                       centerBackgroundColor={state.centerBackgroundColor}
                       companyName={state.companyName}
+                      barcode={state.barcode}
                     />
                   )}
                   {state.activeCardType === CARD_TYPES_OPTIONS.COUPONS && (
@@ -698,6 +804,22 @@ const AddCard = () => {
                       cardTextColor={state.cardTextColor}
                       centerBackgroundColor={state.centerBackgroundColor}
                       companyName={state.companyName}
+                      barcode={state.barcode}
+                    />
+                  )}
+                  {state.activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+                    <StampCards
+                      iconTabs={state.iconTabs}
+                      cardName={state.cardName}
+                      iconPreview={state.iconPreview}
+                      logoPreview={state.logoPreview}
+                      centralImagePreview={state.centralImagePreview}
+                      cardBgColor={state.cardBgColor}
+                      cardTextColor={state.cardTextColor}
+                      centerBackgroundColor={state.centerBackgroundColor}
+                      companyName={state.companyName}
+                      stampCounts={state.stampCounts}
+                      barcode={state.barcode}
                     />
                   )}
                 </div>

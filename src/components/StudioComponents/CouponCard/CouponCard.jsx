@@ -14,6 +14,7 @@ const CouponCard = ({
   cardTextColor,
   centerBackgroundColor,
   companyName,
+  barcode,
 }) => {
   return (
     <>
@@ -25,6 +26,7 @@ const CouponCard = ({
           cardBgColor={cardBgColor}
           cardTextColor={cardTextColor}
           centerBackgroundColor={centerBackgroundColor}
+          barcode={barcode}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ANDROID && (
@@ -35,6 +37,7 @@ const CouponCard = ({
           cardBgColor={cardBgColor}
           cardTextColor={cardTextColor}
           centerBackgroundColor={centerBackgroundColor}
+          barcode={barcode}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ZEEK && (
@@ -45,6 +48,7 @@ const CouponCard = ({
           cardBgColor={cardBgColor}
           cardTextColor={cardTextColor}
           centerBackgroundColor={centerBackgroundColor}
+          barcode={barcode}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.NOTIFICATION && (

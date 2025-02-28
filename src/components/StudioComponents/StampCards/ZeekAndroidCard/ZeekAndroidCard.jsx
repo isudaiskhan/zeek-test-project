@@ -1,16 +1,18 @@
 import { BARCODE_TYPES } from "@/enums/loyalty-card-actions";
+import { Star } from "@mui/icons-material";
 import { Avatar, Box, Card, Divider, Typography } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 import Barcode from "react-barcode";
 
-const CouponAndroidCard = ({
+const ZeekAndroidCard = ({
   cardName,
   iconPreview,
   centralImagePreview,
   cardBgColor,
-  cardTextColor,
   centerBackgroundColor,
+  cardTextColor,
+  stampCounts,
   barcode,
 }) => {
   return (
@@ -39,7 +41,7 @@ const CouponAndroidCard = ({
           <Typography
             sx={{ fontSize: "16px", fontWeight: 400, color: cardTextColor }}
           >
-            Promotion Name
+            Card Description
           </Typography>
         </div>
         <div className="flex flex-col justify-start items-start gap-1">
@@ -51,12 +53,12 @@ const CouponAndroidCard = ({
               color: cardTextColor,
             }}
           >
-            Discount on the FIRST...
+            Reward
           </Typography>
           <Typography
             sx={{ fontSize: "12px", fontWeight: 400, color: cardTextColor }}
           >
-            10
+            No Data
           </Typography>
         </div>
         <Box
@@ -75,6 +77,7 @@ const CouponAndroidCard = ({
             />
           )}
         </Box>
+
         <Box className="flex justify-center items-center">
           <Typography
             sx={{ fontSize: "12px", fontWeight: 400, color: cardTextColor }}
@@ -96,14 +99,48 @@ const CouponAndroidCard = ({
           backgroundSize: "cover",
         }}
       >
-        {!centralImagePreview && (
-          <Typography sx={{ fontWeight: 400, fontSize: "12px" }}>
-            Background Image
-          </Typography>
-        )}
+        <Box className="flex flex-col gap-4 justify-center items-center">
+          {Array.from(
+            { length: stampCounts ? stampCounts : 8 },
+            (_, i) => i + 1
+          )
+            .reduce((acc, curr, index) => {
+              const condition =
+                stampCounts > 12 ? index % 10 === 0 : index % 6 === 0;
+              if (condition) acc.push([]);
+              acc[acc.length - 1].push(curr);
+              return acc;
+            }, [])
+            .map((row, rowIndex) => (
+              <Box
+                key={rowIndex}
+                className={`flex flex-row justify-between gap-1 ${
+                  stampCounts > 12 ? "gap-1" : "gap-2"
+                }`}
+              >
+                {row.map((item) => (
+                  <Box
+                    key={item}
+                    className={`flex justify-center items-center bg-[#EAEAED] border-solid border-[1px] border-[#AAAAAA] ${
+                      stampCounts > 12 ? "h-[18px]" : "h-[30px]"
+                    } ${
+                      stampCounts > 12 ? "w-[18px]" : "w-[30px]"
+                    } rounded-full cursor-pointer`}
+                  >
+                    <Star
+                      sx={{
+                        color: "#1F1E1F",
+                        fontSize: stampCounts > 12 ? "10px" : "20px",
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            ))}
+        </Box>
       </Box>
     </Card>
   );
 };
 
-export default CouponAndroidCard;
+export default ZeekAndroidCard;

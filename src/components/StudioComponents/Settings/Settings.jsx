@@ -15,6 +15,7 @@ import StudioCustomTextField from "../StudioCustomTextField/StudioCustomTextFiel
 import FieldItems from "../FieldItems/FieldsItems";
 import StudioCustomAutoComplete from "../StudioCustomAutoComplete/StudioCustomAutoComplete";
 import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
+import { BARCODE_TYPES } from "@/enums/loyalty-card-actions";
 
 const Settings = ({
   state,
@@ -51,15 +52,12 @@ const Settings = ({
   return (
     <div className="p-6">
       {/* Barcode Section */}
-      <RadioGroup
-        value={state.barcode}
-        onChange={(e) => onBarcodeChange(e.target.value)}
-      >
+      <RadioGroup value={state.barcode} onChange={onBarcodeChange}>
         <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
           Barcode Type
         </Typography>
         <FormControlLabel
-          value="PDF 417"
+          value={BARCODE_TYPES.PDF_417}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -68,7 +66,7 @@ const Settings = ({
           label="PDF 417"
         />
         <FormControlLabel
-          value="QRCode"
+          value={BARCODE_TYPES.QR_CODE}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}

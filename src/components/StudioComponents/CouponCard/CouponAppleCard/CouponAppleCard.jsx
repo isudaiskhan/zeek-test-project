@@ -1,7 +1,9 @@
+import { BARCODE_TYPES } from "@/enums/loyalty-card-actions";
 import { Box, Card, Typography } from "@mui/material";
 import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import React from "react";
+import Barcode from "react-barcode";
 
 const CouponAppleCard = ({
   cardName,
@@ -10,6 +12,7 @@ const CouponAppleCard = ({
   cardBgColor,
   cardTextColor,
   centerBackgroundColor,
+  barcode,
 }) => {
   return (
     <Card
@@ -103,7 +106,17 @@ const CouponAppleCard = ({
         </div> */}
       </Box>
       <Box className="flex flex-col gap-1 justify-center items-center p-4 mt-4">
-        <QRCodeSVG value="https://example.com" size={60} />
+        {barcode === BARCODE_TYPES.QR_CODE ? (
+          <QRCodeSVG value="https://example.com" size={60} />
+        ) : (
+          <Barcode
+            value="63012-816-306"
+            displayValue={false}
+            height={30}
+            width={1}
+            background="transparent"
+          />
+        )}
         <Typography
           sx={{ fontWeight: 500, fontSize: "12px", color: cardTextColor }}
         >

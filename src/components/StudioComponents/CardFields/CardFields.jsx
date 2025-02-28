@@ -1,13 +1,5 @@
 import { FIELD_TYPES } from "@/enums/loyalty-card-actions";
-import { DeleteOutline } from "@mui/icons-material";
-import {
-  Box,
-  IconButton,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 
 const fieldOptions = Object.entries(FIELD_TYPES).map(([key, value]) => ({
@@ -15,14 +7,7 @@ const fieldOptions = Object.entries(FIELD_TYPES).map(([key, value]) => ({
   value: value,
 }));
 
-const CardFields = ({
-  index,
-  field,
-  fieldName,
-  handleCardFieldChange,
-  cardFields,
-  handleRemoveField,
-}) => {
+const CardFields = ({ index, field, fieldName, handleCardFieldChange }) => {
   return (
     <Box sx={{ display: "flex", gap: 2, mb: 1, mt: 2 }} key={index}>
       <Box className="flex flex-col gap-2 w-full">
@@ -64,18 +49,6 @@ const CardFields = ({
           }
         />
       </Box>
-      {cardFields.length > 1 && (
-        <Box className="flex flex-col gap-2">
-          <Typography
-            sx={{ fontSize: "13px", fontWeight: 400, color: "white" }}
-          >
-            Remove
-          </Typography>
-          <IconButton size="small" onClick={() => handleRemoveField(index)}>
-            <DeleteOutline color="warning" />
-          </IconButton>
-        </Box>
-      )}
     </Box>
   );
 };

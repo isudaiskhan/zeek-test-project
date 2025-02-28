@@ -1,4 +1,6 @@
+import { BARCODE_TYPES } from "@/enums/loyalty-card-actions";
 import { Avatar, Box, Card, Divider, Typography } from "@mui/material";
+import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 import Barcode from "react-barcode";
 
@@ -9,6 +11,7 @@ const PointsAndroidCard = ({
   cardBgColor,
   centerBackgroundColor,
   cardTextColor,
+  barcode,
 }) => {
   return (
     <Card
@@ -60,13 +63,17 @@ const PointsAndroidCard = ({
           className="flex justify-center items-center rounded-md p-2 mt-2"
           sx={{ boxShadow: "-1px 2px 20px 0px #00000040" }}
         >
-          <Barcode
-            value="63012-816-306"
-            displayValue={false}
-            height={30}
-            width={1}
-            background="transparent"
-          />
+          {barcode === BARCODE_TYPES.QR_CODE ? (
+            <QRCodeSVG value="https://example.com" size={60} />
+          ) : (
+            <Barcode
+              value="63012-816-306"
+              displayValue={false}
+              height={30}
+              width={1}
+              background="transparent"
+            />
+          )}
         </Box>
         <Box className="flex justify-center items-center">
           <Typography

@@ -1,10 +1,10 @@
-import React from "react";
-import PointsAppleCard from "./PointsAppleCard/PointsAppleCard";
-import PointsAndroidCard from "./PointsAndroidCard/PointsAndroidCard";
-import PointsNotificationCard from "./PointsNotificationCard/PointsNotificationCard";
 import { ICON_TABS_OPTIONS } from "@/enums/cards";
+import React from "react";
+import ZeekAppleCard from "./ZeekAppleCard/ZeekAppleCard";
+import ZeekAndroidCard from "./ZeekAndroidCard/ZeekAndroidCard";
+import PointsNotificationCard from "../PointsCard/PointsNotificationCard/PointsNotificationCard";
 
-const PointsCard = ({
+const StampCards = ({
   iconTabs,
   cardName,
   iconPreview,
@@ -14,40 +14,44 @@ const PointsCard = ({
   cardTextColor,
   centerBackgroundColor,
   companyName,
+  stampCounts,
   barcode,
 }) => {
   return (
     <>
       {iconTabs === ICON_TABS_OPTIONS.APPLE && (
-        <PointsAppleCard
+        <ZeekAppleCard
           cardName={cardName}
           logoPreview={logoPreview}
           centralImagePreview={centralImagePreview}
           cardBgColor={cardBgColor}
           cardTextColor={cardTextColor}
           centerBackgroundColor={centerBackgroundColor}
+          stampCounts={stampCounts}
           barcode={barcode}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ANDROID && (
-        <PointsAndroidCard
+        <ZeekAndroidCard
           cardName={cardName}
           iconPreview={iconPreview}
           centralImagePreview={centralImagePreview}
           cardBgColor={cardBgColor}
           centerBackgroundColor={centerBackgroundColor}
           cardTextColor={cardTextColor}
+          stampCounts={stampCounts}
           barcode={barcode}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ZEEK && (
-        <PointsAppleCard
+        <ZeekAppleCard
           cardName={cardName}
           logoPreview={logoPreview}
           centralImagePreview={centralImagePreview}
           cardBgColor={cardBgColor}
           cardTextColor={cardTextColor}
           centerBackgroundColor={centerBackgroundColor}
+          stampCounts={stampCounts}
           barcode={barcode}
         />
       )}
@@ -61,4 +65,4 @@ const PointsCard = ({
   );
 };
 
-export default PointsCard;
+export default StampCards;
