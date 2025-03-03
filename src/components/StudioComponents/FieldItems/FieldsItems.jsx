@@ -22,6 +22,7 @@ const FieldItems = ({ field, index, onChange }) => {
             value={field.type}
             onChange={(event, newValue) => onChange(index, "type", newValue)}
             renderInput={(params) => <TextField {...params} />}
+            size="small"
           />
         </div>
 

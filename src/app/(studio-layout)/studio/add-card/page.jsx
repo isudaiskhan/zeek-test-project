@@ -32,6 +32,7 @@ import InformationPage from "@/components/StudioComponents/InformationPage/Infor
 import PointsCardDetails from "@/components/StudioComponents/PointsCardDetails/PointsCardDetails";
 import CouponCardDetails from "@/components/StudioComponents/CouponCardDetails/CouponCardDetails";
 import StampCards from "@/components/StudioComponents/StampCards/StampCards";
+import StampCardDetails from "@/components/StudioComponents/StampCardDetails/StampCardDetails";
 
 const tabsOptions = Object.entries(CARD_OPTIONS).map(([key, value]) => ({
   label: transformString(key),
@@ -116,6 +117,10 @@ const initialState = {
   activeStampIconPreview: "",
   inActiveStampIconPreview: "",
   stampCounts: 12,
+  earnStamps: "",
+  rewardDetails: "",
+  earnedStampMessage: "",
+  earnedRewardMessage: "",
 };
 
 const reducer = (state, action) => {
@@ -224,6 +229,14 @@ const reducer = (state, action) => {
       return { ...state, inActiveStampIconPreview: action.payload };
     case LOYALTY_CARD_ACTIONS.SET_STAMP_COUNTS:
       return { ...state, stampCounts: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_EARN_STAMP:
+      return { ...state, earnStamps: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_REWARD_DETAILS:
+      return { ...state, rewardDetails: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_EARNED_STAMP_MESSAGE:
+      return { ...state, earnedStampMessage: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_EARNED_REWARD_MESSAGE:
+      return { ...state, earnedRewardMessage: action.payload };
     default:
       return state;
   }
@@ -392,8 +405,6 @@ const AddCard = () => {
       payload: event.target.value,
     });
   };
-
-  console.log(state.barcode, "state.barcode");
 
   // Reward Program
   const handleRewardProgramChange = (value) => {
@@ -615,7 +626,37 @@ const AddCard = () => {
     });
   };
 
-  console.log(state.stampCounts, "stampCounts");
+  const handleEarnStamps = (event, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_EARN_STAMP,
+      payload: event.target.value,
+      value,
+    });
+  };
+
+  const handleRewardDetails = (e, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_REWARD_DETAILS,
+      payload: e.target.value,
+      value,
+    });
+  };
+
+  const handleEarnedStampMessage = (e, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_EARNED_STAMP_MESSAGE,
+      payload: e.target.value,
+      value,
+    });
+  };
+
+  const handleEarnedRewardMessage = (e, value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_EARNED_REWARD_MESSAGE,
+      payload: e.target.value,
+      value,
+    });
+  };
 
   return (
     <Box>
@@ -704,6 +745,11 @@ const AddCard = () => {
                 addNewLink={addNewLink}
                 handleIssuerInformationChange={handleIssuerInformationChange}
                 issuerInformation={state.issuerInformation}
+                handleEarnStamps={handleEarnStamps}
+                handleRewardDetails={handleRewardDetails}
+                handleEarnedStampMessage={handleEarnedStampMessage}
+                handleEarnedRewardMessage={handleEarnedRewardMessage}
+                activeCardType={state.activeCardType}
               />
             )}
             {state.activeTab === CARD_OPTIONS.INFORMATION ? (
@@ -774,6 +820,18 @@ const AddCard = () => {
                       logoPreview={state.logoPreview}
                       cardBgColor={state.cardBgColor}
                       cardTextColor={state.cardTextColor}
+                    />
+                  )}
+                  {state.activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+                    <StampCardDetails
+                      activeLinks={state.activeLinks}
+                      iconTabs={state.iconTabs}
+                      centralImagePreview={state.centralImagePreview}
+                      centerBackgroundColor={state.centerBackgroundColor}
+                      companyName={state.companyName}
+                      issuerInformation={state.issuerInformation}
+                      iconPreview={state.iconPreview}
+                      stampCounts={state.stampCounts}
                     />
                   )}
                 </div>

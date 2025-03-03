@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import ActiveLinks from "../ActiveLinks/ActiveLinks";
+import { CARD_TYPES_OPTIONS } from "@/enums/cards";
 
 const InformationPage = ({
   handleCardDescriptionChange,
@@ -19,6 +20,11 @@ const InformationPage = ({
   handleIssuerInformationChange,
   issuerInformation,
   handleRemoveLink,
+  handleEarnStamps,
+  handleRewardDetails,
+  handleEarnedStampMessage,
+  handleEarnedRewardMessage,
+  activeCardType,
 }) => {
   return (
     <Box className="flex flex-col gap-4 p-4">
@@ -56,7 +62,79 @@ const InformationPage = ({
           />
         </Box>
       </Box>
+      {activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+        <>
+          <Box className="flex flex-col gap-4 mt-8">
+            <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+              How to earn stamps
+            </Typography>
+            <Box className="px-4">
+              <TextField
+                variant="outlined"
+                className="!w-full"
+                placeholder="Enter brief explanation..."
+                onChange={handleEarnStamps}
+                size="small"
+              />
+            </Box>
+          </Box>
+          <Box className="flex flex-col gap-4 mt-8">
+            <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+              Reward Details
+            </Typography>
+            <Box className="px-4">
+              <TextField
+                variant="outlined"
+                className="!w-full"
+                placeholder="Enter reward details..."
+                onChange={handleRewardDetails}
+                size="small"
+              />
+            </Box>
+          </Box>
+        </>
+      )}
       <Divider sx={{ width: "100%", mt: 8 }} />
+      {activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+        <>
+          <Box className="flex flex-col gap-4 mt-8">
+            <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+              Earned stamp message
+            </Typography>
+            <Box className="flex flex-col gap-2 px-4">
+              <Typography
+                sx={{ fontSize: "14px", fontWeight: 400, color: "#888888" }}
+              >
+                The tag {"{#}"} is required (i.e. You need {"[#]"} more stamps
+                to receive your reward!)
+              </Typography>
+
+              <TextField
+                variant="outlined"
+                className="!w-full"
+                placeholder="Enter message..."
+                onChange={handleEarnedStampMessage}
+                size="small"
+              />
+            </Box>
+          </Box>
+          <Box className="flex flex-col gap-4 mt-8">
+            <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
+              Earned Reward message
+            </Typography>
+            <Box className="px-4">
+              <TextField
+                variant="outlined"
+                className="!w-full"
+                placeholder="Enter message..."
+                onChange={handleEarnedRewardMessage}
+                size="small"
+              />
+            </Box>
+          </Box>
+          <Divider sx={{ width: "100%", mt: 8 }} />
+        </>
+      )}
       <Box className="flex flex-col gap-4 mt-8">
         <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
           Active Links

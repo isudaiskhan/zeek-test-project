@@ -121,6 +121,7 @@ const Settings = ({
                 value={state.spendAmount}
                 onChange={(e) => onSpendChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
+                size="small"
               />
             </Box>
             <Typography>=</Typography>
@@ -129,6 +130,7 @@ const Settings = ({
                 value={state.pointsPerSpend}
                 onChange={(e) => onPointsPerSpendChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
+                size="small"
               />
               <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
                 Points
@@ -155,6 +157,7 @@ const Settings = ({
                 value={state.visitsRequired}
                 onChange={(e) => onVisitsRequiredChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
+                size="small"
               />
             </Box>
             <Typography>=</Typography>
@@ -163,6 +166,7 @@ const Settings = ({
                 value={state.pointsPerVisit}
                 onChange={(e) => onPointsPerVisitChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
+                size="small"
               />
               <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
                 Points

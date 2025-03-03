@@ -17,6 +17,7 @@ const StudioCustomTextField = ({
       value={value}
       onChange={onChange}
       className={className}
+      size="small"
     />
   );
 };

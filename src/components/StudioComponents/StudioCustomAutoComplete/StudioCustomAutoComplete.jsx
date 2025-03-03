@@ -21,6 +21,7 @@ const StudioCustomAutoComplete = ({
         options={options}
         getOptionLabel={(option) => option?.label || ""}
         value={value}
+        size="small"
         renderInput={(params) => (
           <TextField
             {...params}
@@ -30,7 +31,7 @@ const StudioCustomAutoComplete = ({
               ...params.InputProps,
               sx: {
                 borderRadius: "4px",
-                height: "55px",
+                // height: "55px",
                 minWidth: "300px",
               },
             }}
