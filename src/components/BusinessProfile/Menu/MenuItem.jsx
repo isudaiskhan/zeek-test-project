@@ -54,7 +54,7 @@ const MenuItem = ({
                           width={100}
                           height={100}
                           alt={item?.name}
-                          className="!w-[100px] !h-[100px] !rounded-xl"
+                          className="!w-[100px] !h-[100px] !rounded-xl object-cover"
                         />
                       </div>
                       <div className="flex flex-col gap-5">

@@ -9,11 +9,12 @@ import {
   updateMenuItem,
   useGetMenuItem,
 } from "@/services/business-profile/menu";
+import { useGetMenuSegments } from "@/services/business-profile/menu-segment";
 import { uploadFileFunc } from "@/utils/helper-functions";
 import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
 import { fileBaseURL } from "@/utils/urls";
 import { MenuItemSchema } from "@/utils/yup-schemas";
-import { IconButton, Typography } from "@mui/material";
+import { Autocomplete, IconButton, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { use, useMemo, useState } from "react";
@@ -41,12 +42,14 @@ const EditMenuItem = ({ params }) => {
       description: menuItem?.description || "",
       price: menuItem?.price || "",
       image: fileBaseURL + menuItem?.image || "",
+      menuSegment: menuItem?.menuSegment || "",
     }),
     [menuItem]
   );
 
   const { submitHandler } = useSubmitHandler();
   const { invalidateQuery } = useInvalidateQuery();
+  const { data: menuSegments } = useGetMenuSegments(1, 100);
 
   // Initialize formik
   const formik = useFormik({
@@ -121,6 +124,7 @@ const EditMenuItem = ({ params }) => {
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
               errorMessage={formik.errors.name}
+              width="100%"
             />
           </div>
           {/* Item Description */}
@@ -140,6 +144,40 @@ const EditMenuItem = ({ params }) => {
               errorMessage={formik.errors.description}
               multiline
               rows={4}
+              width="100%"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Typography sx={headingSX}>Item Segment</Typography>
+            <Typography sx={subHeadSX}>
+              Select the segment to add this menu item to.
+            </Typography>
+            <Autocomplete
+              disablePortal
+              options={menuSegments?.data || []}
+              getOptionLabel={(option) => option.title}
+              value={menuSegments?.data?.find(
+                (segment) => segment._id === formik.values.menuSegment
+              )}
+              onChange={(event, newValue) => {
+                formik.setFieldValue("menuSegment", newValue?._id);
+              }}
+              sx={{ width: 300 }}
+              size="small"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select Segment"
+                  sx={{
+                    borderRadius: "16px", // For rounded corners
+                    backgroundColor: "#F4F4F4",
+                    width: "80%",
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "16px",
+                    },
+                  }}
+                />
+              )}
             />
           </div>
           {/* Item Price */}
@@ -158,6 +196,7 @@ const EditMenuItem = ({ params }) => {
               onChange={formik.handleChange}
               error={formik.touched.price && Boolean(formik.errors.price)}
               errorMessage={formik.errors.price}
+              width="100%"
             />
           </div>
           {/* Item Image */}

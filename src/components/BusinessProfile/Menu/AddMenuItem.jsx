@@ -3,10 +3,11 @@ import CustomTextField from "@/components/CustomTextField/CustomTextField";
 import ImageUpload from "@/components/ImageUpload/ImageUpload";
 import SuccessDialog from "@/components/Modals/SuccessModal";
 import { addNewMenuItem } from "@/services/business-profile/menu";
+import { useGetMenuSegments } from "@/services/business-profile/menu-segment";
 import { uploadFileFunc } from "@/utils/helper-functions";
 import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
 import { MenuItemSchema } from "@/utils/yup-schemas";
-import { IconButton, Typography } from "@mui/material";
+import { Autocomplete, IconButton, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
@@ -27,6 +28,7 @@ const initialValues = {
   description: "",
   price: "",
   image: "",
+  menuSegment: "",
 };
 
 const AddMenuItem = ({ handleTabClick }) => {
@@ -35,6 +37,8 @@ const AddMenuItem = ({ handleTabClick }) => {
 
   const { submitHandler } = useSubmitHandler();
   const { invalidateQuery } = useInvalidateQuery();
+
+  const { data: menuSegments } = useGetMenuSegments(1, 100);
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -107,6 +111,7 @@ const AddMenuItem = ({ handleTabClick }) => {
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
               errorMessage={formik.errors.name}
+              width="100%"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -125,6 +130,37 @@ const AddMenuItem = ({ handleTabClick }) => {
               errorMessage={formik.errors.description}
               multiline
               rows={4}
+              width="100%"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Typography sx={headingSX}>Item Segment</Typography>
+            <Typography sx={subHeadSX}>
+              Select the segment to add this menu item to.
+            </Typography>
+            <Autocomplete
+              disablePortal
+              options={menuSegments?.data || []}
+              getOptionLabel={(option) => option.title}
+              onChange={(event, newValue) => {
+                formik.setFieldValue("menuSegment", newValue?._id);
+              }}
+              sx={{ width: 300 }}
+              size="small"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select Segment"
+                  sx={{
+                    borderRadius: "16px", // For rounded corners
+                    backgroundColor: "#F4F4F4",
+                    width: "80%",
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "16px",
+                    },
+                  }}
+                />
+              )}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -142,6 +178,7 @@ const AddMenuItem = ({ handleTabClick }) => {
               onChange={formik.handleChange}
               error={formik.touched.price && Boolean(formik.errors.price)}
               errorMessage={formik.errors.price}
+              width="100%"
             />
           </div>
           <div className="flex flex-col gap-2">
