@@ -1,4 +1,4 @@
-import { Divider, IconButton, Tab, Tabs, Typography } from "@mui/material";
+import { IconButton, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 import { RiArrowGoBackFill } from "react-icons/ri";
@@ -10,6 +10,7 @@ import { fileBaseURL } from "@/utils/urls";
 import { useRouter } from "next/navigation";
 import SegmentMenuModal from "@/components/Modals/SegmentMenuModal/SegmentMenuModal";
 import { useGetMenuSegments } from "@/services/business-profile/menu-segment";
+import CustomDivider from "@/components/Custom/CustomDivider/CustomDivider";
 
 const MenuEdit = ({
   menuItemsData,
@@ -74,12 +75,12 @@ const MenuEdit = ({
           <Tab value={item?.title} label={item?.title} key={item?._id} />
         ))}
       </Tabs>
-      <div className="flex justify-start items-start mt-6">
+      <div className="p-4 justify-center items-center mt-6">
         <Grid container spacing={4}>
           {menuItemsData
             ?.filter((item) => item?.menuSegment?.title === segmentTabValue)
             .map((item, index) => (
-              <React.Fragment key={item?.index}>
+              <React.Fragment key={item?._id}>
                 <Grid
                   size={{ md: 12, lg: 5 }}
                   className="hover:scale-105 hover:cursor-pointer"
@@ -113,8 +114,11 @@ const MenuEdit = ({
                     </div>
                   </div>
                 </Grid>
+
                 {index % 2 === 0 && (
-                  <Divider orientation="vertical" flexItem sx={{ mx: 5 }} />
+                  <Grid size={{ md: 2 }}>
+                    <CustomDivider />
+                  </Grid>
                 )}
               </React.Fragment>
             ))}

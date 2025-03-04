@@ -1,6 +1,7 @@
 import CustomButton from "@/components/Custom/CustomButton/CustomButton";
+import CustomDivider from "@/components/Custom/CustomDivider/CustomDivider";
 import { fileBaseURL } from "@/utils/urls";
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Image from "next/image";
 import React from "react";
@@ -75,7 +76,9 @@ const MenuItem = ({
                   </Grid>
 
                   {index % 2 === 0 && (
-                    <Divider orientation="vertical" flexItem sx={{ mx: 4 }} />
+                    <Grid size={{ md: 2 }}>
+                      <CustomDivider />
+                    </Grid>
                   )}
                 </React.Fragment>
               ))}
