@@ -156,9 +156,11 @@ const EditMenuItem = ({ params }) => {
               disablePortal
               options={menuSegments?.data || []}
               getOptionLabel={(option) => option.title}
-              value={menuSegments?.data?.find(
-                (segment) => segment._id === formik.values.menuSegment
-              )}
+              value={
+                menuSegments?.data?.find(
+                  (segment) => segment._id === formik.values.menuSegment
+                ) || null
+              }
               onChange={(event, newValue) => {
                 formik.setFieldValue("menuSegment", newValue?._id);
               }}
