@@ -76,6 +76,7 @@ const Tiers = () => {
             </Typography>
             <div className="flex items-center space-x-5">
               <CustomTextField
+                width="100%"
                 placeholder="0"
                 name="bronze.minThreshold"
                 value={formik.values.bronze.minThreshold || 0}
@@ -94,6 +95,7 @@ const Tiers = () => {
                 To
               </Typography>
               <CustomTextField
+                width="100%"
                 placeholder="99"
                 name="bronze.maxThreshold"
                 value={formik.values.bronze.maxThreshold}
@@ -122,6 +124,7 @@ const Tiers = () => {
             </Typography>
             <div className="flex items-center space-x-5">
               <CustomTextField
+                width="100%"
                 placeholder="100"
                 name="silver.minThreshold"
                 value={formik.values.silver.minThreshold}
@@ -139,6 +142,7 @@ const Tiers = () => {
                 To
               </Typography>
               <CustomTextField
+                width="100%"
                 placeholder="199"
                 name="silver.maxThreshold"
                 value={formik.values.silver.maxThreshold}
@@ -167,6 +171,7 @@ const Tiers = () => {
             </Typography>
             <div className="flex items-center space-x-5">
               <CustomTextField
+                width="100%"
                 placeholder="200"
                 name="gold.minThreshold"
                 value={formik.values.gold.minThreshold}
@@ -184,6 +189,7 @@ const Tiers = () => {
                 To
               </Typography>
               <CustomTextField
+                width="100%"
                 placeholder="299"
                 name="gold.maxThreshold"
                 value={formik.values.gold.maxThreshold}
@@ -212,6 +218,7 @@ const Tiers = () => {
             </Typography>
             <div className="flex items-center space-x-5">
               <CustomTextField
+                width="100%"
                 placeholder="300"
                 name="platinum.minThreshold"
                 value={formik.values.platinum.minThreshold}
@@ -229,6 +236,7 @@ const Tiers = () => {
                 To
               </Typography>
               <CustomTextField
+                width="100%"
                 placeholder="399"
                 name="platinum.maxThreshold"
                 value={formik.values.platinum.maxThreshold}
@@ -259,6 +267,7 @@ const Tiers = () => {
           </Typography>
           <div className="max-w-[15rem]">
             <CustomTextField
+              width="100%"
               placeholder="1"
               name="bronze.pointMultiplier"
               value={formik.values.bronze.pointMultiplier}
@@ -285,6 +294,7 @@ const Tiers = () => {
           </Typography>
           <div className="max-w-[15rem]">
             <CustomTextField
+              width="100%"
               placeholder="1.3"
               name="silver.pointMultiplier"
               value={formik.values.silver.pointMultiplier}
@@ -311,6 +321,7 @@ const Tiers = () => {
           </Typography>
           <div className="max-w-[15rem]">
             <CustomTextField
+              width="100%"
               placeholder="1.6"
               name="gold.pointMultiplier"
               value={formik.values.gold.pointMultiplier}
@@ -337,6 +348,7 @@ const Tiers = () => {
           </Typography>
           <div className="max-w-[15rem]">
             <CustomTextField
+              width="100%"
               placeholder="2"
               name="platinum.pointMultiplier"
               value={formik.values.platinum.pointMultiplier}

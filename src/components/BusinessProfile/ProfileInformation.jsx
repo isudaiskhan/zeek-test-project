@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 import Image from "next/image";
+import { fileBaseURL } from "@/utils/urls";
 
 const ProfileInformation = ({
   name,
@@ -12,6 +13,7 @@ const ProfileInformation = ({
   role,
   firstName,
   lastName,
+  profileImage,
 }) => {
   return (
     <Card className="!rounded-lg !border p-3 !border-[#E7E7E7] !border-solid !shadow-none">
@@ -19,9 +21,14 @@ const ProfileInformation = ({
         <div className="flex items-center gap-4">
           <Image
             alt="Profile Image"
-            src="/images/owner-profile-image.svg"
+            src={
+              profileImage
+                ? `${fileBaseURL}${profileImage}`
+                : "/images/owner-profile-image.svg"
+            }
             width={100}
             height={100}
+            className="rounded-full object-cover"
           />
           <div>
             <Typography

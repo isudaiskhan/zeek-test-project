@@ -99,7 +99,7 @@ const AddMenuItem = ({ handleTabClick }) => {
           </Typography>
         </div>
         <div className="flex flex-col justify-start items-start gap-8 mt-3">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Name</Typography>
             <Typography sx={subHeadSX}>Name the new item</Typography>
             <CustomTextField
@@ -114,7 +114,7 @@ const AddMenuItem = ({ handleTabClick }) => {
               width="100%"
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Description</Typography>
             <Typography sx={subHeadSX}>Describe the new item</Typography>
             <CustomTextField
@@ -163,7 +163,7 @@ const AddMenuItem = ({ handleTabClick }) => {
               )}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Price</Typography>
             <Typography sx={subHeadSX}>
               Price the new item (values in AED)
@@ -181,7 +181,7 @@ const AddMenuItem = ({ handleTabClick }) => {
               width="100%"
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Image</Typography>
             <Typography sx={subHeadSX}>
               Upload an image of the new item

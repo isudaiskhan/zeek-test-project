@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import { updateBusinessProfile } from "@/services/business-profile/profile";
+import { uploadFileFunc } from "@/utils/helper-functions";
+import { useInvalidateQuery, useSubmitHandler } from "@/utils/hooks";
+import { fileBaseURL } from "@/utils/urls";
+import { UserProfileSchema } from "@/utils/yup-schemas";
 import {
   Button,
   FormControl,
@@ -7,23 +11,12 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import CustomTextField from "../CustomTextField/CustomTextField";
-import SuccessDialog from "../Modals/SuccessModal";
-import ImageUpload from "../ImageUpload/ImageUpload";
-import {
-  useInvalidateQuery,
-  useReduxUser,
-  useSubmitHandler,
-} from "@/utils/hooks";
 import { useFormik } from "formik";
-import { uploadFileFunc } from "@/utils/helper-functions";
-import {
-  updateBusinessProfile,
-  useGetProfile,
-} from "@/services/business-profile/profile";
-import { fileBaseURL } from "@/utils/urls";
-import { UserProfileSchema } from "@/utils/yup-schemas";
-import Spinner from "../Spinner/Spinner";
+import { useState } from "react";
+import CustomTextField from "../CustomTextField/CustomTextField";
+import ImageUpload from "../ImageUpload/ImageUpload";
+import SuccessDialog from "../Modals/SuccessModal";
+
 
 const EditProfile = ({
   onBack,
@@ -38,8 +31,6 @@ const EditProfile = ({
   const [uploadedImage, setUploadedImage] = useState(null);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
-  // // get user details
-  // const { data: user, isLoading, refetch } = useGetProfile();
   // submit handler
   const { submitHandler, submitLoading } = useSubmitHandler();
   const { invalidateQuery } = useInvalidateQuery();

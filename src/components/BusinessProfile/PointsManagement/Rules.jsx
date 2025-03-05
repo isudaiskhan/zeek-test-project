@@ -110,6 +110,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 1, 2, 5, 10"
                 name="pointsPerAmount"
+                width="100%"
                 value={formik.values.pointsPerAmount}
                 onChange={formik.handleChange}
                 error={
@@ -139,6 +140,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 100, 200, 500"
                 name="pointsCapPerTransaction"
+                width="100%"
                 value={formik.values.pointsCapPerTransaction}
                 onChange={formik.handleChange}
                 error={
@@ -168,6 +170,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 10, 20, 50"
                 name="minSpendForPoints"
+                width="100%"
                 value={formik.values.minSpendForPoints}
                 onChange={formik.handleChange}
                 error={
@@ -206,6 +209,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 10, 20, 50, 100"
                 name="redemptionPointValue"
+                width="100%"
                 value={formik.values.redemptionPointValue}
                 onChange={formik.handleChange}
                 error={
@@ -234,6 +238,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 0, 10, 20, 50"
                 name="minPointsForRedemption"
+                width="100%"
                 value={formik.values.minPointsForRedemption}
                 onChange={formik.handleChange}
                 error={
@@ -289,6 +294,7 @@ const Rules = () => {
             <CustomTextField
               placeholder="ie. 10, 20, 50, 100"
               name="monthsForExpiry"
+              width="100%"
               value={formik.values.monthsForExpiry}
               onChange={formik.handleChange}
               error={
@@ -348,6 +354,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. Zeek Points"
                 name="pointName"
+                width="100%"
                 value={formik.values.pointName}
                 onChange={formik.handleChange}
                 error={
@@ -383,6 +390,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 10, 20, 50, 100"
                 name="pointsForSignUp"
+                width="100%"
                 value={formik.values.pointsForSignUp}
                 onChange={formik.handleChange}
                 error={
@@ -419,6 +427,7 @@ const Rules = () => {
               <CustomTextField
                 placeholder="ie. 1, 5, 10, 20"
                 name="pointsPerReview"
+                width="100%"
                 value={formik.values.pointsPerReview}
                 onChange={formik.handleChange}
                 error={
@@ -450,6 +459,7 @@ const Rules = () => {
                 <CustomTextField
                   placeholder="ie. 10, 20, 50, 100"
                   name="birthdayPoints"
+                  width="100%"
                   value={formik.values.birthdayPoints}
                   onChange={formik.handleChange}
                   error={

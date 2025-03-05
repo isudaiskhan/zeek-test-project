@@ -91,7 +91,7 @@ const AnalyticsSettings = () => {
             </Typography>
             <div className="max-w-[15rem]">
               <CustomTextField
-                fullWidth
+                width="100%"
                 name="dailySalesTarget"
                 value={inputs.dailySalesTarget}
                 onChange={handleInputChange}
@@ -143,7 +143,7 @@ const AnalyticsSettings = () => {
             </Typography>
             <div className="max-w-[15rem]">
               <CustomTextField
-                fullWidth
+                width="100%"
                 name="averageVisitFrequency"
                 value={inputs.averageVisitFrequency}
                 onChange={handleInputChange}
@@ -184,7 +184,7 @@ const AnalyticsSettings = () => {
             </Typography>
             <div className="max-w-[15rem]">
               <CustomTextField
-                fullWidth
+                width="100%"
                 name="alertThreshold"
                 value={inputs.alertThreshold}
                 onChange={handleInputChange}

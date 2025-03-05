@@ -64,7 +64,7 @@ const EditMenuItem = ({ params }) => {
       }
       const formattedValues = {
         ...values,
-        ...(imageKey && { image: imageKey }), // Add image field only if imageKey exists
+        ...(imageKey ? { image: imageKey } : { image: menuItem?.image }), // Add image field only if imageKey exists
       };
 
       submitHandler({
@@ -112,7 +112,7 @@ const EditMenuItem = ({ params }) => {
         </div>
         <div className="flex flex-col justify-start items-start gap-8 mt-3">
           {/* Item Name */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Name</Typography>
             <Typography sx={subHeadSX}>Name the new item</Typography>
             <CustomTextField
@@ -128,7 +128,7 @@ const EditMenuItem = ({ params }) => {
             />
           </div>
           {/* Item Description */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Description</Typography>
             <Typography sx={subHeadSX}>Describe the new item</Typography>
             <CustomTextField
@@ -183,7 +183,7 @@ const EditMenuItem = ({ params }) => {
             />
           </div>
           {/* Item Price */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Price</Typography>
             <Typography sx={subHeadSX}>
               Price the new item (values in AED)
@@ -202,7 +202,7 @@ const EditMenuItem = ({ params }) => {
             />
           </div>
           {/* Item Image */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col w-full gap-2">
             <Typography sx={headingSX}>Item Image</Typography>
             <Typography sx={subHeadSX}>
               Upload an image of the new item

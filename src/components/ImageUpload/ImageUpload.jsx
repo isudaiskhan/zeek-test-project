@@ -56,6 +56,7 @@ const ImageUpload = ({
             border: "1px solid #D3D3D3",
             backgroundImage: `url(${imagePreview})`,
             backgroundSize: "cover",
+            backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
           onClick={handleUploadClick}

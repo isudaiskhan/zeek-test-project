@@ -1,7 +1,11 @@
 "use client";
+import CustomButton from "@/components/Custom/CustomButton/CustomButton";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Spinner from "@/components/Spinner/Spinner";
-import { useGetRoles } from "@/services/business-profile/roles-permissions";
+import {
+  useGetAllBusinessRoles,
+  useGetRoles,
+} from "@/services/business-profile/roles-permissions";
 import AddIcon from "@mui/icons-material/Add";
 import {
   FormControl,
@@ -24,10 +28,27 @@ const RolesAndPermissions = () => {
   const [partnerAppRole, setPartnerAppRole] = useState("");
   const [showCreateNewRole, setShowCreateNewRole] = useState(false);
 
-  const handleTabChange = (event, newValue) => setActiveTab(newValue);
-
   // react query
-  const { data: businessRoles, isLoading, isError, error } = useGetRoles();
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetAllBusinessRoles();
+  const {
+    data: businessRolesData,
+    // isLoading: isBusinessRolesLoading,
+    // isError: isBusinessRolesError,
+    // error: businessRolesError,
+  } = useGetRoles(activeTab);
+
+  const businessRoles = data?.pages?.flatMap((page) => page.data) || [];
+  const roles = businessRolesData?.pages?.flatMap((page) => page.data) || [];
+
+  const handleTabChange = (_event, newValue) => setActiveTab(newValue);
 
   const handleAdminPanelRoleChange = (event) => {
     setAdminPanelRole(event.target.value);
@@ -39,6 +60,10 @@ const RolesAndPermissions = () => {
 
   const toggleCreateNewRole = () => {
     setShowCreateNewRole(!showCreateNewRole);
+  };
+
+  const removeAdminRole = () => {
+    setAdminPanelRole("");
   };
 
   if (isLoading) {
@@ -78,13 +103,30 @@ const RolesAndPermissions = () => {
             >
               All Created Roles
             </Typography>
-            <div className="flex flex-wrap gap-6">
-              {businessRoles?.data?.map((role) => (
-                <RenderRoles key={role?._id} role={role?.name} id={role?._id} />
-              ))}
+            <div>
+              <div className="flex flex-wrap gap-6 ">
+                {businessRoles?.map((role) => (
+                  <RenderRoles
+                    key={role?._id}
+                    role={role?.name}
+                    id={role?._id}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center justify-center pt-5">
+                {hasNextPage && (
+                  <CustomButton
+                    loading={isFetchingNextPage}
+                    text="Load More"
+                    bgColor="#FFECE1"
+                    textColor="#FF5B00"
+                    onClick={fetchNextPage}
+                  />
+                )}
+              </div>
             </div>
           </div>
-          {businessRoles?.data?.length > 0 ? (
+          {businessRoles?.length > 0 ? (
             <div className="mt-12">
               <ChoosePermissionsArea
                 activeTab={activeTab}
@@ -109,10 +151,20 @@ const RolesAndPermissions = () => {
                       label="Select role..."
                       className="max-w-80"
                     >
-                      <MenuItem value="Manager">Manager</MenuItem>
+                      <MenuItem value="">None</MenuItem>
+                      {roles?.map((role) => (
+                        <MenuItem key={role._id} value={role._id}>
+                          {role.name}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
-                  {adminPanelRole === "Manager" && <AdminPanelPermissions />}
+                  {adminPanelRole && (
+                    <AdminPanelPermissions
+                      roleId={adminPanelRole}
+                      removeAdminRole={removeAdminRole}
+                    />
+                  )}
                 </div>
               )}
 
@@ -135,10 +187,15 @@ const RolesAndPermissions = () => {
                       label="Select role..."
                       className="max-w-80"
                     >
-                      <MenuItem value="Manager">Manager</MenuItem>
+                      <MenuItem value="">None</MenuItem>
+                      {roles?.map((role) => (
+                        <MenuItem key={role._id} value={role._id}>
+                          {role.name}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
-                  {partnerAppRole === "Manager" && <PartnerAppPermissions />}
+                  {partnerAppRole && <PartnerAppPermissions />}
                 </div>
               )}
             </div>

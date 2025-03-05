@@ -43,6 +43,7 @@ const ProfileContent = ({
       <ProfileInformation
         firstName={firstName}
         lastName={lastName}
+        profileImage={profileImage}
         title={"Business Owner"}
         city={address?.city}
         country={address?.country}

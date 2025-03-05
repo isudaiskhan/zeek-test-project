@@ -25,10 +25,15 @@ const ChangePasswordForm = ({ onClose }) => {
     },
     validationSchema: PasswordSchema,
     onSubmit: (values, { resetForm, setSubmitting }) => {
+      const payload = {
+        currentPassword: values.currentPassword,
+        password: values.password,
+      };
       submitHandler({
         successMsg: "Your password has been updated successfully",
         onSubmit: async () => {
-          await updatePassword(values);
+          await updatePassword(payload);
+
           setSuccessModalOpen(true);
           resetForm();
         },
