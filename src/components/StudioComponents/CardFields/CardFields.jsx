@@ -7,7 +7,7 @@ const fieldOptions = Object.entries(FIELD_TYPES).map(([key, value]) => ({
   value: value,
 }));
 
-const CardFields = ({ index, field, fieldName, handleCardFieldChange }) => {
+const CardFields = ({ index, type, fieldName, handleCardFieldChange }) => {
   return (
     <Box sx={{ display: "flex", gap: 2, mb: 1, mt: 2 }} key={index}>
       <Box className="flex flex-col gap-2 w-full">
@@ -17,10 +17,8 @@ const CardFields = ({ index, field, fieldName, handleCardFieldChange }) => {
           Field
         </Typography>
         <Select
-          value={field}
-          onChange={(e) =>
-            handleCardFieldChange(index, "field", e.target.value)
-          }
+          value={type}
+          onChange={(e) => handleCardFieldChange(index, "type", e.target.value)}
           displayEmpty
           sx={{ width: "100%" }}
           size="small"

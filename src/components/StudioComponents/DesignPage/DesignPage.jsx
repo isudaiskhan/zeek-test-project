@@ -313,7 +313,7 @@ const DesignPage = ({
           <CardFields
             key={index}
             index={index}
-            field={item.field}
+            type={item.type}
             fieldName={item.fieldName}
             handleCardFieldChange={handleCardFieldChange}
             cardFields={cardFields}

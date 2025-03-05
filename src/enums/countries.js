@@ -64,3 +64,27 @@ export const countries = [
   { label: "YE", name: "Yemen", value: "+967" },
   { label: "ZW", name: "Zimbabwe", value: "+263" },
 ];
+
+export const COUNTRIES_OPTIONS = [
+  { label: "United Kingdom", value: "UK" },
+  { label: "United States", value: "US" },
+  { label: "Canada", value: "CA" },
+  { label: "Australia", value: "AU" },
+  { label: "Germany", value: "DE" },
+  { label: "France", value: "FR" },
+  { label: "Spain", value: "ES" },
+  { label: "Italy", value: "IT" },
+  { label: "Netherlands", value: "NL" },
+  { label: "Sweden", value: "SE" },
+  { label: "Switzerland", value: "CH" },
+  { label: "Brazil", value: "BR" },
+  { label: "India", value: "IN" },
+  { label: "China", value: "CN" },
+  { label: "Japan", value: "JP" },
+  { label: "South Korea", value: "KR" },
+  { label: "Mexico", value: "MX" },
+  { label: "South Africa", value: "ZA" },
+  { label: "United Arab Emirates", value: "AE" },
+  { label: "Singapore", value: "SG" },
+  { label: "New Zealand", value: "NZ" },
+];

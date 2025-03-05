@@ -8,6 +8,7 @@ const StudioCustomButton = ({
   onClick,
   startIcon,
   width = "auto",
+  type,
 }) => {
   return (
     <Button
@@ -26,6 +27,7 @@ const StudioCustomButton = ({
         padding: "20px",
       }}
       startIcon={startIcon}
+      type={type}
     >
       {text}
     </Button>

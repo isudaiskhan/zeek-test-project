@@ -17,7 +17,7 @@ export const CARD_OPTIONS = {
 };
 
 export const CARD_TYPES_OPTIONS = {
-  POINTS: "points",
+  LOYALTY: "loyalty",
   STAMPS: "stamps",
   COUPONS: "coupons",
 };

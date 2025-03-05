@@ -15,7 +15,14 @@ import StudioCustomTextField from "../StudioCustomTextField/StudioCustomTextFiel
 import FieldItems from "../FieldItems/FieldsItems";
 import StudioCustomAutoComplete from "../StudioCustomAutoComplete/StudioCustomAutoComplete";
 import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCustomButton";
-import { BARCODE_TYPES } from "@/enums/loyalty-card-actions";
+import {
+  BARCODE_TYPES,
+  CARD_EXPIRATION_TYPES,
+  POINTS_LIFETIME_TYPES,
+  REWARD_PROGRAM,
+} from "@/enums/loyalty-card-actions";
+import dayjs from "dayjs";
+import { COUNTRIES_OPTIONS } from "@/enums/countries";
 
 const Settings = ({
   state,
@@ -35,19 +42,22 @@ const Settings = ({
   onSourceChange,
   onCountryChange,
 }) => {
-  const countries = [
-    { label: "United States" },
-    { label: "Canada" },
-    { label: "United Kingdom" },
-  ];
-
   const daysOptions = [
-    { label: "Monday" },
-    { label: "Tuesday" },
-    { label: "Wednesday" },
+    { label: "Days", value: "days" },
+    { label: "Weeks", value: "weeks" },
+    { label: "Months", value: "months" },
+    { label: "Years", value: "years" },
   ];
 
-  const dateOptions = [{ label: "1" }, { label: "2" }, { label: "3" }];
+  const dateOptions = [
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
+    { label: "5", value: 5 },
+    { label: "6", value: 6 },
+    { label: "7", value: 7 },
+  ];
 
   return (
     <div className="p-6">
@@ -85,7 +95,7 @@ const Settings = ({
           Reward Program
         </Typography>
         <FormControlLabel
-          value="Spend"
+          value={REWARD_PROGRAM.SPEND}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -94,7 +104,7 @@ const Settings = ({
           label="Spend (Give points based on customer spend)"
         />
         <FormControlLabel
-          value="Visit"
+          value={REWARD_PROGRAM.VISIT}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -104,7 +114,7 @@ const Settings = ({
         />
       </RadioGroup>
 
-      {state.rewardProgram === "Spend" && (
+      {state.rewardProgram === REWARD_PROGRAM.SPEND && (
         <Box>
           <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
             How do your customers earn points?
@@ -122,6 +132,8 @@ const Settings = ({
                 onChange={(e) => onSpendChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
                 size="small"
+                disabled
+                type="number"
               />
             </Box>
             <Typography>=</Typography>
@@ -131,6 +143,7 @@ const Settings = ({
                 onChange={(e) => onPointsPerSpendChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
                 size="small"
+                type="number"
               />
               <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
                 Points
@@ -140,7 +153,7 @@ const Settings = ({
         </Box>
       )}
 
-      {state.rewardProgram === "Visit" && (
+      {state.rewardProgram === REWARD_PROGRAM.VISIT && (
         <Box>
           <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
             How do your customers earn points?
@@ -158,6 +171,8 @@ const Settings = ({
                 onChange={(e) => onVisitsRequiredChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
                 size="small"
+                disabled
+                type="number"
               />
             </Box>
             <Typography>=</Typography>
@@ -167,6 +182,7 @@ const Settings = ({
                 onChange={(e) => onPointsPerVisitChange(e.target.value)}
                 sx={{ "& fieldset": { border: "none" } }}
                 size="small"
+                type="number"
               />
               <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
                 Points
@@ -191,13 +207,13 @@ const Settings = ({
       {/* Card Expiration Section */}
       <RadioGroup
         value={state.expirationOption}
-        onChange={(e) => onExpirationOptionChange(e.target.value)}
+        onChange={onExpirationOptionChange}
       >
         <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
           Card Expiration Date
         </Typography>
         <FormControlLabel
-          value="ExpirationDate"
+          value={CARD_EXPIRATION_TYPES.UNLIMITED}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -206,7 +222,7 @@ const Settings = ({
           label="Unlimited"
         />
         <FormControlLabel
-          value="fixedPeriod"
+          value={CARD_EXPIRATION_TYPES.FIXED_PERIOD}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -215,7 +231,7 @@ const Settings = ({
           label="Fixed period"
         />
         <FormControlLabel
-          value="fixedAfterIssue"
+          value={CARD_EXPIRATION_TYPES.FIXED_PERIOD_AFTER_CARD_ISSUE}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -225,7 +241,7 @@ const Settings = ({
         />
       </RadioGroup>
 
-      {state.expirationOption === "fixedPeriod" && (
+      {state.expirationOption === CARD_EXPIRATION_TYPES.FIXED_PERIOD && (
         <Box mt={3}>
           <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
             Expiration Date
@@ -233,26 +249,31 @@ const Settings = ({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               value={state.expirationDate}
-              onChange={onExpirationDateChange}
+              onChange={(newValue) => onExpirationDateChange(dayjs(newValue))}
             />
           </LocalizationProvider>
         </Box>
       )}
 
-      {state.expirationOption === "fixedAfterIssue" && (
+      {state.expirationOption ===
+        CARD_EXPIRATION_TYPES.FIXED_PERIOD_AFTER_CARD_ISSUE && (
         <Box mt={3}>
           <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
             Period
           </Typography>
           <Box display="flex" gap={2}>
             <StudioCustomAutoComplete
-              onChange={(value) => onExpirationPeriodChange("value", value)}
+              onChange={(event, newValue) =>
+                onExpirationPeriodChange("value", newValue.value || null)
+              }
               options={dateOptions}
               placeholder="1"
               hideLabel
             />
             <StudioCustomAutoComplete
-              onChange={(unit) => onExpirationPeriodChange("unit", unit)}
+              onChange={(event, newValue) =>
+                onExpirationPeriodChange("unit", newValue.value || null)
+              }
               options={daysOptions}
               placeholder="Days"
               hideLabel
@@ -271,7 +292,7 @@ const Settings = ({
           Points Lifetime
         </Typography>
         <FormControlLabel
-          value="unlimitedPoints"
+          value={POINTS_LIFETIME_TYPES.UNLIMITED}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -280,7 +301,7 @@ const Settings = ({
           label="Unlimited"
         />
         <FormControlLabel
-          value="fixedAfterEarned"
+          value={POINTS_LIFETIME_TYPES.FIXED_PERIOD_AFTER_POINTS_EARNED}
           control={
             <Radio
               sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
@@ -290,20 +311,25 @@ const Settings = ({
         />
       </RadioGroup>
 
-      {state.pointsLifetime === "fixedAfterEarned" && (
+      {state.pointsLifetime ===
+        POINTS_LIFETIME_TYPES.FIXED_PERIOD_AFTER_POINTS_EARNED && (
         <Box mt={3}>
           <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
             Period
           </Typography>
           <Box display="flex" gap={2}>
             <StudioCustomAutoComplete
-              onChange={(value) => onPointsPeriodChange("value", value)}
+              onChange={(event, value) =>
+                onPointsPeriodChange("value", value.value || null)
+              }
               placeholder="1"
               hideLabel
               options={dateOptions}
             />
             <StudioCustomAutoComplete
-              onChange={(unit) => onPointsPeriodChange("unit", unit)}
+              onChange={(event, value) =>
+                onPointsPeriodChange("unit", value.value || null)
+              }
               placeholder="Days"
               hideLabel
               options={daysOptions}
@@ -316,12 +342,11 @@ const Settings = ({
         <Typography className="!text-2xl !font-semibold !mb-6">
           Card issuing form
         </Typography>
-        {/* Form Fields */}
-        {state.fields.map((field, index) => (
+        {Object.entries(state.cardIssueForm).map(([key, field]) => (
           <FieldItems
-            key={index}
+            key={key}
+            fieldKey={key}
             field={field}
-            index={index}
             onChange={onFieldChange}
           />
         ))}
@@ -373,8 +398,8 @@ const Settings = ({
         </Typography>
         <StudioCustomAutoComplete
           placeholder="Select country..."
-          onChange={onCountryChange}
-          options={countries}
+          onChange={(event, value) => onCountryChange(value.value || null)}
+          options={COUNTRIES_OPTIONS}
         />
       </Box>
     </div>

@@ -9,6 +9,7 @@ const StudioCustomAutoComplete = ({
   value,
   placeholder,
   hideLabel = false,
+  onChange,
 }) => {
   return (
     <Box>
@@ -22,6 +23,7 @@ const StudioCustomAutoComplete = ({
         getOptionLabel={(option) => option?.label || ""}
         value={value}
         size="small"
+        onChange={onChange}
         renderInput={(params) => (
           <TextField
             {...params}
