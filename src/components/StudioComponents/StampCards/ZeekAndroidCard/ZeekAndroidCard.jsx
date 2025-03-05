@@ -1,6 +1,7 @@
 import { BARCODE_TYPES } from "@/enums/loyalty-card-actions";
 import { Star } from "@mui/icons-material";
 import { Avatar, Box, Card, Divider, Typography } from "@mui/material";
+import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 import Barcode from "react-barcode";
@@ -14,6 +15,8 @@ const ZeekAndroidCard = ({
   cardTextColor,
   stampCounts,
   barcode,
+  activeStampIconPreview,
+  activeStampColor,
 }) => {
   return (
     <Card
@@ -127,12 +130,27 @@ const ZeekAndroidCard = ({
                       stampCounts > 12 ? "w-[18px]" : "w-[30px]"
                     } rounded-full cursor-pointer`}
                   >
-                    <Star
-                      sx={{
-                        color: "#1F1E1F",
-                        fontSize: stampCounts > 12 ? "10px" : "20px",
-                      }}
-                    />
+                    {activeStampIconPreview ? (
+                      <Image
+                        src={activeStampIconPreview}
+                        alt="stamp icon"
+                        height={100}
+                        width={100}
+                        className={`${
+                          stampCounts > 12 ? "!w-[12px]" : "!w-[20px]"
+                        } ${
+                          stampCounts > 12 ? "!h-[12px]" : "!h-[20px]"
+                        } object-cover`}
+                        layout="responsive"
+                      />
+                    ) : (
+                      <Star
+                        sx={{
+                          color: activeStampColor,
+                          fontSize: stampCounts > 12 ? "10px" : "20px",
+                        }}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>

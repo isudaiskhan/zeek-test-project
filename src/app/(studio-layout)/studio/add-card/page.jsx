@@ -1077,6 +1077,8 @@ const AddCard = () => {
                         companyName={state.companyName}
                         stampCounts={state.stampCounts}
                         barcode={state.barcode}
+                        activeStampIconPreview={state.activeStampIconPreview}
+                      activeStampColor={state.activeStampColor}
                       />
                     )}
                   </div>

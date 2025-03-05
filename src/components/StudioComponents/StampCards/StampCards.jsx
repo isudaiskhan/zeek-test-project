@@ -16,6 +16,8 @@ const StampCards = ({
   companyName,
   stampCounts,
   barcode,
+  activeStampIconPreview,
+  activeStampColor,
 }) => {
   return (
     <>
@@ -29,6 +31,8 @@ const StampCards = ({
           centerBackgroundColor={centerBackgroundColor}
           stampCounts={stampCounts}
           barcode={barcode}
+          activeStampIconPreview={activeStampIconPreview}
+          activeStampColor={activeStampColor}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ANDROID && (
@@ -41,6 +45,8 @@ const StampCards = ({
           cardTextColor={cardTextColor}
           stampCounts={stampCounts}
           barcode={barcode}
+          activeStampIconPreview={activeStampIconPreview}
+          activeStampColor={activeStampColor}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ZEEK && (
@@ -53,6 +59,8 @@ const StampCards = ({
           centerBackgroundColor={centerBackgroundColor}
           stampCounts={stampCounts}
           barcode={barcode}
+          activeStampIconPreview={activeStampIconPreview}
+          activeStampColor={activeStampColor}
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.NOTIFICATION && (

@@ -15,6 +15,8 @@ const ZeekAppleCard = ({
   centerBackgroundColor,
   stampCounts,
   barcode,
+  activeStampIconPreview,
+  activeStampColor,
 }) => {
   return (
     <Card
@@ -82,12 +84,27 @@ const ZeekAppleCard = ({
                       stampCounts > 12 ? "w-[18px]" : "w-[30px]"
                     } rounded-full cursor-pointer`}
                   >
-                    <Star
-                      sx={{
-                        color: "#1F1E1F",
-                        fontSize: stampCounts > 12 ? "10px" : "20px",
-                      }}
-                    />
+                    {activeStampIconPreview ? (
+                      <Image
+                        src={activeStampIconPreview}
+                        alt="stamp icon"
+                        height={100}
+                        width={100}
+                        className={`${
+                          stampCounts > 12 ? "!w-[12px]" : "!w-[20px]"
+                        } ${
+                          stampCounts > 12 ? "!h-[12px]" : "!h-[20px]"
+                        } object-cover`}
+                        layout="responsive"
+                      />
+                    ) : (
+                      <Star
+                        sx={{
+                          color: activeStampColor,
+                          fontSize: stampCounts > 12 ? "10px" : "20px",
+                        }}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>
