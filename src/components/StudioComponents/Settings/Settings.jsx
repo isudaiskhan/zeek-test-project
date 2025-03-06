@@ -18,11 +18,13 @@ import StudioCustomButton from "@/components/Custom/StudioCustomButton/StudioCus
 import {
   BARCODE_TYPES,
   CARD_EXPIRATION_TYPES,
+  DISCOUNT_VALUE,
   POINTS_LIFETIME_TYPES,
   REWARD_PROGRAM,
 } from "@/enums/loyalty-card-actions";
 import dayjs from "dayjs";
 import { COUNTRIES_OPTIONS } from "@/enums/countries";
+import { CARD_TYPES_OPTIONS } from "@/enums/cards";
 
 const Settings = ({
   state,
@@ -41,6 +43,11 @@ const Settings = ({
   onFieldChange,
   onSourceChange,
   onCountryChange,
+  handleStampPerSpend,
+  handleStampPerVisit,
+  handleDiscountValueChange,
+  handleSetFixedAmountValue,
+  handleVariablePercentageChange,
 }) => {
   const daysOptions = [
     { label: "Days", value: "days" },
@@ -86,123 +93,336 @@ const Settings = ({
         />
       </RadioGroup>
       <Divider className="!my-8 bg-[#B8B8B8]" />
-      {/* Reward Program Section */}
-      <RadioGroup
-        value={state.rewardProgram}
-        onChange={(e) => onRewardProgramChange(e.target.value)}
-      >
-        <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
-          Reward Program
-        </Typography>
-        <FormControlLabel
-          value={REWARD_PROGRAM.SPEND}
-          control={
-            <Radio
-              sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
-            />
-          }
-          label="Spend (Give points based on customer spend)"
-        />
-        <FormControlLabel
-          value={REWARD_PROGRAM.VISIT}
-          control={
-            <Radio
-              sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
-            />
-          }
-          label="Visit (Give points based on customer visits)"
-        />
-      </RadioGroup>
 
-      {state.rewardProgram === REWARD_PROGRAM.SPEND && (
-        <Box>
-          <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
-            How do your customers earn points?
-          </Typography>
-          <Typography className="!text-base !font-inter !text-[#989898] !mb-5">
-            Eg: 1 point for every 1 AED spent
-          </Typography>
-          <Box display="flex" alignItems="center" gap={1}>
-            <Box display="flex" border="1px solid #CCCCCC" borderRadius="4px">
-              <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
-                AED
-              </Box>
-              <TextField
-                value={state.spendAmount}
-                onChange={(e) => onSpendChange(e.target.value)}
-                sx={{ "& fieldset": { border: "none" } }}
-                size="small"
-                disabled
-                type="number"
-              />
-            </Box>
-            <Typography>=</Typography>
-            <Box display="flex" border="1px solid #CCCCCC" borderRadius="4px">
-              <TextField
-                value={state.pointsPerSpend}
-                onChange={(e) => onPointsPerSpendChange(e.target.value)}
-                sx={{ "& fieldset": { border: "none" } }}
-                size="small"
-                type="number"
-              />
-              <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
-                Points
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      )}
+      {state.activeCardType === CARD_TYPES_OPTIONS.STAMP ? (
+        <>
+          <RadioGroup
+            value={state.rewardProgram}
+            onChange={(e) => onRewardProgramChange(e.target.value)}
+          >
+            <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
+              Reward Program
+            </Typography>
+            <FormControlLabel
+              value={REWARD_PROGRAM.SPEND}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
+              }
+              label="Spend (Give stamps based on customer spend)"
+            />
+            <FormControlLabel
+              value={REWARD_PROGRAM.VISIT}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
+              }
+              label="Visit (Give stamps based on customer visits)"
+            />
+          </RadioGroup>
 
-      {state.rewardProgram === REWARD_PROGRAM.VISIT && (
-        <Box>
-          <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
-            How do your customers earn points?
-          </Typography>
-          <Typography className="!text-base !font-inter !text-[#989898] !mb-5">
-            Eg: 1 point for every 1 visit
-          </Typography>
-          <Box display="flex" alignItems="center" gap={1}>
-            <Box display="flex" border="1px solid #CCCCCC" borderRadius="4px">
-              <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
-                Visit
+          {state.rewardProgram === REWARD_PROGRAM.SPEND && (
+            <Box>
+              <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
+                How do your customers earn points?
+              </Typography>
+              <Typography className="!text-base !font-inter !text-[#989898] !mb-5">
+                Eg: 1 stamp for every 1 AED spent
+              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    AED
+                  </Box>
+                  <TextField
+                    value={state.stampPerSpent}
+                    onChange={(e) => handleStampPerSpend(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    type="number"
+                  />
+                </Box>
+                <Typography>=</Typography>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <TextField
+                    value={state.pointsPerSpend}
+                    onChange={(e) => onPointsPerSpendChange(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    type="number"
+                    disabled
+                  />
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    Stamps
+                  </Box>
+                </Box>
               </Box>
-              <TextField
-                value={state.visitsRequired}
-                onChange={(e) => onVisitsRequiredChange(e.target.value)}
-                sx={{ "& fieldset": { border: "none" } }}
-                size="small"
-                disabled
-                type="number"
+            </Box>
+          )}
+
+          {state.rewardProgram === REWARD_PROGRAM.VISIT && (
+            <Box>
+              <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
+                How do your customers earn points?
+              </Typography>
+              <Typography className="!text-base !font-inter !text-[#989898] !mb-5">
+                Eg: 1 stamp for every 1 visit
+              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    Visit
+                  </Box>
+                  <TextField
+                    value={state.visitsRequired}
+                    onChange={(e) => onVisitsRequiredChange(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    disabled
+                    type="number"
+                  />
+                </Box>
+                <Typography>=</Typography>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <TextField
+                    value={state.stampPerVisit}
+                    onChange={(e) => handleStampPerVisit(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    type="number"
+                  />
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    Stamp
+                  </Box>
+                </Box>
+              </Box>
+              <FormControlLabel
+                className="mt-7"
+                control={
+                  <Checkbox
+                    checked={state.dailyVisitLimit}
+                    onChange={onDailyVisitLimitToggle}
+                    sx={{
+                      color: "#CACACA",
+                      "&.Mui-checked": { color: "#28EA84" },
+                    }}
+                  />
+                }
+                label="Restrict to one visit per day"
               />
             </Box>
-            <Typography>=</Typography>
-            <Box display="flex" border="1px solid #CCCCCC" borderRadius="4px">
-              <TextField
-                value={state.pointsPerVisit}
-                onChange={(e) => onPointsPerVisitChange(e.target.value)}
-                sx={{ "& fieldset": { border: "none" } }}
-                size="small"
-                type="number"
-              />
-              <Box bgcolor="#E8E8E8" px={2} display="flex" alignItems="center">
-                Points
+          )}
+          <Divider className="!my-8 bg-[#B8B8B8]" />
+        </>
+      ) : state.activeCardType === CARD_TYPES_OPTIONS.LOYALTY ? (
+        <>
+          <RadioGroup
+            value={state.rewardProgram}
+            onChange={(e) => onRewardProgramChange(e.target.value)}
+          >
+            <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
+              Reward Program
+            </Typography>
+            <FormControlLabel
+              value={REWARD_PROGRAM.SPEND}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
+              }
+              label="Spend (Give points based on customer spend)"
+            />
+            <FormControlLabel
+              value={REWARD_PROGRAM.VISIT}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
+              }
+              label="Visit (Give points based on customer visits)"
+            />
+          </RadioGroup>
+
+          {state.rewardProgram === REWARD_PROGRAM.SPEND && (
+            <Box>
+              <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
+                How do your customers earn points?
+              </Typography>
+              <Typography className="!text-base !font-inter !text-[#989898] !mb-5">
+                Eg: 1 point for every 1 AED spent
+              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    AED
+                  </Box>
+                  <TextField
+                    value={state.spendAmount}
+                    onChange={(e) => onSpendChange(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    disabled
+                    type="number"
+                  />
+                </Box>
+                <Typography>=</Typography>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <TextField
+                    value={state.pointsPerSpend}
+                    onChange={(e) => onPointsPerSpendChange(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    type="number"
+                  />
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    Points
+                  </Box>
+                </Box>
               </Box>
             </Box>
-          </Box>
-          <FormControlLabel
-            className="mt-7"
-            control={
-              <Checkbox
-                checked={state.dailyVisitLimit}
-                onChange={onDailyVisitLimitToggle}
-                sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
+          )}
+
+          {state.rewardProgram === REWARD_PROGRAM.VISIT && (
+            <Box>
+              <Typography className="!text-xl !font-inter !font-semibold !text-[#000000] !mb-4 !mt-10">
+                How do your customers earn points?
+              </Typography>
+              <Typography className="!text-base !font-inter !text-[#989898] !mb-5">
+                Eg: 1 point for every 1 visit
+              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    Visit
+                  </Box>
+                  <TextField
+                    value={state.visitsRequired}
+                    onChange={(e) => onVisitsRequiredChange(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    disabled
+                    type="number"
+                  />
+                </Box>
+                <Typography>=</Typography>
+                <Box
+                  display="flex"
+                  border="1px solid #CCCCCC"
+                  borderRadius="4px"
+                >
+                  <TextField
+                    value={state.pointsPerVisit}
+                    onChange={(e) => onPointsPerVisitChange(e.target.value)}
+                    sx={{ "& fieldset": { border: "none" } }}
+                    size="small"
+                    type="number"
+                  />
+                  <Box
+                    bgcolor="#E8E8E8"
+                    px={2}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    Points
+                  </Box>
+                </Box>
+              </Box>
+              <FormControlLabel
+                className="mt-7"
+                control={
+                  <Checkbox
+                    checked={state.dailyVisitLimit}
+                    onChange={onDailyVisitLimitToggle}
+                    sx={{
+                      color: "#CACACA",
+                      "&.Mui-checked": { color: "#28EA84" },
+                    }}
+                  />
+                }
+                label="Restrict to one visit per day"
               />
-            }
-            label="Restrict to one visit per day"
-          />
-        </Box>
-      )}
-      <Divider className="!my-8 bg-[#B8B8B8]" />
+            </Box>
+          )}
+          <Divider className="!my-8 bg-[#B8B8B8]" />
+        </>
+      ) : null}
 
       {/* Card Expiration Section */}
       <RadioGroup
@@ -283,61 +503,160 @@ const Settings = ({
       )}
       <Divider className="!my-8 bg-[#B8B8B8]" />
 
-      {/* Points Lifetime Section */}
-      <RadioGroup
-        value={state.pointsLifetime}
-        onChange={(e) => onPointsLifetimeChange(e.target.value)}
-      >
-        <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
-          Points Lifetime
-        </Typography>
-        <FormControlLabel
-          value={POINTS_LIFETIME_TYPES.UNLIMITED}
-          control={
-            <Radio
-              sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
+      {state.activeCardType === CARD_TYPES_OPTIONS.COUPON ? (
+        <>
+          <RadioGroup
+            value={state.discountValue}
+            onChange={(e) => handleDiscountValueChange(e.target.value)}
+          >
+            <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
+              Discount Value
+            </Typography>
+            <FormControlLabel
+              value={DISCOUNT_VALUE.FIXED}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
+              }
+              label="Fixed Value"
             />
-          }
-          label="Unlimited"
-        />
-        <FormControlLabel
-          value={POINTS_LIFETIME_TYPES.FIXED_PERIOD_AFTER_POINTS_EARNED}
-          control={
-            <Radio
-              sx={{ color: "#CACACA", "&.Mui-checked": { color: "#28EA84" } }}
+            <FormControlLabel
+              value={DISCOUNT_VALUE.PERCENTAGE}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
+              }
+              label="Variable Value"
             />
-          }
-          label="Fixed period after points earned"
-        />
-      </RadioGroup>
+          </RadioGroup>
 
-      {state.pointsLifetime ===
-        POINTS_LIFETIME_TYPES.FIXED_PERIOD_AFTER_POINTS_EARNED && (
-        <Box mt={3}>
-          <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
-            Period
-          </Typography>
-          <Box display="flex" gap={2}>
-            <StudioCustomAutoComplete
-              onChange={(event, value) =>
-                onPointsPeriodChange("value", value.value || null)
+          {state.discountValue === DISCOUNT_VALUE.FIXED && (
+            <Box className="flex flex-col gap-4 p-4">
+              <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
+                Amount
+              </Typography>
+              <Box className="flex flex-row justify-center items-end px-10">
+                <TextField
+                  value={state.fixedValueAmount}
+                  onChange={(e) => handleSetFixedAmountValue(e.target.value)}
+                  fullWidth
+                  size="small"
+                  sx={{ "& fieldset": { border: "2px solid #E8E8E8" } }}
+                  type="number"
+                />
+                <Box className="bg-[#E8E8E8] p-2 items-center px-8 font-normal text-[16px]">
+                  AED
+                </Box>
+              </Box>
+            </Box>
+          )}
+
+          {state.discountValue === DISCOUNT_VALUE.PERCENTAGE && (
+            <Box className="flex flex-col gap-4 p-4">
+              <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
+                Percentage
+              </Typography>
+              <Box className="flex flex-row justify-center items-end px-10">
+                <TextField
+                  value={state.variablePercentage}
+                  onChange={(e) =>
+                    handleVariablePercentageChange(e.target.value)
+                  }
+                  fullWidth
+                  size="small"
+                  sx={{ "& fieldset": { border: "2px solid #E8E8E8" } }}
+                  type="number"
+                />
+                <Box className="bg-[#E8E8E8] p-2 items-center px-8 font-normal text-[16px]">
+                  %
+                </Box>
+              </Box>
+            </Box>
+          )}
+
+          <Divider className="!my-12 bg-[#B8B8B8]" />
+        </>
+      ) : (
+        <>
+          <RadioGroup
+            value={state.pointsLifetime}
+            onChange={(e) => onPointsLifetimeChange(e.target.value)}
+          >
+            <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
+              {state.activeCardType === CARD_TYPES_OPTIONS.STAMP
+                ? "Stamp Lifetime"
+                : "Points Lifetime"}
+            </Typography>
+            <FormControlLabel
+              value={POINTS_LIFETIME_TYPES.UNLIMITED}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
               }
-              placeholder="1"
-              hideLabel
-              options={dateOptions}
+              label="Unlimited"
             />
-            <StudioCustomAutoComplete
-              onChange={(event, value) =>
-                onPointsPeriodChange("unit", value.value || null)
+            <FormControlLabel
+              value={POINTS_LIFETIME_TYPES.FIXED_PERIOD_AFTER_POINTS_EARNED}
+              control={
+                <Radio
+                  sx={{
+                    color: "#CACACA",
+                    "&.Mui-checked": { color: "#28EA84" },
+                  }}
+                />
               }
-              placeholder="Days"
-              hideLabel
-              options={daysOptions}
+              label={
+                state.activeCardType === CARD_TYPES_OPTIONS.STAMP
+                  ? "Fixed period after latest stamp earned"
+                  : "Fixed period after points earned"
+              }
             />
-          </Box>
-        </Box>
+          </RadioGroup>
+
+          {state.pointsLifetime ===
+            POINTS_LIFETIME_TYPES.FIXED_PERIOD_AFTER_POINTS_EARNED && (
+            <Box mt={3}>
+              <Typography className="!text-xl !font-inter !text-[#000000] !mb-5">
+                Period
+              </Typography>
+              <Box display="flex" gap={2}>
+                <StudioCustomAutoComplete
+                  onChange={(event, value) =>
+                    onPointsPeriodChange("value", value.value || null)
+                  }
+                  placeholder="1"
+                  hideLabel
+                  options={dateOptions}
+                />
+                <StudioCustomAutoComplete
+                  onChange={(event, value) =>
+                    onPointsPeriodChange("unit", value.value || null)
+                  }
+                  placeholder="Days"
+                  hideLabel
+                  options={daysOptions}
+                />
+              </Box>
+            </Box>
+          )}
+          <Divider className="!my-12 bg-[#B8B8B8]" />
+        </>
       )}
-      <Divider className="!my-12 bg-[#B8B8B8]" />
+
+      {/* Points Lifetime Section */}
+
       <div>
         <Typography className="!text-2xl !font-semibold !mb-6">
           Card issuing form

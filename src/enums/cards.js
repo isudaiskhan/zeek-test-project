@@ -18,8 +18,8 @@ export const CARD_OPTIONS = {
 
 export const CARD_TYPES_OPTIONS = {
   LOYALTY: "loyalty",
-  STAMPS: "stamps",
-  COUPONS: "coupons",
+  STAMP: "stamp",
+  COUPON: "coupon",
 };
 
 export const ICON_TABS_OPTIONS = {

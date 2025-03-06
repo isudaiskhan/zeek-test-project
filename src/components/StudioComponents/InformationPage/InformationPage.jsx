@@ -62,7 +62,7 @@ const InformationPage = ({
           />
         </Box>
       </Box>
-      {activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+      {activeCardType === CARD_TYPES_OPTIONS.STAMP && (
         <>
           <Box className="flex flex-col gap-4 mt-8">
             <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>
@@ -95,7 +95,7 @@ const InformationPage = ({
         </>
       )}
       <Divider sx={{ width: "100%", mt: 8 }} />
-      {activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+      {activeCardType === CARD_TYPES_OPTIONS.STAMP && (
         <>
           <Box className="flex flex-col gap-4 mt-8">
             <Typography sx={{ fontSize: "20px", fontWeight: 500 }}>

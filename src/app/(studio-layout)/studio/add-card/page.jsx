@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Chip, Container, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Container,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React, { useReducer, useState } from "react";
 import Grid from "@mui/material/Grid2";
 import { PiCoin } from "react-icons/pi";
@@ -30,6 +37,7 @@ import DesignPage from "@/components/StudioComponents/DesignPage/DesignPage";
 import {
   BARCODE_TYPES,
   CARD_STATUS,
+  DISCOUNT_VALUE,
   LOYALTY_CARD_ACTIONS,
 } from "@/enums/loyalty-card-actions";
 import Settings from "@/components/StudioComponents/Settings/Settings";
@@ -157,6 +165,11 @@ const initialState = {
   earnedStampMessage: "",
   earnedRewardMessage: "",
   status: "",
+  stampPerVisit: 1,
+  stampPerSpent: 1,
+  discountValue: "",
+  fixedValueAmount: 1,
+  variablePercentage: 20,
 };
 
 const reducer = (state, action) => {
@@ -287,6 +300,16 @@ const reducer = (state, action) => {
       return { ...state, earnedRewardMessage: action.payload };
     case LOYALTY_CARD_ACTIONS.SET_CARD_STATUS:
       return { ...state, status: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_STAMP_PER_SPENT:
+      return { ...state, stampPerSpent: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_STAMP_PER_VISIT:
+      return { ...state, stampPerVisit: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_DISCOUNT_VALUE:
+      return { ...state, discountValue: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_FIXED_VALUE_AMOUNT:
+      return { ...state, fixedValueAmount: action.payload };
+    case LOYALTY_CARD_ACTIONS.SET_VARIABLE_PERCENTAGE:
+      return { ...state, variablePercentage: action.payload };
     default:
       return state;
   }
@@ -315,30 +338,30 @@ const AddCard = () => {
           : "#FF5B00",
     },
     {
-      label: CARD_TYPES_OPTIONS.STAMPS,
-      value: CARD_TYPES_OPTIONS.STAMPS,
+      label: CARD_TYPES_OPTIONS.STAMP,
+      value: CARD_TYPES_OPTIONS.STAMP,
       icon: (props) => <BiCertification {...props} />,
       buttonText: "High Retention",
       bgColor:
-        state.activeCardType === CARD_TYPES_OPTIONS.STAMPS
+        state.activeCardType === CARD_TYPES_OPTIONS.STAMP
           ? "#FF5B00"
           : "#FFEBDF",
       textColor:
-        state.activeCardType === CARD_TYPES_OPTIONS.STAMPS
+        state.activeCardType === CARD_TYPES_OPTIONS.STAMP
           ? "#FFFFFF"
           : "#FF5B00",
     },
     {
-      label: CARD_TYPES_OPTIONS.COUPONS,
-      value: CARD_TYPES_OPTIONS.COUPONS,
+      label: CARD_TYPES_OPTIONS.COUPON,
+      value: CARD_TYPES_OPTIONS.COUPON,
       icon: (props) => <RiCoupon2Line {...props} />,
       buttonText: "Best for acquisition",
       bgColor:
-        state.activeCardType === CARD_TYPES_OPTIONS.COUPONS
+        state.activeCardType === CARD_TYPES_OPTIONS.COUPON
           ? "#768CEA"
           : "#F0F3FF",
       textColor:
-        state.activeCardType === CARD_TYPES_OPTIONS.COUPONS
+        state.activeCardType === CARD_TYPES_OPTIONS.COUPON
           ? "#FFFFFF"
           : "#768CEA",
     },
@@ -718,6 +741,41 @@ const AddCard = () => {
     });
   };
 
+  const handleStampPerSpend = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_STAMP_PER_SPENT,
+      payload: value,
+    });
+  };
+
+  const handleStampPerVisit = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_STAMP_PER_VISIT,
+      payload: value,
+    });
+  };
+
+  const handleDiscountValueChange = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_DISCOUNT_VALUE,
+      payload: value,
+    });
+  };
+
+  const handleSetFixedAmountValue = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_FIXED_VALUE_AMOUNT,
+      payload: value,
+    });
+  };
+
+  const handleVariablePercentageChange = (value) => {
+    dispatch({
+      type: LOYALTY_CARD_ACTIONS.SET_VARIABLE_PERCENTAGE,
+      payload: value,
+    });
+  };
+
   const handleCloseSuccessModal = () => {
     setOpenSuccessModal(false);
   };
@@ -732,6 +790,8 @@ const AddCard = () => {
           type: "", // visit or spend
           pointPerVisit: 0, // when type is visit
           pointPerSpent: 0, // when type is spend
+          stampPerVisit: 0, // when type is visit
+          stampPerSpent: 0, // when type is spend
         },
         cardExpiration: {
           type: "",
@@ -751,6 +811,10 @@ const AddCard = () => {
         cardIssueForm: initialFields,
         utmLink: "",
         phoneMask: "",
+        couponDiscount: {
+          type: "",
+          value: 0,
+        },
       },
       cardDesign: {
         logo: "",
@@ -765,10 +829,17 @@ const AddCard = () => {
             fieldName: "",
           },
         ],
+        stampCount: 0,
+        activeStampImage: "",
+        inactiveStampImage: "",
       },
       cardInformation: {
         description: "",
         companyName: "",
+        howToEarnStamp: "",
+        rewardDetails: "",
+        earnedRewardMessage: "",
+        earnedStampMessage: "",
         activeLinks: [],
         issuerInformation: {
           companyName: "",
@@ -796,6 +867,18 @@ const AddCard = () => {
         centralImageKey = response?.key;
       }
 
+      let activeStampIconKey = "";
+      if (state.activeStampIcon) {
+        const response = await uploadFileFunc(state.activeStampIcon);
+        activeStampIconKey = response?.key;
+      }
+
+      let inActiveStampIconKey = "";
+      if (state.inActiveStampIcon) {
+        const response = await uploadFileFunc(state.inActiveStampIcon);
+        inActiveStampIconKey = response?.key;
+      }
+
       const formattedValues = {
         ...values,
         type: state.activeCardType,
@@ -806,6 +889,8 @@ const AddCard = () => {
             type: state.rewardProgram.toLowerCase(),
             pointPerVisit: Number(state.pointsPerVisit) || 0,
             pointPerSpent: Number(state.pointsPerSpend) || 0,
+            stampPerVisit: Number(state.stampPerVisit) || 0,
+            stampPerSpent: Number(state.stampPerSpend) || 0,
           },
           cardExpiration: {
             type: state.expirationOption.toLowerCase(),
@@ -821,6 +906,13 @@ const AddCard = () => {
           cardIssueForm: state.cardIssueForm,
           utmLink: state.source,
           phoneMask: state.country,
+          couponDiscount: {
+            type: state.discountValue.toLowerCase(),
+            value:
+              state.discountValue === DISCOUNT_VALUE.FIXED
+                ? Number(state.fixedValueAmount)
+                : Number(state.variablePercentage),
+          },
         },
         cardDesign: {
           logo: logoKey,
@@ -830,16 +922,23 @@ const AddCard = () => {
           textColor: state.cardTextColor,
           backgroundCenterColor: state.centerBackgroundColor,
           cardFields: state.cardFields,
+          stampCount: state.stampCounts,
+          activeStampImage: activeStampIconKey,
+          inactiveStampImage: inActiveStampIconKey,
         },
         cardInformation: {
           description: state.cardDescription,
           companyName: state.companyName,
           activeLinks: state.activeLinks,
           issuerInformation: state.issuerInformation,
+          howToEarnStamp: state.earnStamps,
+          rewardDetails: state.rewardDetails,
+          earnedRewardMessage: state.earnedRewardMessage,
+          earnedStampMessage: state.earnedStampMessage,
         },
       };
 
-      console.log(formattedValues, "formattedValues");
+      console.log(formattedValues);
 
       submitHandler({
         successMsg: "Card has been added successfully",
@@ -895,6 +994,13 @@ const AddCard = () => {
                   onFieldChange={handleFieldChange}
                   onSourceChange={handleSourceChange}
                   onCountryChange={handleCountryChange}
+                  handleStampPerSpend={handleStampPerSpend}
+                  handleStampPerVisit={handleStampPerVisit}
+                  handleDiscountValueChange={handleDiscountValueChange}
+                  handleSetFixedAmountValue={handleSetFixedAmountValue}
+                  handleVariablePercentageChange={
+                    handleVariablePercentageChange
+                  }
                 />
               )}
               {state.activeTab === CARD_OPTIONS.DESIGN && (
@@ -952,14 +1058,26 @@ const AddCard = () => {
               )}
               {state.activeTab === CARD_OPTIONS.INFORMATION ? (
                 <Box className="flex mt-20 md:mt-32 justify-center items-center w-full">
-                  <StudioCustomButton
+                  {/* <StudioCustomButton
                     text="Activate"
                     textColor="#FFFFFF"
                     bgColor="#333333"
                     width="100%"
                     type="submit"
                     onClick={() => handleStatusUpdate(CARD_STATUS.ACTIVE)}
-                  />
+                  /> */}
+                  <Button
+                    variant="outlined"
+                    type="submit"
+                    onClick={() => handleStatusUpdate(CARD_STATUS.ACTIVE)}
+                    sx={{
+                      backgroundColor: "#333333",
+                      color: "#FFFFFF",
+                      width: "100%",
+                    }}
+                  >
+                    Activate
+                  </Button>
                 </Box>
               ) : (
                 <Box className="flex mt-20 md:mt-52 justify-center items-center w-full">
@@ -1007,7 +1125,7 @@ const AddCard = () => {
                         iconPreview={state.iconPreview}
                       />
                     )}
-                    {state.activeCardType === CARD_TYPES_OPTIONS.COUPONS && (
+                    {state.activeCardType === CARD_TYPES_OPTIONS.COUPON && (
                       <CouponCardDetails
                         activeLinks={state.activeLinks}
                         iconTabs={state.iconTabs}
@@ -1021,7 +1139,7 @@ const AddCard = () => {
                         cardTextColor={state.cardTextColor}
                       />
                     )}
-                    {state.activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+                    {state.activeCardType === CARD_TYPES_OPTIONS.STAMP && (
                       <StampCardDetails
                         activeLinks={state.activeLinks}
                         iconTabs={state.iconTabs}
@@ -1050,7 +1168,7 @@ const AddCard = () => {
                         barcode={state.barcode}
                       />
                     )}
-                    {state.activeCardType === CARD_TYPES_OPTIONS.COUPONS && (
+                    {state.activeCardType === CARD_TYPES_OPTIONS.COUPON && (
                       <CouponCard
                         iconTabs={state.iconTabs}
                         cardName={state.cardName}
@@ -1064,7 +1182,7 @@ const AddCard = () => {
                         barcode={state.barcode}
                       />
                     )}
-                    {state.activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+                    {state.activeCardType === CARD_TYPES_OPTIONS.STAMP && (
                       <StampCards
                         iconTabs={state.iconTabs}
                         cardName={state.cardName}
@@ -1078,7 +1196,7 @@ const AddCard = () => {
                         stampCounts={state.stampCounts}
                         barcode={state.barcode}
                         activeStampIconPreview={state.activeStampIconPreview}
-                      activeStampColor={state.activeStampColor}
+                        activeStampColor={state.activeStampColor}
                       />
                     )}
                   </div>

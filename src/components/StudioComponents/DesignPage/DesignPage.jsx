@@ -45,7 +45,7 @@ const DesignPage = ({
         </Typography>
         <Divider sx={{ width: "100%", mt: 4 }} />
       </Box>
-      {activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+      {activeCardType === CARD_TYPES_OPTIONS.STAMP && (
         <>
           <Box className="p-2 mt-4">
             <Box className="mb-8">
@@ -229,7 +229,7 @@ const DesignPage = ({
               </div>
             </Box>
           </Grid>
-          {activeCardType === CARD_TYPES_OPTIONS.STAMPS && (
+          {activeCardType === CARD_TYPES_OPTIONS.STAMP && (
             <>
               <Grid size={{ xs: 12, md: 6 }}>
                 <Box className="flex px-6 mt-8 w-full">

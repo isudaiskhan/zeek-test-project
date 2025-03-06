@@ -45,7 +45,7 @@ const CardTypes = ({ activeCardType, handleCardTypeClick, cardTypes }) => {
                 // card.label === "Coupons" ? "#F0F3FF" : "#FFEBDF",
                 color: card.textColor,
                 border:
-                  card.label === CARD_TYPES_OPTIONS.COUPONS
+                  card.label === CARD_TYPES_OPTIONS.COUPON
                     ? "1px solid #768CEA"
                     : "1px solid #FF5B00",
               }}
