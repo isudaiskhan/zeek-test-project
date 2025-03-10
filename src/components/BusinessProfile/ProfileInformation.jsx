@@ -4,7 +4,6 @@ import Image from "next/image";
 import { fileBaseURL } from "@/utils/urls";
 
 const ProfileInformation = ({
-  name,
   title,
   city,
   country,
@@ -35,7 +34,7 @@ const ProfileInformation = ({
               variant="h6"
               className="text-[#000000] !font-sans !mb-3 !text-[15px]"
             >
-              {name}
+              {firstName + " " + lastName}
             </Typography>
             <Typography
               variant="body2"

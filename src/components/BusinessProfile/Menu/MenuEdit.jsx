@@ -85,14 +85,33 @@ const MenuEdit = ({
                   size={{ md: 12, lg: 5 }}
                   className="hover:scale-105 hover:cursor-pointer"
                 >
-                  <div className="w-[100px] h-[100px] rounded-xl">
-                    <Image
-                      src={`${fileBaseURL}${item?.image}`}
-                      width={100}
-                      height={100}
-                      alt={item?.name}
-                      className="!w-[100px] !h-[100px] !rounded-xl object-cover"
-                    />
+                  <div
+                    className="flex flex-row gap-4"
+                    onClick={() => handleEditMenu(item?._id)}
+                  >
+                    <div className="w-[100px] h-[100px] rounded-xl">
+                      <Image
+                        src={`${fileBaseURL}${item?.image}`}
+                        width={100}
+                        height={100}
+                        alt={item?.name}
+                        className="!w-[100px] !h-[100px] !rounded-xl object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-5">
+                      <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
+                        {item?.name}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "14px",
+                          fontWeight: 400,
+                          color: "#A7A7A7",
+                        }}
+                      >
+                        {item?.description}
+                      </Typography>
+                    </div>
                   </div>
                 </Grid>
 

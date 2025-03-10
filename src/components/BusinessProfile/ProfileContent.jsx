@@ -3,6 +3,7 @@ import ProfileBusinessName from "@/components/BusinessProfile/ProfileBusinessNam
 import ProfileInformation from "@/components/BusinessProfile/ProfileInformation";
 import ProfileBusinessAddress from "@/components/BusinessProfile/ProfileBusinessAddress";
 import EditProfile from "./EditProfile";
+import ProfileCSVDownload from "./ProfileCSVDownload";
 
 const ProfileContent = ({
   businessName,
@@ -60,6 +61,7 @@ const ProfileContent = ({
         postalCode={address?.postalCode}
         floor={address?.floor}
       />
+      <ProfileCSVDownload />
     </div>
   );
 };
