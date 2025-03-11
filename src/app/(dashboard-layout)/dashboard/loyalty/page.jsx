@@ -2,13 +2,11 @@
 "use client";
 
 import CustomButton from "@/components/Custom/CustomButton/CustomButton";
-import CouponCard from "@/components/Loyalty/CouponCard/CouponCard";
-import CouponPastryCard from "@/components/Loyalty/CouponPastryCard/CouponPastryCard";
-import LoyaltyCard from "@/components/Loyalty/LoyaltyCard/LoyaltyCard";
+import LoyaltyCardsMain from "@/components/LoyaltyCards/LoyaltyCardsMain";
 import Spinner from "@/components/Spinner/Spinner";
 import CustomTab from "@/components/Studio/CustomTab/CustomTab";
-import { CARD_STATUSES, CARD_TYPES } from "@/enums/cards";
-import { useGetAllCardsData } from "@/services/loyalty";
+import { CARD_STATUSES } from "@/enums/cards";
+import { useGetInfiniteCardsData } from "@/services/loyalty";
 import { Add } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -24,9 +22,10 @@ const tabs = [
 const Loyalty = () => {
   const [activeTab, setActiveTab] = useState("live");
 
-  const { data, isLoading, isError } = useGetAllCardsData(1, 10);
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
+    useGetInfiniteCardsData(3);
 
-  console.log(data, "cards");
+  const cardsData = data?.pages?.flatMap((page) => page.data) || [];
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -69,140 +68,130 @@ const Loyalty = () => {
             {activeTab === "live" && (
               <>
                 <Grid container spacing={2}>
-                  {data?.data
+                  {cardsData
                     ?.filter((card) => card?.status === CARD_STATUSES.ACTIVE)
                     .map((card) => (
-                      <Grid size={{ xs: 12, md: 4 }} key={card._id}>
-                        {card?.type === CARD_TYPES.LOYALTY ? (
-                          <LoyaltyCard
-                            expiry={card?.validUntil}
-                            createdAt={card?.createdAt}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                            onClick={() =>
-                              router.push("/studio/update-card-loyalty")
-                            }
-                          />
-                        ) : card?.type === CARD_TYPES.COUPON ? (
-                          <CouponCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            createdAt={card?.createdAt}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : card?.type === CARD_TYPES.STAMP ? (
-                          <CouponPastryCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            createdAt={card?.createdAt}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : null}
+                      <Grid size={{ xs: 12, md: 6, lg: 4 }} key={card?._id}>
+                        <LoyaltyCardsMain
+                          id={card?._id}
+                          type={card?.type}
+                          status={card?.status}
+                          createdAt={card?.createdAt}
+                          cardBackground={card?.cardDesign?.cardBackground}
+                          logo={card?.cardDesign?.logo}
+                          textColor={card?.cardDesign?.textColor}
+                          backgroundCenterColor={
+                            card?.cardDesign?.backgroundCenterColor
+                          }
+                          centralImage={card?.cardDesign?.centralImage}
+                          stampCount={card?.cardDesign?.stampCount}
+                          activeStampImage={card?.cardDesign?.activeStampImage}
+                          activeStampColor={card?.cardDesign?.activeStampColor}
+                          bardCodeType={card?.cardSettings?.bardCodeType}
+                        />
                       </Grid>
                     ))}
                 </Grid>
+                <div className="flex items-center justify-center py-2 mt-4">
+                  {hasNextPage ? (
+                    <CustomButton
+                      text="Load More"
+                      bgColor="#FFECE1"
+                      textColor="#FF5B00"
+                      onClick={fetchNextPage}
+                    />
+                  ) : (
+                    <div className="font-[400] text-red-400 text-sm">
+                      Nothing more to load
+                    </div>
+                  )}
+                </div>
               </>
             )}
             {activeTab === "inactive" && (
               <>
                 <Grid container spacing={2}>
-                  {data?.data
+                  {cardsData
                     ?.filter((card) => card?.status === CARD_STATUSES.INACTIVE)
                     .map((card) => (
                       <Grid size={{ xs: 12, md: 4 }} key={card?._id}>
-                        {card?.type === CARD_TYPES.LOYALTY ? (
-                          <LoyaltyCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : card?.type === CARD_TYPES.COUPON ? (
-                          <CouponCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            createdAt={card?.createdAt}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : card?.type === CARD_TYPES.STAMP ? (
-                          <CouponPastryCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            createdAt={card?.createdAt}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : null}
+                        <LoyaltyCardsMain
+                          id={card?._id}
+                          type={card?.type}
+                          status={card?.status}
+                          createdAt={card?.createdAt}
+                          cardBackground={card?.cardDesign?.cardBackground}
+                          logo={card?.cardDesign?.logo}
+                          textColor={card?.cardDesign?.textColor}
+                          backgroundCenterColor={
+                            card?.cardDesign?.backgroundCenterColor
+                          }
+                          centralImage={card?.cardDesign?.centralImage}
+                          stampCount={card?.cardDesign?.stampCount}
+                          activeStampImage={card?.cardDesign?.activeStampImage}
+                          activeStampColor={card?.cardDesign?.activeStampColor}
+                          bardCodeType={card?.cardSettings?.bardCodeType}
+                        />
                       </Grid>
                     ))}
                 </Grid>
+                <div className="flex items-center justify-center py-2 mt-4">
+                  {hasNextPage ? (
+                    <CustomButton
+                      text="Load More"
+                      bgColor="#FFECE1"
+                      textColor="#FF5B00"
+                      onClick={fetchNextPage}
+                    />
+                  ) : (
+                    <div className="font-[400] text-red-400 text-sm">
+                      Nothing more to load
+                    </div>
+                  )}
+                </div>
               </>
             )}
             {activeTab === "draft" && (
               <>
                 <Grid container spacing={2}>
-                  {data?.data
+                  {cardsData
                     ?.filter((card) => card?.status === CARD_STATUSES.DRAFT)
                     .map((card) => (
                       <Grid size={{ xs: 12, md: 4 }} key={card?._id}>
-                        {card?.type === CARD_TYPES.LOYALTY ? (
-                          <LoyaltyCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : card?.type === CARD_TYPES.COUPON ? (
-                          <CouponCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            createdAt={card?.createdAt}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : card?.type === CARD_TYPES.STAMP ? (
-                          <CouponPastryCard
-                            expiry={card?.validUntil}
-                            status={card?.status}
-                            logoImage={card?.logoImage}
-                            createdAt={card?.createdAt}
-                            heroImage={card?.heroImage}
-                            cardNumber={card?.cardNumber}
-                            colors={card?.colors}
-                            type={card?.type}
-                          />
-                        ) : null}
+                        <LoyaltyCardsMain
+                          id={card?._id}
+                          type={card?.type}
+                          status={card?.status}
+                          createdAt={card?.createdAt}
+                          cardBackground={card?.cardDesign?.cardBackground}
+                          logo={card?.cardDesign?.logo}
+                          textColor={card?.cardDesign?.textColor}
+                          backgroundCenterColor={
+                            card?.cardDesign?.backgroundCenterColor
+                          }
+                          centralImage={card?.cardDesign?.centralImage}
+                          stampCount={card?.cardDesign?.stampCount}
+                          activeStampImage={card?.cardDesign?.activeStampImage}
+                          activeStampColor={card?.cardDesign?.activeStampColor}
+                          bardCodeType={card?.cardSettings?.bardCodeType}
+                        />
                       </Grid>
                     ))}
                 </Grid>
+                <div className="flex items-center justify-center py-2 mt-4">
+                  {hasNextPage ? (
+                    <CustomButton
+                      text="Load More"
+                      bgColor="#FFECE1"
+                      textColor="#FF5B00"
+                      onClick={fetchNextPage}
+                    />
+                  ) : (
+                    <div className="font-[400] text-red-400 text-sm">
+                      Nothing more to load
+                    </div>
+                  )}
+                </div>
               </>
             )}
           </div>
