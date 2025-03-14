@@ -3,6 +3,7 @@ import PointsAppleCard from "./PointsAppleCard/PointsAppleCard";
 import PointsAndroidCard from "./PointsAndroidCard/PointsAndroidCard";
 import PointsNotificationCard from "./PointsNotificationCard/PointsNotificationCard";
 import { ICON_TABS_OPTIONS } from "@/enums/cards";
+import PointsZeekCard from "./PointsZeekCard/PointsZeekCard";
 
 const PointsCard = ({
   iconTabs,
@@ -41,7 +42,7 @@ const PointsCard = ({
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ZEEK && (
-        <PointsAppleCard
+        <PointsZeekCard
           cardName={cardName}
           logoPreview={logoPreview}
           centralImagePreview={centralImagePreview}

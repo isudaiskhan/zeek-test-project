@@ -351,20 +351,20 @@ const AddCard = () => {
           ? "#FFFFFF"
           : "#FF5B00",
     },
-    {
-      label: CARD_TYPES_OPTIONS.COUPON,
-      value: CARD_TYPES_OPTIONS.COUPON,
-      icon: (props) => <RiCoupon2Line {...props} />,
-      buttonText: "Best for acquisition",
-      bgColor:
-        state.activeCardType === CARD_TYPES_OPTIONS.COUPON
-          ? "#768CEA"
-          : "#F0F3FF",
-      textColor:
-        state.activeCardType === CARD_TYPES_OPTIONS.COUPON
-          ? "#FFFFFF"
-          : "#768CEA",
-    },
+    // {
+    //   label: CARD_TYPES_OPTIONS.COUPON,
+    //   value: CARD_TYPES_OPTIONS.COUPON,
+    //   icon: (props) => <RiCoupon2Line {...props} />,
+    //   buttonText: "Best for acquisition",
+    //   bgColor:
+    //     state.activeCardType === CARD_TYPES_OPTIONS.COUPON
+    //       ? "#768CEA"
+    //       : "#F0F3FF",
+    //   textColor:
+    //     state.activeCardType === CARD_TYPES_OPTIONS.COUPON
+    //       ? "#FFFFFF"
+    //       : "#768CEA",
+    // },
   ];
 
   const handleTabClick = (tab) => {
@@ -1123,6 +1123,11 @@ const AddCard = () => {
                         companyName={state.companyName}
                         issuerInformation={state.issuerInformation}
                         iconPreview={state.iconPreview}
+                        cardName={state.cardName}
+                        logoPreview={state.logoPreview}
+                        cardBgColor={state.cardBgColor}
+                        cardTextColor={state.cardTextColor}
+                        barcode={state.barcode}
                       />
                     )}
                     {state.activeCardType === CARD_TYPES_OPTIONS.COUPON && (

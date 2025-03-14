@@ -44,26 +44,45 @@ const ZeekAndroidCard = ({
           <Typography
             sx={{ fontSize: "16px", fontWeight: 400, color: cardTextColor }}
           >
-            Card Description
+            Collect Stamps to get rewards
           </Typography>
         </div>
-        <div className="flex flex-col justify-start items-start gap-1">
-          <Typography
-            sx={{
-              fontSize: "10px",
-              fontWeight: 400,
-              textTransform: "uppercase",
-              color: cardTextColor,
-            }}
-          >
-            Reward
-          </Typography>
-          <Typography
-            sx={{ fontSize: "12px", fontWeight: 400, color: cardTextColor }}
-          >
-            No Data
-          </Typography>
-        </div>
+        <Box className="flex flex-row justify-between items-center">
+          <div className="flex flex-col items-start gap-[2px]">
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: "8px",
+                textTransform: "uppercase",
+                color: cardTextColor,
+              }}
+            >
+              Stamps until the reward
+            </Typography>
+            <Typography
+              sx={{ fontWeight: 400, fontSize: "14px", color: cardTextColor }}
+            >
+              8 Stamps
+            </Typography>
+          </div>
+          <div className="flex flex-col items-end gap-[2px]">
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: "8px",
+                textTransform: "uppercase",
+                color: cardTextColor,
+              }}
+            >
+              Available Rewards
+            </Typography>
+            <Typography
+              sx={{ fontWeight: 400, fontSize: "14px", color: cardTextColor }}
+            >
+              2 Rewards
+            </Typography>
+          </div>
+        </Box>
         <Box
           className="flex justify-center items-center rounded-md p-2 mt-2"
           sx={{ boxShadow: "-1px 2px 20px 0px #00000040" }}

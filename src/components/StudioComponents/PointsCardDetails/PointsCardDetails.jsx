@@ -3,6 +3,7 @@ import PointsAndroidCardBack from "./PointsAndroidCardBack/PointsAndroidCardBack
 import { ICON_TABS_OPTIONS } from "@/enums/cards";
 import PointsAppleCardBack from "./PointsAppleCardBack/PointsAppleCardBack";
 import PointsNotificationCard from "../PointsCard/PointsNotificationCard/PointsNotificationCard";
+import PointsZeekCard from "../PointsCard/PointsZeekCard/PointsZeekCard";
 
 const PointsCardDetails = ({
   activeLinks,
@@ -12,6 +13,11 @@ const PointsCardDetails = ({
   companyName,
   issuerInformation,
   iconPreview,
+  cardName,
+  logoPreview,
+  cardBgColor,
+  cardTextColor,
+  barcode,
 }) => {
   return (
     <>
@@ -30,11 +36,19 @@ const PointsCardDetails = ({
         />
       )}
       {iconTabs === ICON_TABS_OPTIONS.ZEEK && (
-        <PointsAppleCardBack
-          companyName={companyName}
-          activeLinks={activeLinks}
-          issuerInformation={issuerInformation}
-        />
+        <div className="flex justify-center items-center">
+          <div className="mt-5 w-[230px]">
+            <PointsZeekCard
+              cardName={cardName}
+              logoPreview={logoPreview}
+              centralImagePreview={centralImagePreview}
+              cardBgColor={cardBgColor}
+              cardTextColor={cardTextColor}
+              centerBackgroundColor={centerBackgroundColor}
+              barcode={barcode}
+            />
+          </div>
+        </div>
       )}
       {iconTabs === ICON_TABS_OPTIONS.NOTIFICATION && (
         <div className="flex justify-center items-center">
