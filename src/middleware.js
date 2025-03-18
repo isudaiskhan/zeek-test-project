@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 // Route configuration
 // add paths in matcher to run middleware only on these paths
 const ROUTES = {
-  PUBLIC_URLS: ["/auth/login", "/auth/signup",],
+  PUBLIC_URLS: ["/auth/login", "/auth/signup"],
   HYBRID_URLS: ["/about-us"],
   LOGIN_URL: "/auth/login",
   ADMIN_ROUTES: "/dashboard",
@@ -48,7 +48,7 @@ export default async function validateAuthentication(req) {
     return redirectTo(req, "/dashboard");
   }
 
-  if (token && pathname === '/') {
+  if (token && pathname === "/") {
     return redirectTo(req, "/dashboard");
   }
 

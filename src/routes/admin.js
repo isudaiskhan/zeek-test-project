@@ -236,3 +236,138 @@ export const businessProfileRoutes = [
     sidebar: true,
   },
 ];
+
+export const superAdminRoutes = [
+  {
+    path: "/super-admin",
+    name: "Business Metrics",
+    icon: (
+      <Image
+        src="/images/1.svg"
+        alt="Business Metrics"
+        width={20}
+        height={20}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+  {
+    path: "/super-admin/user-metrics",
+    name: "User Metrics",
+    icon: (
+      <Image
+        src="/images/2.svg"
+        alt="User Metrics"
+        width={20}
+        height={20}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+
+  {
+    path: "/dashboard/crm",
+    name: "Transaction Metrics",
+    icon: (
+      <Image src="/images/3.svg" alt="CRM" width={20} height={20} priority />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+  // {
+  //   path: "#",
+  //   name: "Campaigns",
+  //   icon: (
+  //     <Image src="/images/4.svg" alt="Users" width={20} height={20} priority />
+  //   ),
+  //   sidebar: true,
+  //   isPrivate: true,
+  //   subRoutes: [
+  //     {
+  //       path: "/dashboard/campaigns/notification",
+  //       name: "Notification",
+  //       icon: <SubdirectoryArrowRight />,
+  //     },
+  //     {
+  //       path: "/dashboard/campaigns/segments",
+  //       name: "Segments",
+  //       icon: <SubdirectoryArrowRight />,
+  //     },
+  //   ],
+  // },
+
+  {
+    path: "/dashboard/analytics",
+    name: "Loyalty & Token",
+    icon: (
+      <Image
+        src="/images/5.svg"
+        alt="Analytics"
+        width={20}
+        height={20}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+
+  {
+    path: "/dashboard/reviews",
+    name: "Operational Metrics",
+    icon: (
+      <Image
+        src="/images/6.svg"
+        alt="Reviews"
+        width={20}
+        height={20}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+
+  {
+    path: "/dashboard/loyalty",
+    name: "Marketing Metrics",
+    icon: (
+      <Image
+        src="/images/7.svg"
+        alt="Loyalty"
+        width={24}
+        height={24}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+  {
+    path: "/dashboard/promotions",
+    name: "Alerts & Reports",
+    icon: <LocalOfferIcon fontSize="small" sx={{ color: "#888888" }} />,
+    sidebar: true,
+    isPrivate: true,
+  },
+
+  {
+    path: "/dashboard/ticket-resolution",
+    name: "Ticket resolution",
+    icon: (
+      <Image
+        src="/images/7.svg"
+        alt="Loyalty"
+        width={24}
+        height={24}
+        priority
+      />
+    ),
+    sidebar: true,
+    isPrivate: true,
+  },
+];
