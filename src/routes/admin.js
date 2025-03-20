@@ -270,7 +270,7 @@ export const superAdminRoutes = [
   },
 
   {
-    path: "/dashboard/crm",
+    path: "/super-admin/transaction-metrics",
     name: "Transaction Metrics",
     icon: (
       <Image src="/images/3.svg" alt="CRM" width={20} height={20} priority />
@@ -301,7 +301,7 @@ export const superAdminRoutes = [
   // },
 
   {
-    path: "/dashboard/analytics",
+    path: "/super-admin/loyalty-token",
     name: "Loyalty & Token",
     icon: (
       <Image
@@ -317,7 +317,7 @@ export const superAdminRoutes = [
   },
 
   {
-    path: "/dashboard/reviews",
+    path: "/super-admin/operational-metrics",
     name: "Operational Metrics",
     icon: (
       <Image
@@ -333,7 +333,7 @@ export const superAdminRoutes = [
   },
 
   {
-    path: "/dashboard/loyalty",
+    path: "/super-admin/marketing-metrics",
     name: "Marketing Metrics",
     icon: (
       <Image

@@ -3,13 +3,12 @@
 import { Box, IconButton, List, Typography } from "@mui/material";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { routes, superAdminRoutes } from "../../routes/admin";
+import { routes } from "../../routes/admin";
 import AdminSidebarActions from "./Actions/AdminSidebarActions.jsx";
 import RenderSidebarList from "./RenderSidebarList";
 import { DRAWER_WIDTH } from "@/theme/drawer";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Cookies from "js-cookie";
 
 const AdminSidebar = ({ closeSidebar = () => {} }) => {
   const [filterRoutes, setFilterRoutes] = useState([]);
@@ -22,12 +21,7 @@ const AdminSidebar = ({ closeSidebar = () => {} }) => {
   useEffect(() => {
     setIsClient(true);
     let arr = [];
-    let routeType = routes;
-    if (Cookies.get("token") === "super-admin") {
-      routeType = superAdminRoutes;
-    }
-    console.log(JSON.stringify(routeType));
-    arr = routeType.filter((item) => item.sidebar);
+    arr = routes.filter((item) => item.sidebar);
     setFilterRoutes(arr);
   }, []);
 

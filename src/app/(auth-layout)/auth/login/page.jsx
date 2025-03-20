@@ -41,13 +41,6 @@ const Login = () => {
       onSubmit: async () => {
         const { email, password, rememberMe } = values;
 
-        if (email == "super-admin@gmail.com") {
-          localStorage.setItem("token", "super-admin");
-          Cookies.set("token", "super-admin");
-          router.push("/super-admin");
-          return;
-        }
-
         const res = await login(email, password);
 
         const { token } = res;
@@ -66,8 +59,7 @@ const Login = () => {
         }
 
         dispatch(setAuthUser(reduxState));
-
-        router.push("/dashboard");
+        router.push("/");
       },
       onError: () => {
         setSubmitting(false);
